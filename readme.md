@@ -9,13 +9,19 @@ When working with Webpack will probably want to generate you bundles with a gene
 
 This plug-in generates a json file with the generated assets to be used somewhere else, I use this with Rails so it can find the assets.
 
+## Install
+
+```
+npm install assets-webpack-plugin --save
+```
+
 ## Configuration
 
 In you webpack config include the plug-in. And add it to your config:
 
 ```
 var path = require("path");
-var SaveHashes = require('./hash');
+var SaveAssetsJson = require('assets-webpack-plugin');
 
 module.exports = {
   ...
@@ -25,7 +31,7 @@ module.exports = {
     publicPath: "/js/"
   },
   ....
-  plugins: [new SaveHashes()]
+  plugins: [new SaveAssetsJson()]
 };  
 ```
 
