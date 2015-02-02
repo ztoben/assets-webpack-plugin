@@ -47,13 +47,22 @@ Plugin.prototype.writeOutput = function(compiler, hashes, outputFull) {
 Plugin.prototype.getHashes = function(compiler) {
 	var webpackStatsJson = compiler.getStats().toJson();
 	var assets = {};
-	var filterDevChunks = function(value) {
+
+	// filterDevChunks
+	// Return true if a chunk is not a source map
+	// @param {String} chunk value e.g. index-bundle.js.map
+	// @return {Boolean}
+	function filterDevChunks(value) {
 		return !(
 			/source-?map/.test(compiler.options.devtool) &&
 			/\.map$/.test(value)
 		);
-	};
+	}
 
+	// webpackStatsJson.assetsByChunkName contains a hash with the bundle names and the produced files
+	// e.g. { one: 'one-bundle.js', two: 'two-bundle.js' }
+	// in some cases (when using a plugin or source maps) it might contain an array of produced files
+	// e.g. { main: [ 'index-bundle.js', 'index-bundle.js.map' ] }
 	for (var chunk in webpackStatsJson.assetsByChunkName) {
 		var chunkValue = webpackStatsJson.assetsByChunkName[chunk];
 
@@ -62,12 +71,14 @@ Plugin.prototype.getHashes = function(compiler) {
 			// When using plugins like 'extract-text', for extracting CSS from JS, webpack
 			// will push the new bundle to the array, so the last item will be the correct
 			// chunk
+			// e.g. [ 'styles-bundle.js', 'styles-bundle.css' ]
 			chunkValue = chunkValue.filter(filterDevChunks).pop();
 		}
 
 		if (compiler.options.output.publicPath) {
 			chunkValue = compiler.options.output.publicPath + chunkValue;
 		}
+
 		assets[chunk] = chunkValue;
 	}
 

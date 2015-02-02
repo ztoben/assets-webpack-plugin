@@ -84,3 +84,9 @@ And finally in the views:
 </div>
 ```
 
+## Test
+
+```
+npm test
+```
+
