@@ -47,13 +47,22 @@ Plugin.prototype.writeOutput = function(compiler, hashes, outputFull) {
 Plugin.prototype.getHashes = function(compiler) {
 	var webpackStatsJson = compiler.getStats().toJson();
 	var assets = {};
+	var filterDevChunks = function(value) {
+		return !(
+			/source-?map/.test(compiler.options.devtool) &&
+			/\.map$/.test(value)
+		);
+	};
+
 	for (var chunk in webpackStatsJson.assetsByChunkName) {
 		var chunkValue = webpackStatsJson.assetsByChunkName[chunk];
 
-		// Webpack outputs an array for each chunk when using sourcemaps
+		// Webpack outputs an array for each chunk when using sourcemaps and some plugins
 		if (chunkValue instanceof Array) {
-			// Is the main bundle always the first element?
-			chunkValue = chunkValue[0];
+			// When using plugins like 'extract-text', for extracting CSS from JS, webpack
+			// will push the new bundle to the array, so the last item will be the correct
+			// chunk
+			chunkValue = chunkValue.filter(filterDevChunks).pop();
 		}
 
 		if (compiler.options.output.publicPath) {

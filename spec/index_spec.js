@@ -1,6 +1,7 @@
 var path = require('path');
 var fs = require('fs');
 var webpack = require('webpack');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var rm_rf = require('rimraf');
 var mkdirp = require('mkdirp');
 var Plugin = require('../index.js');
@@ -149,6 +150,36 @@ describe('Plugin', function() {
 		};
 
 		var expected = [/{"main":"index-bundle-[0-9a-f]+\.js"}/];
+
+		testPlugin(webpackConfig, expected, null, done);
+	});
+
+	it('works with ExtractTextPlugin for stylesheets', function(done) {
+
+		var webpackConfig = {
+			entry: {
+				one: path.join(__dirname, 'fixtures/one.js'),
+				two: path.join(__dirname, 'fixtures/two.js'),
+				styles: path.join(__dirname, 'fixtures/styles.js')
+			},
+			output: {
+				path: OUTPUT_DIR,
+				filename: '[name]-bundle.js'
+			},
+			module: {
+				loaders: [
+					{test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader')}
+				]
+			},
+			plugins: [
+				new ExtractTextPlugin('[name]-bundle.css', {allChunks: true}),
+				new Plugin({
+					path: 'dist'
+				})
+			]
+		};
+
+		var expected = ['{"one":"one-bundle.js","two":"two-bundle.js","styles":"styles-bundle.css"}'];
 
 		testPlugin(webpackConfig, expected, null, done);
 	});
