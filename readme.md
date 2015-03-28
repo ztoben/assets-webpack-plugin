@@ -11,7 +11,7 @@ This plug-in generates a json file with the generated assets to be used somewher
 
 ## Install
 
-```
+```sh
 npm install assets-webpack-plugin --save
 ```
 
@@ -19,7 +19,7 @@ npm install assets-webpack-plugin --save
 
 In you webpack config include the plug-in. And add it to your config:
 
-```
+```js
 var path = require("path");
 var SaveAssetsJson = require('assets-webpack-plugin');
 
@@ -43,7 +43,7 @@ __path__:
 
 Path where to save the created json file. Defaults to the current directory.
 
-```
+```js
 new SaveHashes({path: path.join(__dirname, 'app', 'views')})
 ```
 
@@ -51,7 +51,7 @@ __filename__:
 
 Name for the created json file. Defaults to `webpack-assets.json`
 
-```
+```js
 new SaveHashes({filename: 'assets.json'})
 ```
 
@@ -78,7 +78,7 @@ end
 
 And finally in the views:
 
-```
+```erb
 <div id="app">
   <script src="<%= @script %>"></script>
 </div>
@@ -86,7 +86,6 @@ And finally in the views:
 
 ## Test
 
-```
+```sh
 npm test
 ```
-
