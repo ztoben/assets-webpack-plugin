@@ -48,32 +48,15 @@ Plugin.prototype.getHashes = function(compiler) {
 	var webpackStatsJson = compiler.getStats().toJson();
 	var assets = {};
 
-	// filterDevChunks
-	// Return true if a chunk is not a source map
-	// @param {String} chunk value e.g. index-bundle.js.map
-	// @return {Boolean}
-	function filterDevChunks(value) {
-		return !(
-			/source-?map/.test(compiler.options.devtool) &&
-			/\.map$/.test(value)
-		);
-	}
-
 	// webpackStatsJson.assetsByChunkName contains a hash with the bundle names and the produced files
 	// e.g. { one: 'one-bundle.js', two: 'two-bundle.js' }
 	// in some cases (when using a plugin or source maps) it might contain an array of produced files
 	// e.g. { main: [ 'index-bundle.js', 'index-bundle.js.map' ] }
 	for (var chunk in webpackStatsJson.assetsByChunkName) {
 		var chunkValue = webpackStatsJson.assetsByChunkName[chunk];
-
 		// Webpack outputs an array for each chunk when using sourcemaps and some plugins
-		if (chunkValue instanceof Array) {
-			// When using plugins like 'extract-text', for extracting CSS from JS, webpack
-			// will push the new bundle to the array, so the last item will be the correct
-			// chunk
-			// e.g. [ 'styles-bundle.js', 'styles-bundle.css' ]
-			chunkValue = chunkValue.filter(filterDevChunks).pop();
-		}
+
+		chunkValue = Plugin.getAssetChunk(chunkValue, compiler.options);
 
 		if (compiler.options.output.publicPath) {
 			chunkValue = compiler.options.output.publicPath + chunkValue;
@@ -83,6 +66,49 @@ Plugin.prototype.getHashes = function(compiler) {
 	}
 
 	return assets;
+};
+
+Plugin.getAssetChunk = function (stringOrArray, compilerOptions) {
+	if (!stringOrArray) throw new Error('stringOrArray required');
+	if (!compilerOptions) throw new Error('compilerOptions required');
+
+	// For source maps we care about:
+	// compilerOptions.output.sourceMapFilename;
+	// compiler.devtool;
+
+	var sourceMapFilename = compilerOptions.output.sourceMapFilename;
+	// e.g. '[file].map[query]'
+	var mapSegment = sourceMapFilename
+		.replace('[file]', '')
+		.replace('[query]', '')
+		.replace('[hash]', '')
+		.replace('.', '');
+	var mapRegex = new RegExp(mapSegment);
+
+	function isSourceMap(value) {
+		return mapRegex.test(value);
+	}
+
+	// isAsset
+	// Return true if a chunk is not a source map
+	// @param {String} chunk value e.g. index-bundle.js.map
+	// @return {Boolean}
+	function isAsset(value) {
+		return !isSourceMap(value);
+	}
+
+	if (stringOrArray instanceof Array) {
+		// When using plugins like 'extract-text', for extracting CSS from JS, webpack
+		// will push the new bundle to the array, so the last item will be the correct
+		// chunk
+		// e.g. [ 'styles-bundle.js', 'styles-bundle.css' ]
+
+		return stringOrArray
+			.filter(isAsset)
+			.pop();
+	} else {
+		return stringOrArray;
+	}
 };
 
 module.exports = Plugin;

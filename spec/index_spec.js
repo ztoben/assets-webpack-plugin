@@ -35,6 +35,31 @@ function testPlugin(webpackConfig, expectedResults, outputFile, done) {
 	});
 }
 
+describe('getAssetChunk', function() {
+	var webpackConfig;
+
+	beforeEach(function () {
+		webpackConfig = {
+			output: {
+				sourceMapFilename: '[file].map[query]'
+			},
+			devtool: 'sourcemap'
+		};
+	});
+
+	it('returns the string when given just a string', function () {
+		var input = 'desktop.js';
+		var res = Plugin.getAssetChunk(input, webpackConfig);
+		expect(res).toBe(input);
+	});
+
+	it('returns the assets when given an array', function() {
+		var input = ['desktop.js?9b913c8594ce98e06b21', 'desktop.js.map?9b913c8594ce98e06b21'];
+		var res = Plugin.getAssetChunk(input, webpackConfig);
+		expect(res).toBe('desktop.js?9b913c8594ce98e06b21');
+	});
+});
+
 describe('Plugin', function() {
 	beforeEach(function(done) {
 		rm_rf(OUTPUT_DIR, done);
@@ -94,9 +119,7 @@ describe('Plugin', function() {
 		var expected = ['{"main":"index-bundle.js"}'];
 
 		testPlugin(webpackConfig, expected, 'foo.json', done);
-
 	});
-
 
 	it('registers a webpack error when output folder doesnt exists', function(done) {
 		var webpackConfig = {
@@ -132,6 +155,24 @@ describe('Plugin', function() {
 		};
 
 		var expected = ['{"main":"index-bundle.js"}'];
+
+		testPlugin(webpackConfig, expected, null, done);
+	});
+
+	it('works with source maps and hash', function(done) {
+		var webpackConfig = {
+			devtool: 'sourcemap',
+			entry: path.join(__dirname, 'fixtures/one.js'),
+			output: {
+				path: OUTPUT_DIR,
+				filename: 'index-bundle-[hash].js'
+			},
+			plugins: [new Plugin({
+				path: 'dist'
+			})]
+		};
+
+		var expected = [/{"main":"index-bundle-[0-9a-f]+\.js"}/];
 
 		testPlugin(webpackConfig, expected, null, done);
 	});
