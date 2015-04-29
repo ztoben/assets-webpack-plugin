@@ -82,8 +82,9 @@ Plugin.getAssetChunk = function (stringOrArray, compilerOptions) {
 		.replace('[file]', '')
 		.replace('[query]', '')
 		.replace('[hash]', '')
-		.replace('.', '');
-	var mapRegex = new RegExp(mapSegment);
+		.replace('.', '\\.')
+		.replace(/\//, '\\/.*');
+	var mapRegex = new RegExp(mapSegment + '$');
 
 	function isSourceMap(value) {
 		return mapRegex.test(value);
