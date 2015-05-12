@@ -1,9 +1,14 @@
 var fs = require('fs');
 var path = require('path');
 
-var extend = require('extend');
-
 var assets = {};
+
+function extend(target, source) {
+	for(var k in source){
+		target[k] = source[k];
+	}
+	return target;
+}
 
 function Plugin(options) {
 	this.options = options || {};
