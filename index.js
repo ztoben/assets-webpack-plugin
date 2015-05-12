@@ -1,6 +1,10 @@
 var fs = require('fs');
 var path = require('path');
 
+var extend = require('extend');
+
+var assets = {};
+
 function Plugin(options) {
 	this.options = options || {};
 }
@@ -22,7 +26,7 @@ Plugin.prototype.apply = function(compiler) {
 
 		var outputFilename = self.options.filename || 'webpack-assets.json';
 		var outputFull = path.join(outputDir, outputFilename);
-		self.writeOutput(compiler, hashes, outputFull);
+		self.writeOutput(compiler, self.options.multiCompiler ? extend(assets,hashes) : hashes, outputFull);
 		callback();
 	});
 };
