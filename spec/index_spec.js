@@ -102,6 +102,41 @@ describe('Plugin', function() {
 		testPlugin(webpackConfig, expected, null, done);
 	});
 
+	it('generates a default file with multiple compilers', function(done) {
+		var webpackConfig = [
+			{
+				entry: {
+					one: path.join(__dirname, 'fixtures/one.js')
+				},
+				output: {
+					path: OUTPUT_DIR,
+					filename: 'one-bundle.js'
+				},
+				plugins: [new Plugin({
+					multiCompiler: true,
+					path: 'dist'
+				})]
+			},
+			{
+				entry: {
+					two: path.join(__dirname, 'fixtures/two.js')
+				},
+				output: {
+					path: OUTPUT_DIR,
+					filename: 'two-bundle.js'
+				},
+				plugins: [new Plugin({
+					multiCompiler: true,
+					path: 'dist'
+				})]
+			}
+		];
+
+		var expected = ['{"one":"one-bundle.js","two":"two-bundle.js"}'];
+
+		testPlugin(webpackConfig, expected, null, done);
+	});
+
 	it('allows you to specify your own filename', function(done) {
 
 		var webpackConfig = {
