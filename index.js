@@ -90,11 +90,14 @@ Plugin.getAssetChunk = function (stringOrArray, compilerOptions) {
 	var mapSegment = sourceMapFilename
 		.replace('[file]', '')
 		.replace('[query]', '')
-		.replace('[hash]', '')
-		.replace('.', '\\.')
-		.replace(/\//, '\\/.*');
-	var mapRegex = new RegExp(mapSegment + '$');
+		.replace('[hash]', '');
 
+	// mapSegment e.g. ".map"
+	var mapRegex = new RegExp(mapSegment);
+
+	// value e.g.
+	//   desktop.js.map
+	//   desktop.js.map?9b913c8594ce98e06b21
 	function isSourceMap(value) {
 		return mapRegex.test(value);
 	}
@@ -112,7 +115,6 @@ Plugin.getAssetChunk = function (stringOrArray, compilerOptions) {
 		// will push the new bundle to the array, so the last item will be the correct
 		// chunk
 		// e.g. [ 'styles-bundle.js', 'styles-bundle.css' ]
-
 		return stringOrArray
 			.filter(isAsset)
 			.pop();
