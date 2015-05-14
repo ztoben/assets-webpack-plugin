@@ -26,7 +26,9 @@ function testPlugin(webpackConfig, expectedResults, outputFile, done) {
 				if (expectedResult instanceof RegExp) {
 					expect(content).toMatch(expectedResult);
 				} else {
-					expect(content).toContain(expectedResult);
+					var json = JSON.parse(content);
+					var expectedJson = JSON.parse(expectedResult);
+					expect(json).toEqual(expectedJson);
 				}
 			}
 			done();
