@@ -1,6 +1,15 @@
 var fs = require('fs');
 var path = require('path');
 
+var assets = {};
+
+function extend(target, source) {
+	for(var k in source){
+		target[k] = source[k];
+	}
+	return target;
+}
+
 function Plugin(options) {
 	this.options = options || {};
 }
@@ -22,7 +31,7 @@ Plugin.prototype.apply = function(compiler) {
 
 		var outputFilename = self.options.filename || 'webpack-assets.json';
 		var outputFull = path.join(outputDir, outputFilename);
-		self.writeOutput(compiler, hashes, outputFull);
+		self.writeOutput(compiler, self.options.multiCompiler ? extend(assets,hashes) : hashes, outputFull);
 		callback();
 	});
 };
@@ -82,8 +91,9 @@ Plugin.getAssetChunk = function (stringOrArray, compilerOptions) {
 		.replace('[file]', '')
 		.replace('[query]', '')
 		.replace('[hash]', '')
-		.replace('.', '');
-	var mapRegex = new RegExp(mapSegment);
+		.replace('.', '\\.')
+		.replace(/\//, '\\/.*');
+	var mapRegex = new RegExp(mapSegment + '$');
 
 	function isSourceMap(value) {
 		return mapRegex.test(value);
