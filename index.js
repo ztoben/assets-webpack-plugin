@@ -1,14 +1,24 @@
 var fs = require('fs');
 var path = require('path');
 
+// function extend(target, source) {
+// 	for(var k in source){
+// 		target[k] = source[k];
+// 	}
+// 	return target;
+// }
+
 function Plugin(options) {
 	this.options = options || {};
 }
 
 Plugin.prototype.apply = function(compiler) {
 	var _this = this;
+	// var assets = {};
 
 	compiler.plugin('emit', function(compiler, callback) {
+		// console.log('emit');
+		// console.log(assets);
 		var outputDir = _this.options.path || '.';
 
 		try {
@@ -23,6 +33,9 @@ Plugin.prototype.apply = function(compiler) {
 		var outputFilename = _this.options.filename || 'webpack-assets.json';
 		var outputFullPath = path.join(outputDir, outputFilename);
 
+		// if (_this.options.multiCompiler) {
+		// 	output =  extend(assets, output);
+		// }
 		_this.writeOutput(compiler, output, outputFullPath);
 
 		callback();
@@ -88,7 +101,8 @@ Plugin.getMapSegment = function(compilerOptions) {
 	return sourceMapFilename
 		.replace('[file]', '')
 		.replace('[query]', '')
-		.replace('[hash]', '');
+		.replace('[hash]', '')
+		.replace(/\//, '\\/.*');
 		// .replace('.', '');
 };
 

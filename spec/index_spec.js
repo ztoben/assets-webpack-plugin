@@ -186,7 +186,7 @@ describe('Plugin', function() {
 		expectOutput(args, done);
 	});
 
-	xit('works with source maps and hash', function(done) {
+	it('works with source maps and hash', function(done) {
 		var webpackConfig = {
 			devtool: 'sourcemap',
 			entry: path.join(__dirname, 'fixtures/one.js'),
@@ -285,5 +285,54 @@ describe('Plugin', function() {
 
 		expectOutput(args, done);
 	});
+
+	xit('generates a default file with multiple compilers', function(done) {
+		var webpackConfig = [
+			{
+				entry: {
+					one: path.join(__dirname, 'fixtures/one.js')
+				},
+				output: {
+					path: OUTPUT_DIR,
+					filename: 'one-bundle.js'
+				},
+				plugins: [new Plugin({
+					multiCompiler: true,
+					path: 'dist'
+				})]
+			},
+			{
+				entry: {
+					two: path.join(__dirname, 'fixtures/two.js')
+				},
+				output: {
+					path: OUTPUT_DIR,
+					filename: 'two-bundle.js'
+				},
+				plugins: [new Plugin({
+					multiCompiler: true,
+					path: 'dist'
+				})]
+			}
+		];
+
+		var expected = {
+			one: {
+				js: "one-bundle.js"
+			},
+			two: {
+				js: "two-bundle.js"
+			}
+		};
+		expected = JSON.stringify(expected);
+
+		var args = {
+			config:   webpackConfig,
+			expected: expected
+		};
+
+		expectOutput(args, done);
+	});
+
 
 });
