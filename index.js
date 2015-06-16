@@ -1,25 +1,25 @@
 var fs = require('fs');
 var path = require('path');
 
-var assets = {};
-
-function extend(target, source) {
-	for(var k in source){
-		target[k] = source[k];
-	}
-	return target;
-}
+// function extend(target, source) {
+// 	for(var k in source){
+// 		target[k] = source[k];
+// 	}
+// 	return target;
+// }
 
 function Plugin(options) {
 	this.options = options || {};
 }
 
 Plugin.prototype.apply = function(compiler) {
-	var self = this;
+	var _this = this;
+	// var assets = {};
 
 	compiler.plugin('emit', function(compiler, callback) {
-		var hashes = self.getHashes(compiler);
-		var outputDir = self.options.path || '.';
+		// console.log('emit');
+		// console.log(assets);
+		var outputDir = _this.options.path || '.';
 
 		try {
 			// check that output folder exists
@@ -29,78 +29,135 @@ Plugin.prototype.apply = function(compiler) {
 			return callback();
 		}
 
-		var outputFilename = self.options.filename || 'webpack-assets.json';
-		var outputFull = path.join(outputDir, outputFilename);
-		self.writeOutput(compiler, self.options.multiCompiler ? extend(assets,hashes) : hashes, outputFull);
+		var output         = _this.buildOutput(compiler);
+		var outputFilename = _this.options.filename || 'webpack-assets.json';
+		var outputFullPath = path.join(outputDir, outputFilename);
+
+		// if (_this.options.multiCompiler) {
+		// 	output =  extend(assets, output);
+		// }
+		_this.writeOutput(compiler, output, outputFullPath);
+
 		callback();
 	});
 };
 
-Plugin.prototype.writeOutput = function(compiler, hashes, outputFull) {
-	var json = JSON.stringify(hashes);
-	fs.writeFile(outputFull, json, function(err) {
+
+/*
+Write output to file system
+*/
+Plugin.prototype.writeOutput = function(compiler, output, outputFullPath) {
+	var json = JSON.stringify(output);
+	fs.writeFile(outputFullPath, json, function(err) {
 		if (err) {
-			compiler.errors.push(new Error('Plugin: Unable to save to ' + outputFull));
+			compiler.errors.push(new Error('Plugin: Unable to save to ' + outputFullPath));
 		}
 	});
-	// compiler.assets[outputFilename] = {
-	//  source: function() {
-	//    return json;
-	//  },
-	//  size: function() {
-	//    return json.length;
-	//  }
-	// };
 };
 
-Plugin.prototype.getHashes = function(compiler) {
-	var webpackStatsJson = compiler.getStats().toJson();
-	var assets = {};
+Plugin.prototype.buildOutput = function(compiler) {
 
-	// webpackStatsJson.assetsByChunkName contains a hash with the bundle names and the produced files
+	var webpackStatsJson  = compiler.getStats().toJson();
+
+	var assetsByChunkName = webpackStatsJson.assetsByChunkName;
+	// assetsByChunkName contains a hash with the bundle names and the produced files
 	// e.g. { one: 'one-bundle.js', two: 'two-bundle.js' }
 	// in some cases (when using a plugin or source maps) it might contain an array of produced files
-	// e.g. { main: [ 'index-bundle.js', 'index-bundle.js.map' ] }
-	for (var chunk in webpackStatsJson.assetsByChunkName) {
-		var chunkValue = webpackStatsJson.assetsByChunkName[chunk];
-		// Webpack outputs an array for each chunk when using sourcemaps and some plugins
+	// e.g. {
+	// main:
+  //   [ 'index-bundle-42b6e1ec4fa8c5f0303e.js',
+  //     'index-bundle-42b6e1ec4fa8c5f0303e.js.map' ] 
+	// }
 
-		chunkValue = Plugin.getAssetChunk(chunkValue, compiler.options);
+	var output            = {};
 
-		if (compiler.options.output.publicPath) {
-			chunkValue = compiler.options.output.publicPath + chunkValue;
-		}
+	// console.log(webpackStatsJson);
 
-		assets[chunk] = chunkValue;
+	for (var chunkName in assetsByChunkName) {
+		var chunkValue = assetsByChunkName[chunkName];
+		// Webpack outputs an array for each chunkName when using sourcemaps and some plugins
+
+		var chunkMap = Plugin.getChunkMap(compiler.options, chunkValue);
+
+		// if (compiler.options.output.publicPath) {
+		// 	chunkMap = compiler.options.output.publicPath + chunkMap;
+		// }
+
+		output[chunkName] = chunkMap;
 	}
 
-	return assets;
+	return output;
 };
 
-Plugin.getAssetChunk = function (stringOrArray, compilerOptions) {
-	if (!stringOrArray) throw new Error('stringOrArray required');
-	if (!compilerOptions) throw new Error('compilerOptions required');
-
+Plugin.getMapSegment = function(compilerOptions) {
 	// For source maps we care about:
 	// compilerOptions.output.sourceMapFilename;
 	// compiler.devtool;
 
 	var sourceMapFilename = compilerOptions.output.sourceMapFilename;
 	// e.g. '[file].map[query]'
-	var mapSegment = sourceMapFilename
+	// e.g. 'index-bundle-42b6e1ec4fa8c5f0303e.js.map'
+
+	return sourceMapFilename
 		.replace('[file]', '')
 		.replace('[query]', '')
-		.replace('[hash]', '');
+		.replace('[hash]', '')
+		.replace(/\//, '\\/.*');
+		// .replace('.', '');
+};
 
-	// mapSegment e.g. ".map"
+Plugin.isSourceMap = function(compilerOptions, asset) {
+	var mapSegment = Plugin.getMapSegment(compilerOptions);
 	var mapRegex = new RegExp(mapSegment);
 
-	// value e.g.
-	//   desktop.js.map
-	//   desktop.js.map?9b913c8594ce98e06b21
-	function isSourceMap(value) {
-		return mapRegex.test(value);
+	return mapRegex.test(asset);
+};
+
+Plugin.getFileExt = function(compilerOptions, asset) {
+
+	var isSourceMap = Plugin.isSourceMap(compilerOptions, asset);
+
+	if (isSourceMap) {
+		// remove the map segment
+		var mapSegment = Plugin.getMapSegment(compilerOptions);
+		asset = asset.replace(mapSegment, '');
+		// remove queries
+		var queryIx = asset.indexOf('?');
+		if (queryIx > -1) asset = asset.slice(0, queryIx);
 	}
+
+	var extIx = asset.lastIndexOf('.');
+	return asset.slice(extIx + 1);
+};
+
+Plugin.getAssetKind = function(compilerOptions, asset) {
+	// console.log('compilerOptions', compilerOptions);
+	// console.log(asset);
+
+	var isSourceMap = Plugin.isSourceMap(compilerOptions, asset);
+	var ext         = Plugin.getFileExt(compilerOptions, asset);
+
+	if (isSourceMap) {
+		return ext + 'Map';
+	} else {
+		return ext;
+	}
+};
+
+/*
+Create a map with information about this chunk
+
+@param stringOrArray
+String or an array of strings
+
+@return
+{
+	js: 'source.js'
+}
+*/
+Plugin.getChunkMap = function (compilerOptions, stringOrArray) {
+	if (!stringOrArray)   throw new Error('stringOrArray required');
+	if (!compilerOptions) throw new Error('compilerOptions required');
 
 	// isAsset
 	// Return true if a chunk is not a source map
@@ -109,18 +166,24 @@ Plugin.getAssetChunk = function (stringOrArray, compilerOptions) {
 	function isAsset(value) {
 		return !isSourceMap(value);
 	}
+	var output = {};
 
 	if (stringOrArray instanceof Array) {
 		// When using plugins like 'extract-text', for extracting CSS from JS, webpack
 		// will push the new bundle to the array, so the last item will be the correct
 		// chunk
 		// e.g. [ 'styles-bundle.js', 'styles-bundle.css' ]
-		return stringOrArray
-			.filter(isAsset)
-			.pop();
+
+		for (var a = 0; a < stringOrArray.length ; a++) {
+			var asset = stringOrArray[a];
+			var kind = Plugin.getAssetKind(compilerOptions, asset);
+			output[kind] = asset;
+		}
 	} else {
-		return stringOrArray;
+		output.js = stringOrArray;
 	}
+
+	return output;
 };
 
 module.exports = Plugin;
