@@ -1,5 +1,7 @@
 var webpack = require('webpack');
 var Plugin = require('../index.js');
+var chai              = require('chai');
+var expect            = chai.expect;
 
 describe('getAssetKind', function() {
 	var webpackConfig;
@@ -18,7 +20,7 @@ describe('getAssetKind', function() {
 		it('returns js', function () {
 			var input = 'desktop.js';
 			var res = Plugin.getAssetKind(webpackConfig, input);
-			expect(res).toBe('js');
+			expect(res).to.eq('js');
 		});
 
 	});
@@ -28,13 +30,13 @@ describe('getAssetKind', function() {
 		it('returns map', function() {
 			var input = 'desktop.js.map';
 			var res = Plugin.getAssetKind(webpackConfig, input);
-			expect(res).toBe('jsMap');
+			expect(res).to.eq('jsMap');
 		});
 
 		it('returns map', function() {
 			var input = 'desktop.js.map?9b913c8594ce98e06b21';
 			var res = Plugin.getAssetKind(webpackConfig, input);
-			expect(res).toBe('jsMap');
+			expect(res).to.eq('jsMap');
 		});
 
 	});

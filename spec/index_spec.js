@@ -1,10 +1,16 @@
-var path = require('path');
-var fs = require('fs');
-var webpack = require('webpack');
+/*jshint expr: true*/
+
+var path              = require('path');
+var fs                = require('fs');
+// var mocha             = require('mocha');
+var chai              = require('chai');
+var webpack           = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var rm_rf = require('rimraf');
-var mkdirp = require('mkdirp');
-var Plugin = require('../index.js');
+var rm_rf             = require('rimraf');
+var mkdirp            = require('mkdirp');
+var _                 = require('lodash');
+var Plugin            = require('../index.js');
+var expect            = chai.expect;
 
 var OUTPUT_DIR = path.join(__dirname, '../dist');
 
@@ -19,20 +25,24 @@ function expectOutput(args, done) {
 
 	// Create output folder
 	mkdirp(OUTPUT_DIR, function(err) {
-		expect(err).toBeFalsy();
+		expect(err).to.be.null;
 
 		outputFile = outputFile || 'webpack-assets.json';
 
 		webpack(webpackConfig, function(err, stats) {
-			expect(err).toBeFalsy();
-			expect(stats.hasErrors()).toBe(false);
+			expect(err).to.be.null;
+			expect(stats.hasErrors()).to.be.false;
 
 			var content = fs.readFileSync(path.join(OUTPUT_DIR, outputFile)).toString();
 
-			if (expectedResult instanceof RegExp) {
-				expect(content).toMatch(expectedResult);
+			if (_.isRegExp(expectedResult)) {
+				expect(content).to.match(expectedResult);
+			} else if(_.isString(expectedResult)) {
+				expect(content).to.contain(expectedResult);
 			} else {
-				expect(content).toContain(expectedResult);
+				// JSON object provided
+				var actual = JSON.parse(content);
+				expect(actual).to.eql(expectedResult);
 			}
 
 			done();
@@ -96,7 +106,6 @@ describe('Plugin', function() {
 				js: 'two-bundle.js'
 			}
 		};
-		expected = JSON.stringify(expected);
 
 		var args = {
 			config: webpackConfig,
@@ -125,7 +134,6 @@ describe('Plugin', function() {
 				js: 'index-bundle.js'
 			}
 		};
-		expected = JSON.stringify(expected);
 
 		var args = {
 			config: webpackConfig,
@@ -149,8 +157,8 @@ describe('Plugin', function() {
 		};
 
 		webpack(webpackConfig, function(err, stats) {
-			expect(stats.hasErrors()).toBe(true);
-			expect(stats.toJson().errors[0]).toContain('Plugin');
+			expect(stats.hasErrors()).to.be.true;
+			expect(stats.toJson().errors[0]).to.contain('Plugin');
 			done();
 		});
 	});
@@ -175,8 +183,6 @@ describe('Plugin', function() {
 				jsMap: 'index-bundle.js.map'
 			}
 		};
-
-		expected = JSON.stringify(expected);
 
 		var args = {
 			config: webpackConfig,
@@ -221,13 +227,6 @@ describe('Plugin', function() {
 				path: 'dist'
 			})]
 		};
-
-		// var expected = {
-		// 	main: {
-		// 		js: "index-bundle-[0-9a-f]+\.js"
-		// 	}
-		// };
-		// expected = JSON.stringify(expected);
 
 		var expected = /{"main":{"js":"index-bundle-[0-9a-f]+\.js"}}/;
 
@@ -276,7 +275,6 @@ describe('Plugin', function() {
 				css: "styles-bundle.css"
 			}
 		};
-		expected = JSON.stringify(expected);
 
 		var args = {
 			config: webpackConfig,
@@ -286,7 +284,7 @@ describe('Plugin', function() {
 		expectOutput(args, done);
 	});
 
-	xit('generates a default file with multiple compilers', function(done) {
+	it.skip('generates a default file with multiple compilers', function(done) {
 		var webpackConfig = [
 			{
 				entry: {
@@ -324,7 +322,6 @@ describe('Plugin', function() {
 				js: "two-bundle.js"
 			}
 		};
-		expected = JSON.stringify(expected);
 
 		var args = {
 			config:   webpackConfig,
