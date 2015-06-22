@@ -331,5 +331,34 @@ describe('Plugin', function() {
 		expectOutput(args, done);
 	});
 
+	it('includes full publicPath', function(done) {
+
+		var webpackConfig = {
+			devtool: 'sourcemap',
+			entry: path.join(__dirname, 'fixtures/one.js'),
+			output: {
+				path: OUTPUT_DIR,
+				publicPath: '/public/path/',
+				filename: 'index-bundle.js'
+			},
+			plugins: [new Plugin({
+				path: 'dist'
+			})]
+		};
+
+		var expected = {
+			main: {
+				js:    '/public/path/index-bundle.js',
+				jsMap: '/public/path/index-bundle.js.map'
+			}
+		};
+
+		var args = {
+			config: webpackConfig,
+			expected: expected
+		};
+
+		expectOutput(args, done);
+	});
 
 });
