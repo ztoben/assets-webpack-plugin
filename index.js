@@ -79,10 +79,6 @@ Plugin.prototype.buildOutput = function(compiler) {
 
 		var chunkMap = Plugin.getChunkMap(compiler.options, chunkValue);
 
-		// if (compiler.options.output.publicPath) {
-		// 	chunkMap = compiler.options.output.publicPath + chunkMap;
-		// }
-
 		output[chunkName] = chunkMap;
 	}
 
@@ -167,6 +163,7 @@ Plugin.getChunkMap = function (compilerOptions, stringOrArray) {
 		return !isSourceMap(value);
 	}
 	var output = {};
+	var publicPath = compilerOptions.output.publicPath || '';
 
 	if (stringOrArray instanceof Array) {
 		// When using plugins like 'extract-text', for extracting CSS from JS, webpack
@@ -177,10 +174,10 @@ Plugin.getChunkMap = function (compilerOptions, stringOrArray) {
 		for (var a = 0; a < stringOrArray.length ; a++) {
 			var asset = stringOrArray[a];
 			var kind = Plugin.getAssetKind(compilerOptions, asset);
-			output[kind] = asset;
+			output[kind] = publicPath + asset;
 		}
 	} else {
-		output.js = stringOrArray;
+		output.js = publicPath + stringOrArray;
 	}
 
 	return output;
