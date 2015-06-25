@@ -1,5 +1,6 @@
 var fs = require('fs');
 var path = require('path');
+var mkdirp = require('mkdirp');
 
 // function extend(target, source) {
 // 	for(var k in source){
@@ -22,10 +23,12 @@ Plugin.prototype.apply = function(compiler) {
 		var outputDir = _this.options.path || '.';
 
 		try {
-			// check that output folder exists
-			fs.lstatSync(outputDir).isDirectory();
+			// make sure output folder exists
+			mkdirp.sync(outputDir);
 		} catch (e) {
-			compiler.errors.push(new Error('Plugin: Folder not found ' + outputDir));
+			compiler.errors.push(new Error(
+				'Assets Plugin: Could not create output folder' + outputDir
+			));
 			return callback();
 		}
 
