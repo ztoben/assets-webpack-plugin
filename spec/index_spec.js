@@ -144,25 +144,6 @@ describe('Plugin', function() {
 		expectOutput(args, done);
 	});
 
-	it('registers a webpack error when output folder doesnt exists', function(done) {
-		var webpackConfig = {
-			entry: path.join(__dirname, 'fixtures/one.js'),
-			output: {
-				path: OUTPUT_DIR,
-				filename: 'index-bundle.js'
-			},
-			plugins: [new Plugin({
-				path: 'notFound'
-			})]
-		};
-
-		webpack(webpackConfig, function(err, stats) {
-			expect(stats.hasErrors()).to.be.true;
-			expect(stats.toJson().errors[0]).to.contain('Plugin');
-			done();
-		});
-	});
-
 	it('works with source maps', function(done) {
 
 		var webpackConfig = {
