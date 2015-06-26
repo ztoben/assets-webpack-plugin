@@ -12,7 +12,7 @@ var _                 = require('lodash');
 var Plugin            = require('../index.js');
 var expect            = chai.expect;
 
-var OUTPUT_DIR = path.join(__dirname, '../dist');
+var OUTPUT_DIR = path.join(__dirname, '../tmp');
 
 function expectOutput(args, done) {
 	if (!args.config)    throw new Error('Expected args.config');
@@ -64,7 +64,7 @@ describe('Plugin', function() {
 				filename: 'index-bundle.js'
 			},
 			plugins: [new Plugin({
-				path: 'dist'
+				path: 'tmp'
 			})]
 		};
 
@@ -94,7 +94,7 @@ describe('Plugin', function() {
 				filename: '[name]-bundle.js'
 			},
 			plugins: [new Plugin({
-				path: 'dist'
+				path: 'tmp'
 			})]
 		};
 
@@ -125,7 +125,7 @@ describe('Plugin', function() {
 			},
 			plugins: [new Plugin({
 				filename: 'foo.json',
-				path: 'dist'
+				path: 'tmp'
 			})]
 		};
 
@@ -154,7 +154,7 @@ describe('Plugin', function() {
 				filename: 'index-bundle.js'
 			},
 			plugins: [new Plugin({
-				path: 'dist'
+				path: 'tmp'
 			})]
 		};
 
@@ -182,7 +182,7 @@ describe('Plugin', function() {
 				filename: 'index-bundle-[hash].js'
 			},
 			plugins: [new Plugin({
-				path: 'dist'
+				path: 'tmp'
 			})]
 		};
 
@@ -205,7 +205,7 @@ describe('Plugin', function() {
 				filename: 'index-bundle-[hash].js'
 			},
 			plugins: [new Plugin({
-				path: 'dist'
+				path: 'tmp'
 			})]
 		};
 
@@ -239,7 +239,7 @@ describe('Plugin', function() {
 			plugins: [
 				new ExtractTextPlugin('[name]-bundle.css', {allChunks: true}),
 				new Plugin({
-					path: 'dist'
+					path: 'tmp'
 				})
 			]
 		};
@@ -277,7 +277,7 @@ describe('Plugin', function() {
 				},
 				plugins: [new Plugin({
 					multiCompiler: true,
-					path: 'dist'
+					path: 'tmp'
 				})]
 			},
 			{
@@ -290,7 +290,7 @@ describe('Plugin', function() {
 				},
 				plugins: [new Plugin({
 					multiCompiler: true,
-					path: 'dist'
+					path: 'tmp'
 				})]
 			}
 		];
@@ -323,7 +323,7 @@ describe('Plugin', function() {
 				filename: 'index-bundle.js'
 			},
 			plugins: [new Plugin({
-				path: 'dist'
+				path: 'tmp'
 			})]
 		};
 
