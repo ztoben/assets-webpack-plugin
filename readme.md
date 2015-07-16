@@ -7,7 +7,7 @@ Webpack plugin that emits a json file with assets paths.
 
 ## Why is this useful?
 
-When working with Webpack you might want to generate you bundles with a generated hash in them (for cache busting).
+When working with Webpack you might want to generate your bundles with a generated hash in them (for cache busting).
 
 This plug-in outputs a json file with the generated assets so you can find the assets from somewhere else.
 
@@ -35,7 +35,7 @@ npm install assets-webpack-plugin --save-dev
 
 ## Configuration
 
-In you webpack config include the plug-in. And add it to your config:
+In your webpack config include the plug-in. And add it to your config:
 
 ```js
 var path                 = require('path');
