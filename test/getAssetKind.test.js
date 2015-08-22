@@ -1,7 +1,7 @@
-var webpack = require('webpack');
-var Plugin = require('../index.js');
-var chai              = require('chai');
-var expect            = chai.expect;
+var webpack        = require('webpack');
+var getAssetKind   = require('../lib/getAssetKind.js');
+var chai           = require('chai');
+var expect         = chai.expect;
 
 describe('getAssetKind', function() {
 	var webpackConfig;
@@ -9,6 +9,7 @@ describe('getAssetKind', function() {
 	beforeEach(function () {
 		webpackConfig = {
 			output: {
+				filename: '[name].js?[hash]',
 				sourceMapFilename: '[file].map[query]'
 			},
 			devtool: 'sourcemap'
@@ -19,7 +20,13 @@ describe('getAssetKind', function() {
 
 		it('returns js', function () {
 			var input = 'desktop.js';
-			var res = Plugin.getAssetKind(webpackConfig, input);
+			var res = getAssetKind(webpackConfig, input);
+			expect(res).to.eq('js');
+		});
+
+		it('returns js with hash', function() {
+			var input = 'desktop.js?9b913c8594ce98e06b21';
+			var res = getAssetKind(webpackConfig, input);
 			expect(res).to.eq('js');
 		});
 
@@ -29,13 +36,13 @@ describe('getAssetKind', function() {
 
 		it('returns map', function() {
 			var input = 'desktop.js.map';
-			var res = Plugin.getAssetKind(webpackConfig, input);
+			var res = getAssetKind(webpackConfig, input);
 			expect(res).to.eq('jsMap');
 		});
 
 		it('returns map', function() {
 			var input = 'desktop.js.map?9b913c8594ce98e06b21';
-			var res = Plugin.getAssetKind(webpackConfig, input);
+			var res = getAssetKind(webpackConfig, input);
 			expect(res).to.eq('jsMap');
 		});
 

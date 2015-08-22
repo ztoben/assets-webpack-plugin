@@ -4,7 +4,7 @@
   "description": "Emits a json file with assets paths",
   "main": "index.js",
   "scripts": {
-    "test": "jshint *.js spec && ./node_modules/.bin/mocha spec"
+    "test": "jshint *.js test && ./node_modules/.bin/mocha test"
   },
   "repository": {
     "type": "git",
