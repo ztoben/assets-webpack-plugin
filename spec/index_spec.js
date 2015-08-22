@@ -219,6 +219,29 @@ describe('Plugin', function() {
 		expectOutput(args, done);
 	});
 
+	it('handles hashes in a different position', function(done) {
+
+		var webpackConfig = {
+			entry: path.join(__dirname, 'fixtures/one.js'),
+			output: {
+				path: OUTPUT_DIR,
+				filename: '[name].js?[hash]'
+			},
+			plugins: [new Plugin({
+				path: 'tmp'
+			})]
+		};
+
+		var expected = /{"main":{"js":"main\.js\?[0-9a-f]+"}}/;
+
+		var args = {
+			config: webpackConfig,
+			expected: expected
+		};
+
+		expectOutput(args, done);
+	});
+
 	it('works with ExtractTextPlugin for stylesheets', function(done) {
 
 		var webpackConfig = {
