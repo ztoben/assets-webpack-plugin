@@ -74,6 +74,14 @@ Name for the created json file. Defaults to `webpack-assets.json`
 new AssetsPlugin({filename: 'assets.json'})
 ```
 
+__multiCompiler__:
+
+Set to true if you need collect all assets from several webpack configurations. Defaults to false
+
+```js
+new AssetsPlugin({multiCompiler: true})
+```
+
 ### Using this with Rails
 
 You can use this with Rails to find the bundled Webpack assets via sprockets. In `ApplicationController` you might have:

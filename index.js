@@ -1,15 +1,19 @@
-var buildOutput   = require('./lib/buildOutput');
-var writeOutput   = require('./lib/writeOutput');
-var mkdirp        = require('mkdirp');
-var path          = require('path');
+var buildOutput = require('./lib/buildOutput');
+var writeOutput = require('./lib/writeOutput');
+var mkdirp = require('mkdirp');
+var merge = require('lodash.merge');
+var path = require('path');
 
 function Plugin(options) {
 	this.options = options || {};
 }
 
+// Will keep all assets during webpack compile session
+// (until nodejs process dies)
+var assets = {};
+
 Plugin.prototype.apply = function(compiler) {
 	var _this = this;
-	// var assets = {};
 
 	compiler.plugin('emit', function(compiler, callback) {
 		// console.log('emit');
@@ -26,16 +30,16 @@ Plugin.prototype.apply = function(compiler) {
 			return callback();
 		}
 
-		var output         = buildOutput(compiler);
+		var output = buildOutput(compiler);
 		var outputFilename = _this.options.filename || 'webpack-assets.json';
 		var outputFullPath = path.join(outputDir, outputFilename);
 
-		// if (_this.options.multiCompiler) {
-		// 	output =  extend(assets, output);
-		// }
-		writeOutput(compiler, output, outputFullPath);
-
-		callback();
+		if (_this.options.multiCompiler) {
+			merge(assets, output);
+		} else {
+			assets = output
+		}
+		writeOutput(compiler, assets, outputFullPath, callback);
 	});
 };
 
