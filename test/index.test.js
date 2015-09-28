@@ -150,7 +150,7 @@ describe('Plugin', function() {
         expectOutput(args, done);
     });
 
-    it('works with source maps', function(done) {
+    it('skips source maps', function(done) {
 
         var webpackConfig = {
             devtool: 'sourcemap',
@@ -164,31 +164,9 @@ describe('Plugin', function() {
 
         var expected = {
             main: {
-                js: 'index-bundle.js',
-                jsSourceMap: 'index-bundle.js.map'
+                js: 'index-bundle.js'
             }
         };
-
-        var args = {
-            config: webpackConfig,
-            expected: expected
-        };
-
-        expectOutput(args, done);
-    });
-
-    it('works with source maps and hash', function(done) {
-        var webpackConfig = {
-            devtool: 'sourcemap',
-            entry: path.join(__dirname, 'fixtures/one.js'),
-            output: {
-                path: OUTPUT_DIR,
-                filename: 'index-bundle-[hash].js'
-            },
-            plugins: [new Plugin({path: 'tmp'})]
-        };
-
-        var expected = /{"main":{"js":"index-bundle-[0-9a-f]+\.js","jsSourceMap":"index-bundle-[0-9a-f]+\.js\.map"}}/;
 
         var args = {
             config: webpackConfig,

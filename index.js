@@ -4,6 +4,7 @@ var fs = require('fs');
 
 var getAssetKind = require('./lib/getAssetKind');
 var isHMRUpdate = require('./lib/isHMRUpdate');
+var isSourceMap = require('./lib/isSourceMap');
 
 
 function AssetsWebpackPlugin (options) {
@@ -59,7 +60,7 @@ AssetsWebpackPlugin.prototype = {
                     assets = [assets];
                 }
                 chunkMap[chunkName] = assets.reduce(function (typeMap, asset) {
-                    if (isHMRUpdate(options, asset)) {
+                    if (isHMRUpdate(options, asset) || isSourceMap(options, asset)) {
                         return typeMap;
                     }
 
