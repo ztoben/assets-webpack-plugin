@@ -1,42 +1,103 @@
-var buildOutput   = require('./lib/buildOutput');
-var writeOutput   = require('./lib/writeOutput');
-var mkdirp        = require('mkdirp');
-var path          = require('path');
+var mkdirp = require('mkdirp');
+var path = require('path');
+var fs = require('fs');
 
-function Plugin(options) {
-	this.options = options || {};
+var getAssetKind = require('./lib/getAssetKind');
+var isHMRUpdate = require('./lib/isHMRUpdate');
+
+
+function AssetsWebpackPlugin (options) {
+    this.options = this.getOptions(options || {});
+    this.outputPath = path.join(this.options.path, this.options.filename);
+    this.paths = {};
 }
 
-Plugin.prototype.apply = function(compiler) {
-	var _this = this;
-	// var assets = {};
+AssetsWebpackPlugin.prototype = {
+    constructor: AssetsWebpackPlugin,
 
-	compiler.plugin('emit', function(compiler, callback) {
-		// console.log('emit');
-		// console.log(assets);
-		var outputDir = _this.options.path || '.';
+    getOptions: function (options) {
+        var defaults = {
+            path: '.',
+            filename: 'webpack-assets.json',
+            prettyPrint: false
+        };
+        return Object.keys(defaults).reduce(function (map, option) {
+            map[option] = options.hasOwnProperty(option) ? options[option] : defaults[option];
+            return map;
+        }, {});
+    },
 
-		try {
-			// make sure output folder exists
-			mkdirp.sync(outputDir);
-		} catch (e) {
+    apply: function (compiler) {
+        var self = this;
+
+        compiler.plugin("emit", function (compilation, callback) {
+            var options = compiler.options;
+            stats = compilation.getStats().toJson({
+                hash: true,
+                publicPath: true,
+                assets: true,
+                chunks: false,
+                modules: false,
+                source: false,
+                errorDetails: false,
+                timings: false
+            });
+            // publicPath with resolved [hash] placeholder
+            var publicPath = stats.publicPath || '';
+            // assetsByChunkName contains a hash with the bundle names and the produced files
+            // e.g. { one: 'one-bundle.js', two: 'two-bundle.js' }
+            // in some cases (when using a plugin or source maps) it might contain an array of produced files
+            // e.g. {
+            // main:
+            //   [ 'index-bundle-42b6e1ec4fa8c5f0303e.js',
+            //     'index-bundle-42b6e1ec4fa8c5f0303e.js.map' ] 
+            // }
+            var assetsByChunkName = stats.assetsByChunkName;
+
+            var output = Object.keys(assetsByChunkName).reduce(function (chunkMap, chunkName) {
+                var assets = assetsByChunkName[chunkName];
+                if (!Array.isArray(assets)) {
+                    assets = [assets];
+                }
+                chunkMap[chunkName] = assets.reduce(function (typeMap, asset) {
+                    if (isHMRUpdate(options, asset)) {
+                        return typeMap;
+                    }
+
+                    var typeName = getAssetKind(options, asset);
+                    typeMap[typeName] = publicPath + asset;
+
+                    return typeMap;
+                }, {});
+
+                return chunkMap;
+            }, {});
+
+            self.writeOutput(output, compilation);
+
+            callback();
+        });
+    },
+
+    writeOutput: function (assets, compiler) {
+        try {
+            mkdirp.sync(this.options.path);
+        } catch (e) {
 			compiler.errors.push(new Error(
-				'Assets Plugin: Could not create output folder' + outputDir
+				'[AssetsWebpackPlugin]: Could not create output folder' + this.options.path
 			));
-			return callback();
+			return; 
 		}
+        var json = JSON.stringify(assets, null, this.options.prettyPrint ? 2 : null);
+        fs.writeFile(this.outputPath, json, function (err) {
+            if (err) {
+                compiler.errors.push(new Error(
+                    '[AssetsWebpackPlugin]: Unable to write to ' + this.outputPath
+                ));
+            }
+        });
+    },
 
-		var output         = buildOutput(compiler);
-		var outputFilename = _this.options.filename || 'webpack-assets.json';
-		var outputFullPath = path.join(outputDir, outputFilename);
-
-		// if (_this.options.multiCompiler) {
-		// 	output =  extend(assets, output);
-		// }
-		writeOutput(compiler, output, outputFullPath);
-
-		callback();
-	});
 };
 
-module.exports = Plugin;
+module.exports = AssetsWebpackPlugin;
