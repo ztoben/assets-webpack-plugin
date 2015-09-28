@@ -9,21 +9,54 @@ Webpack plugin that emits a json file with assets paths.
 
 When working with Webpack you might want to generate your bundles with a generated hash in them (for cache busting).
 
-This plug-in outputs a json file with the generated assets so you can find the assets from somewhere else.
+This plug-in outputs a json file with the paths of the generated assets so you can find them from somewhere else.
 
 ### Example output:
 
-As of version 2.0 the output now includes keys for different assets kinds.
+The output is a JSON object in the form:
 
-```
+```json
 {
-  "one": {
-    "js":    "one-bundle.js",
-    "jsMap": "one-bundle.js.map"
-  },
-  "two": {
-    "js":    "two-bundle.js"
-  }
+    "bundle_name": {
+        "asset_kind": "/public/path/to/asset"
+    }
+}
+```
+
+Where:
+
+    * `"bundle_name"` is the name of the bundle (the key of the entry object in your webpack config, or "main" if your entry is an array).
+    * `"asset_kind"` is the camel-cased file extension of the asset, except for source maps where `asset_kind = camelcase(file_xtension) + 'SourceMap'`.
+
+For example, given the following webpack config:
+
+```js
+{
+    entry: {
+        one: ['src/one.js'],
+        two: ['src/two.js']
+    },
+    output: {
+        path: path.join(__dirname, "public", "js"),
+        publicPath: "/js/",
+        filename: '[name]_[hash].bundle.js',
+        sourceMapFilename: '[file].map'
+    }
+}
+```
+
+The plugin will output the following json file:
+
+```json
+{
+    "one": {
+        "js": "/js/one_2bb80372ebe8047a68d4.bundle.js",
+        "jsSourceMap": "/js/one_2bb80372ebe8047a68d4.bundle.js.map"
+    },
+    "two": {
+        "js": "/js/two_2bb80372ebe8047a68d4.bundle.js",
+        "jsSourceMap": "/js/two_2bb80372ebe8047a68d4.bundle.js.map"
+    }
 }
 ```
 
@@ -38,20 +71,20 @@ npm install assets-webpack-plugin --save-dev
 In your webpack config include the plug-in. And add it to your config:
 
 ```js
-var path                 = require('path');
-var AssetsPlugin         = require('assets-webpack-plugin');
+var path = require('path');
+var AssetsPlugin = require('assets-webpack-plugin');
 var assetsPluginInstance = new AssetsPlugin();
 
 module.exports = {
-  ...
-  output: {
-    path:        path.join(__dirname, "public", "js"),
-    filename:    "[name]-bundle-[hash].js",
-    publicPath:  "/js/"
-  },
-  ....
-  plugins: [assetsPluginInstance]
-};  
+    // ...
+    output: {
+        path: path.join(__dirname, "public", "js"),
+        filename: "[name]-bundle-[hash].js",
+        publicPath: "/js/"
+    },
+    // ....
+    plugins: [assetsPluginInstance]
+};
 ```
 
 ### Options
