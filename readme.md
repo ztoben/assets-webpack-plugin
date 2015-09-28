@@ -91,21 +91,24 @@ module.exports = {
 
 You can pass the following options:
 
-__path__: 
-
-Path where to save the created json file. Defaults to the current directory.
+__path__: Path where to save the created json file. Defaults to the current directory.
 
 ```js
 new AssetsPlugin({path: path.join(__dirname, 'app', 'views')})
 ```
 
-__filename__: 
-
-Name for the created json file. Defaults to `webpack-assets.json`
+__filename__: Name for the created json file. Defaults to `webpack-assets.json`
 
 ```js
 new AssetsPlugin({filename: 'assets.json'})
 ```
+
+__prettyPrint__: Whether to format the json output for readability. Defaults to false.
+
+```js
+new AssetsPlugin({prettyPrint: true})
+```
+
 
 ### Using this with Rails
 
