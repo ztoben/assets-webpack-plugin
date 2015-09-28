@@ -26,7 +26,7 @@ The output is a JSON object in the form:
 Where:
 
   * `"bundle_name"` is the name of the bundle (the key of the entry object in your webpack config, or "main" if your entry is an array).
-  * `"asset_kind"` is the camel-cased file extension of the asset, except for source maps where `asset_kind = camelcase(file_xtension) + 'SourceMap'`.
+  * `"asset_kind"` is the camel-cased file extension of the asset
 
 For example, given the following webpack config:
 
@@ -39,8 +39,7 @@ For example, given the following webpack config:
     output: {
         path: path.join(__dirname, "public", "js"),
         publicPath: "/js/",
-        filename: '[name]_[hash].bundle.js',
-        sourceMapFilename: '[file].map'
+        filename: '[name]_[hash].bundle.js'
     }
 }
 ```
@@ -50,12 +49,10 @@ The plugin will output the following json file:
 ```json
 {
     "one": {
-        "js": "/js/one_2bb80372ebe8047a68d4.bundle.js",
-        "jsSourceMap": "/js/one_2bb80372ebe8047a68d4.bundle.js.map"
+        "js": "/js/one_2bb80372ebe8047a68d4.bundle.js"
     },
     "two": {
-        "js": "/js/two_2bb80372ebe8047a68d4.bundle.js",
-        "jsSourceMap": "/js/two_2bb80372ebe8047a68d4.bundle.js.map"
+        "js": "/js/two_2bb80372ebe8047a68d4.bundle.js"
     }
 }
 ```
