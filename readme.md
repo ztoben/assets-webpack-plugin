@@ -25,8 +25,8 @@ The output is a JSON object in the form:
 
 Where:
 
-    * `"bundle_name"` is the name of the bundle (the key of the entry object in your webpack config, or "main" if your entry is an array).
-    * `"asset_kind"` is the camel-cased file extension of the asset, except for source maps where `asset_kind = camelcase(file_xtension) + 'SourceMap'`.
+  * `"bundle_name"` is the name of the bundle (the key of the entry object in your webpack config, or "main" if your entry is an array).
+  * `"asset_kind"` is the camel-cased file extension of the asset, except for source maps where `asset_kind = camelcase(file_xtension) + 'SourceMap'`.
 
 For example, given the following webpack config:
 
