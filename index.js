@@ -9,7 +9,6 @@ var isHMRUpdate = require('./lib/isHMRUpdate');
 function AssetsWebpackPlugin (options) {
     this.options = this.getOptions(options || {});
     this.outputPath = path.join(this.options.path, this.options.filename);
-    this.paths = {};
 }
 
 AssetsWebpackPlugin.prototype = {
@@ -83,11 +82,11 @@ AssetsWebpackPlugin.prototype = {
         try {
             mkdirp.sync(this.options.path);
         } catch (e) {
-			compiler.errors.push(new Error(
-				'[AssetsWebpackPlugin]: Could not create output folder' + this.options.path
-			));
-			return; 
-		}
+            compiler.errors.push(new Error(
+                '[AssetsWebpackPlugin]: Could not create output folder' + this.options.path
+            ));
+            return;
+        }
         var json = JSON.stringify(assets, null, this.options.prettyPrint ? 2 : null);
         fs.writeFile(this.outputPath, json, function (err) {
             if (err) {
