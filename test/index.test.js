@@ -355,4 +355,35 @@ describe('Plugin', function() {
         expectOutput(args, done);
     });
 
+    it('works with CommonChunksPlugin', function (done) {
+        var webpackConfig = {
+            entry: {
+                one: path.join(__dirname, 'fixtures/common-chunks/one.js'),
+                two: path.join(__dirname, 'fixtures/common-chunks/two.js')
+            },
+            output: {
+                path: OUTPUT_DIR,
+                filename: '[name].js'
+            },
+            plugins: [
+                new webpack.optimize.CommonsChunkPlugin({name: "common"}),
+                new Plugin({path: 'tmp'})
+            ]
+        };
+
+        var expected = {
+            one: {js: 'one.js'},
+            two: {js: 'two.js'},
+            common: {js: 'common.js'}
+        };
+
+        var args = {
+            config: webpackConfig,
+            expected: expected
+        };
+
+        expectOutput(args, done);
+
+    });
+
 });
