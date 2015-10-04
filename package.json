@@ -35,6 +35,8 @@
     "webpack": "^1.3.3-beta1"
   },
   "dependencies": {
+    "camelcase": "^1.2.1",
+    "escape-string-regexp": "^1.0.3",
     "mkdirp": "^0.5.1"
   }
 }
