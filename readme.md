@@ -100,10 +100,42 @@ __filename__: Name for the created json file. Defaults to `webpack-assets.json`
 new AssetsPlugin({filename: 'assets.json'})
 ```
 
+__update__: When set to true, the output json file will be updated instead of overwritten. Defaults to false.
+
+```js
+new AssetsPlugin({update: true})
+```
+
 __prettyPrint__: Whether to format the json output for readability. Defaults to false.
 
 ```js
 new AssetsPlugin({prettyPrint: true})
+```
+
+### Using in multi-compiler mode
+
+If you use webpack multi-compiler mode and want your assets written to a single file,
+you __must__ use the same instance of the plugin in the different configurations.
+
+For example:
+
+```js
+var webpack = require('webpack');
+var AssetsPlugin = require('assets-webpack-plugin');
+var assetsPluginInstance = new AssetsPlugin();
+
+webpack([
+    {
+        entry: {one: 'src/one.js'},
+        output: {path: 'build', filename: 'one-bundle.js'},
+        plugins: [assetsPluginInstance]
+    },
+    {
+        entry: {two:'src/two.js'},
+        output: {path: 'build', filename: 'two-bundle.js'},
+        plugins: [assetsPluginInstance]
+    }
+]);
 ```
 
 
