@@ -4,7 +4,7 @@
     "description": "Emits a json file with assets paths",
     "main": "index.js",
     "scripts": {
-        "lint": "./node_modules/.bin/eslint --fix index.js lib/**",
+        "lint": "./node_modules/.bin/eslint --fix .",
         "test": "npm run lint && ./node_modules/.bin/mocha test"
     },
     "repository": {
@@ -43,16 +43,18 @@
         "mkdirp": "^0.5.1"
     },
     "eslintConfig": {
+        "root": true,
         "env": {
             "node": true
         },
         "extends": "eslint:recommended",
         "rules": {
             "indent": [2, 4],
-            "quotes": [2, "single"],
+            "quotes": [2, "single", "avoid-escape"],
             "linebreak-style": [2, "unix"],
             "semi": [2, "always"],
-            "no-multi-spaces": 2
+            "no-multi-spaces": 2,
+            "space-before-function-paren": [2, "always"]
         }
     }
 }

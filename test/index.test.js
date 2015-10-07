@@ -1,27 +1,22 @@
 /*jshint expr: true*/
 
 var path = require('path');
-// var mocha = require('mocha');
-var chai = require('chai');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var rm_rf = require('rimraf');
-var mkdirp = require('mkdirp');
-var _ = require('lodash');
 var Plugin = require('../index.js');
-var expect = chai.expect;
 
 var OUTPUT_DIR = path.join(__dirname, '../tmp');
 var expectOutput = require('./utils/expectOutput')(OUTPUT_DIR);
 
 
-describe('Plugin', function() {
+describe('Plugin', function () {
 
-    beforeEach(function(done) {
+    beforeEach(function (done) {
         rm_rf(OUTPUT_DIR, done);
     });
 
-    it('generates a default file for a single entry point', function(done) {
+    it('generates a default file for a single entry point', function (done) {
         var webpackConfig = {
             entry: path.join(__dirname, 'fixtures/one.js'),
             output: {
@@ -48,7 +43,7 @@ describe('Plugin', function() {
         expectOutput(args, done);
     });
 
-    it('generates a default file with multiple entry points', function(done) {
+    it('generates a default file with multiple entry points', function (done) {
         var webpackConfig = {
             entry: {
                 one: path.join(__dirname, 'fixtures/one.js'),
@@ -78,7 +73,7 @@ describe('Plugin', function() {
         expectOutput(args, done);
     });
 
-    it('allows you to specify your own filename', function(done) {
+    it('allows you to specify your own filename', function (done) {
 
         var webpackConfig = {
             entry: path.join(__dirname, 'fixtures/one.js'),
@@ -107,7 +102,7 @@ describe('Plugin', function() {
         expectOutput(args, done);
     });
 
-    it('skips source maps', function(done) {
+    it('skips source maps', function (done) {
 
         var webpackConfig = {
             devtool: 'sourcemap',
@@ -133,7 +128,7 @@ describe('Plugin', function() {
         expectOutput(args, done);
     });
 
-    it('handles hashes in bundle filenames', function(done) {
+    it('handles hashes in bundle filenames', function (done) {
 
         var webpackConfig = {
             entry: path.join(__dirname, 'fixtures/one.js'),
@@ -154,7 +149,7 @@ describe('Plugin', function() {
         expectOutput(args, done);
     });
 
-    it('handles hashes in a different position', function(done) {
+    it('handles hashes in a different position', function (done) {
 
         var webpackConfig = {
             entry: path.join(__dirname, 'fixtures/one.js'),
@@ -175,7 +170,7 @@ describe('Plugin', function() {
         expectOutput(args, done);
     });
 
-    it('works with ExtractTextPlugin for stylesheets', function(done) {
+    it('works with ExtractTextPlugin for stylesheets', function (done) {
 
         var webpackConfig = {
             entry: {
@@ -202,14 +197,14 @@ describe('Plugin', function() {
 
         var expected = {
             one: {
-                js: "one-bundle.js"
+                js: 'one-bundle.js'
             },
             two: {
-                js: "two-bundle.js"
+                js: 'two-bundle.js'
             },
             styles: {
-                js:  "styles-bundle.js",
-                css: "styles-bundle.css"
+                js:  'styles-bundle.js',
+                css: 'styles-bundle.css'
             }
         };
 
@@ -221,7 +216,7 @@ describe('Plugin', function() {
         expectOutput(args, done);
     });
 
-    it('includes full publicPath', function(done) {
+    it('includes full publicPath', function (done) {
 
         var webpackConfig = {
             entry: path.join(__dirname, 'fixtures/one.js'),
@@ -254,7 +249,7 @@ describe('Plugin', function() {
                 filename: '[name].js'
             },
             plugins: [
-                new webpack.optimize.CommonsChunkPlugin({name: "common"}),
+                new webpack.optimize.CommonsChunkPlugin({name: 'common'}),
                 new Plugin({path: 'tmp'})
             ]
         };

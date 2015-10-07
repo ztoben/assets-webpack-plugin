@@ -19,17 +19,17 @@ module.exports = function (outputDir) {
             throw new Error('Expected done');
         }
 
-        var webpackConfig  = args.config;
+        var webpackConfig = args.config;
         var expectedResult = args.expected;
-        var outputFile     = args.outputFile;
+        var outputFile = args.outputFile;
 
         // Create output folder
-        mkdirp(outputDir, function(err) {
+        mkdirp(outputDir, function (err) {
             expect(err).to.be.null;
 
             outputFile = outputFile || 'webpack-assets.json';
 
-            webpack(webpackConfig, function(err, stats) {
+            webpack(webpackConfig, function (err, stats) {
                 expect(err).to.be.null;
                 expect(stats.hasErrors()).to.be.false;
 
