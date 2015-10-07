@@ -1,7 +1,6 @@
 /*jshint expr: true*/
 
 var path = require('path');
-var fs = require('fs');
 // var mocha = require('mocha');
 var chai = require('chai');
 var webpack = require('webpack');
@@ -13,50 +12,8 @@ var Plugin = require('../index.js');
 var expect = chai.expect;
 
 var OUTPUT_DIR = path.join(__dirname, '../tmp');
+var expectOutput = require('./utils/expectOutput')(OUTPUT_DIR);
 
-
-function expectOutput(args, done) {
-    if (!args.config) {
-        throw new Error('Expected args.config');
-    }
-    if (!args.expected) {
-        throw new Error('Expected args.expected');
-    }
-    if (!done) {
-        throw new Error('Expected done');
-    }
-
-    var webpackConfig  = args.config;
-    var expectedResult = args.expected;
-    var outputFile     = args.outputFile;
-
-    // Create output folder
-    mkdirp(OUTPUT_DIR, function(err) {
-        expect(err).to.be.null;
-
-        outputFile = outputFile || 'webpack-assets.json';
-
-        webpack(webpackConfig, function(err, stats) {
-            expect(err).to.be.null;
-            expect(stats.hasErrors()).to.be.false;
-
-            var content = fs.readFileSync(path.join(OUTPUT_DIR, outputFile)).toString();
-
-            if (_.isRegExp(expectedResult)) {
-                expect(content).to.match(expectedResult);
-            } else if(_.isString(expectedResult)) {
-                expect(content).to.contain(expectedResult);
-            } else {
-                // JSON object provided
-                var actual = JSON.parse(content);
-                expect(actual).to.eql(expectedResult);
-            }
-
-            done();
-        });
-
-    });
-}
 
 describe('Plugin', function() {
 
@@ -253,53 +210,6 @@ describe('Plugin', function() {
             styles: {
                 js:  "styles-bundle.js",
                 css: "styles-bundle.css"
-            }
-        };
-
-        var args = {
-            config: webpackConfig,
-            expected: expected
-        };
-
-        expectOutput(args, done);
-    });
-
-    it.skip('generates a default file with multiple compilers', function(done) {
-        var webpackConfig = [
-            {
-                entry: {
-                    one: path.join(__dirname, 'fixtures/one.js')
-                },
-                output: {
-                    path: OUTPUT_DIR,
-                    filename: 'one-bundle.js'
-                },
-                plugins: [new Plugin({
-                    multiCompiler: true,
-                    path: 'tmp'
-                })]
-            },
-            {
-                entry: {
-                    two: path.join(__dirname, 'fixtures/two.js')
-                },
-                output: {
-                    path: OUTPUT_DIR,
-                    filename: 'two-bundle.js'
-                },
-                plugins: [new Plugin({
-                    multiCompiler: true,
-                    path: 'tmp'
-                })]
-            }
-        ];
-
-        var expected = {
-            one: {
-                js: "one-bundle.js"
-            },
-            two: {
-                js: "two-bundle.js"
             }
         };
 

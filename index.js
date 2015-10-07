@@ -1,38 +1,34 @@
-var mkdirp = require('mkdirp');
-var path = require('path');
-var fs = require('fs');
+var merge = require('lodash.merge');
 
 var getAssetKind = require('./lib/getAssetKind');
 var isHMRUpdate = require('./lib/isHMRUpdate');
 var isSourceMap = require('./lib/isSourceMap');
 
+var createQueuedWriter = require('./lib/output/createQueuedWriter');
+var createOutputWriter = require('./lib/output/createOutputWriter');
+
 
 function AssetsWebpackPlugin (options) {
-    this.options = this.getOptions(options || {});
-    this.outputPath = path.join(this.options.path, this.options.filename);
+    this.options = merge({}, {
+        path: '.',
+        filename: 'webpack-assets.json',
+        prettyPrint: false,
+        update: false
+    }, options);
+    this.writer = createQueuedWriter(createOutputWriter(this.options));
 }
 
 AssetsWebpackPlugin.prototype = {
-    constructor: AssetsWebpackPlugin,
 
-    getOptions: function (options) {
-        var defaults = {
-            path: '.',
-            filename: 'webpack-assets.json',
-            prettyPrint: false
-        };
-        return Object.keys(defaults).reduce(function (map, option) {
-            map[option] = options.hasOwnProperty(option) ? options[option] : defaults[option];
-            return map;
-        }, {});
-    },
+    constructor: AssetsWebpackPlugin,
 
     apply: function (compiler) {
         var self = this;
 
-        compiler.plugin("emit", function (compilation, callback) {
+        compiler.plugin('after-emit', function (compilation, callback) {
+
             var options = compiler.options;
-            stats = compilation.getStats().toJson({
+            var stats = compilation.getStats().toJson({
                 hash: true,
                 publicPath: true,
                 assets: true,
@@ -50,7 +46,7 @@ AssetsWebpackPlugin.prototype = {
             // e.g. {
             // main:
             //   [ 'index-bundle-42b6e1ec4fa8c5f0303e.js',
-            //     'index-bundle-42b6e1ec4fa8c5f0303e.js.map' ] 
+            //     'index-bundle-42b6e1ec4fa8c5f0303e.js.map' ]
             // }
             var assetsByChunkName = stats.assetsByChunkName;
 
@@ -73,31 +69,15 @@ AssetsWebpackPlugin.prototype = {
                 return chunkMap;
             }, {});
 
-            self.writeOutput(output, compilation);
+            self.writer(output, function (err) {
+                if (err) {
+                    compilation.errors.push(err);
+                }
+                callback();
+            });
 
-            callback();
         });
-    },
-
-    writeOutput: function (assets, compiler) {
-        try {
-            mkdirp.sync(this.options.path);
-        } catch (e) {
-            compiler.errors.push(new Error(
-                '[AssetsWebpackPlugin]: Could not create output folder' + this.options.path
-            ));
-            return;
-        }
-        var json = JSON.stringify(assets, null, this.options.prettyPrint ? 2 : null);
-        fs.writeFile(this.outputPath, json, function (err) {
-            if (err) {
-                compiler.errors.push(new Error(
-                    '[AssetsWebpackPlugin]: Unable to write to ' + this.outputPath
-                ));
-            }
-        });
-    },
-
+    }
 };
 
 module.exports = AssetsWebpackPlugin;
