@@ -1,42 +1,60 @@
 {
-  "name": "assets-webpack-plugin",
-  "version": "2.2.3",
-  "description": "Emits a json file with assets paths",
-  "main": "index.js",
-  "scripts": {
-    "test": "jshint *.js test && ./node_modules/.bin/mocha test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sporto/assets-webpack-plugin.git"
-  },
-  "keywords": [
-    "webpack",
-    "plugin",
-    "generate",
-    "assets",
-    "hashes"
-  ],
-  "author": "Sebastian Porto",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/sporto/assets-webpack-plugin/issues"
-  },
-  "homepage": "https://github.com/sporto/assets-webpack-plugin",
-  "devDependencies": {
-    "chai": "^3.0.0",
-    "css-loader": "^0.9.1",
-    "extract-text-webpack-plugin": "^0.3.8",
-    "jshint": "^2.5.2",
-    "lodash": "^3.9.3",
-    "mocha": "^2.2.5",
-    "rimraf": "^2.2.8",
-    "style-loader": "^0.8.3",
-    "webpack": "^1.3.3-beta1"
-  },
-  "dependencies": {
-    "camelcase": "^1.2.1",
-    "escape-string-regexp": "^1.0.3",
-    "mkdirp": "^0.5.1"
-  }
+    "name": "assets-webpack-plugin",
+    "version": "2.2.3",
+    "description": "Emits a json file with assets paths",
+    "main": "index.js",
+    "scripts": {
+        "lint": "./node_modules/.bin/eslint --fix .",
+        "test": "npm run lint && ./node_modules/.bin/mocha test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/sporto/assets-webpack-plugin.git"
+    },
+    "keywords": [
+        "webpack",
+        "plugin",
+        "generate",
+        "assets",
+        "hashes"
+    ],
+    "author": "Sebastian Porto",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/sporto/assets-webpack-plugin/issues"
+    },
+    "homepage": "https://github.com/sporto/assets-webpack-plugin",
+    "devDependencies": {
+        "chai": "^3.0.0",
+        "css-loader": "^0.9.1",
+        "eslint": "^1.6.0",
+        "extract-text-webpack-plugin": "^0.3.8",
+        "lodash": "^3.9.3",
+        "mocha": "^2.2.5",
+        "rimraf": "^2.2.8",
+        "style-loader": "^0.8.3",
+        "webpack": "^1.3.3-beta1"
+    },
+    "dependencies": {
+        "camelcase": "^1.2.1",
+        "escape-string-regexp": "^1.0.3",
+        "lodash.assign": "^3.2.0",
+        "lodash.merge": "^3.3.2",
+        "mkdirp": "^0.5.1"
+    },
+    "eslintConfig": {
+        "root": true,
+        "env": {
+            "node": true
+        },
+        "extends": "eslint:recommended",
+        "rules": {
+            "indent": [2, 4],
+            "quotes": [2, "single", "avoid-escape"],
+            "linebreak-style": [2, "unix"],
+            "semi": [2, "always"],
+            "no-multi-spaces": 2,
+            "space-before-function-paren": [2, "always"]
+        }
+    }
 }
