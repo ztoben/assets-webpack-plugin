@@ -9,37 +9,37 @@ var createOutputWriter = require('./lib/output/createOutputWriter');
 
 
 function AssetsWebpackPlugin (options) {
-    this.options = merge({}, {
-        path: '.',
-        filename: 'webpack-assets.json',
-        prettyPrint: false,
-        update: false
-    }, options);
-    this.writer = createQueuedWriter(createOutputWriter(this.options));
+  this.options = merge({}, {
+    path: '.',
+    filename: 'webpack-assets.json',
+    prettyPrint: false,
+    update: false
+  }, options);
+  this.writer = createQueuedWriter(createOutputWriter(this.options));
 }
 
 AssetsWebpackPlugin.prototype = {
 
-    constructor: AssetsWebpackPlugin,
+  constructor: AssetsWebpackPlugin,
 
-    apply: function (compiler) {
-        var self = this;
+  apply: function (compiler) {
+    var self = this;
 
-        compiler.plugin('after-emit', function (compilation, callback) {
+    compiler.plugin('after-emit', function (compilation, callback) {
 
-            var options = compiler.options;
-            var stats = compilation.getStats().toJson({
-                hash: true,
-                publicPath: true,
-                assets: true,
-                chunks: false,
-                modules: false,
-                source: false,
-                errorDetails: false,
-                timings: false
-            });
+        var options = compiler.options;
+        var stats = compilation.getStats().toJson({
+            hash: true,
+            publicPath: true,
+            assets: true,
+            chunks: false,
+            modules: false,
+            source: false,
+            errorDetails: false,
+            timings: false
+          });
             // publicPath with resolved [hash] placeholder
-            var publicPath = stats.publicPath || '';
+        var publicPath = stats.publicPath || '';
             // assetsByChunkName contains a hash with the bundle names and the produced files
             // e.g. { one: 'one-bundle.js', two: 'two-bundle.js' }
             // in some cases (when using a plugin or source maps) it might contain an array of produced files
@@ -48,36 +48,36 @@ AssetsWebpackPlugin.prototype = {
             //   [ 'index-bundle-42b6e1ec4fa8c5f0303e.js',
             //     'index-bundle-42b6e1ec4fa8c5f0303e.js.map' ]
             // }
-            var assetsByChunkName = stats.assetsByChunkName;
+        var assetsByChunkName = stats.assetsByChunkName;
 
-            var output = Object.keys(assetsByChunkName).reduce(function (chunkMap, chunkName) {
-                var assets = assetsByChunkName[chunkName];
-                if (!Array.isArray(assets)) {
-                    assets = [assets];
-                }
-                chunkMap[chunkName] = assets.reduce(function (typeMap, asset) {
-                    if (isHMRUpdate(options, asset) || isSourceMap(options, asset)) {
-                        return typeMap;
-                    }
-
-                    var typeName = getAssetKind(options, asset);
-                    typeMap[typeName] = publicPath + asset;
-
+        var output = Object.keys(assetsByChunkName).reduce(function (chunkMap, chunkName) {
+            var assets = assetsByChunkName[chunkName];
+            if (!Array.isArray(assets)) {
+                assets = [assets];
+              }
+            chunkMap[chunkName] = assets.reduce(function (typeMap, asset) {
+                if (isHMRUpdate(options, asset) || isSourceMap(options, asset)) {
                     return typeMap;
-                }, {});
+                  }
 
-                return chunkMap;
-            }, {});
+                var typeName = getAssetKind(options, asset);
+                typeMap[typeName] = publicPath + asset;
 
-            self.writer(output, function (err) {
-                if (err) {
-                    compilation.errors.push(err);
-                }
-                callback();
-            });
+                return typeMap;
+              }, {});
 
-        });
-    }
+            return chunkMap;
+          }, {});
+
+        self.writer(output, function (err) {
+            if (err) {
+                compilation.errors.push(err);
+              }
+            callback();
+          });
+
+      });
+  }
 };
 
 module.exports = AssetsWebpackPlugin;
