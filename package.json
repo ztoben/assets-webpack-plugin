@@ -1,6 +1,6 @@
 {
   "name": "assets-webpack-plugin",
-  "version": "2.2.3",
+  "version": "3.0.0",
   "description": "Emits a json file with assets paths",
   "main": "index.js",
   "scripts": {
