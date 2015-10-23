@@ -88,28 +88,38 @@ module.exports = {
 
 You can pass the following options:
 
-__path__: Path where to save the created json file. Defaults to the current directory.
-
-```js
-new AssetsPlugin({path: path.join(__dirname, 'app', 'views')})
-```
-
 __filename__: Name for the created json file. Defaults to `webpack-assets.json`
 
 ```js
 new AssetsPlugin({filename: 'assets.json'})
 ```
 
-__update__: When set to true, the output json file will be updated instead of overwritten. Defaults to false.
+__fullPath__: True by default. If false the output will not include the full path of the generated file.
 
 ```js
-new AssetsPlugin({update: true})
+new AssetsPlugin({fullPath: false})
+```
+
+e.g.
+
+`/public/path/bundle.js` vs `bundle.js vs`
+
+__path__: Path where to save the created json file. Defaults to the current directory.
+
+```js
+new AssetsPlugin({path: path.join(__dirname, 'app', 'views')})
 ```
 
 __prettyPrint__: Whether to format the json output for readability. Defaults to false.
 
 ```js
 new AssetsPlugin({prettyPrint: true})
+```
+
+__update__: When set to true, the output json file will be updated instead of overwritten. Defaults to false.
+
+```js
+new AssetsPlugin({update: true})
 ```
 
 ### Using in multi-compiler mode
@@ -173,3 +183,8 @@ And finally in the views:
 ```sh
 npm test
 ```
+
+## Changelog
+
+__ v3.1.0__ Config now accepts a `fullPath` option. 
+
