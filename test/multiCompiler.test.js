@@ -23,33 +23,33 @@ describe('Plugin', function () {
     var webpackConfig = [
       {
         entry: {
-            one: path.join(__dirname, 'fixtures/one.js')
-          },
+          one: path.join(__dirname, 'fixtures/one.js')
+        },
         output: {
-            path: OUTPUT_DIR,
-            filename: 'one-bundle.js'
-          },
+          path: OUTPUT_DIR,
+          filename: 'one-bundle.js'
+        },
         plugins: [plugin]
       },
       {
         entry: {
-            two: path.join(__dirname, 'fixtures/two.js')
-          },
+          two: path.join(__dirname, 'fixtures/two.js')
+        },
         output: {
-            path: OUTPUT_DIR,
-            filename: 'two-bundle.js'
-          },
+          path: OUTPUT_DIR,
+          filename: 'two-bundle.js'
+        },
         plugins: [plugin]
       }
     ];
 
     var expected = {
       one: {
-          js: 'one-bundle.js'
-        },
+        js: 'one-bundle.js'
+      },
       two: {
-          js: 'two-bundle.js'
-        }
+        js: 'two-bundle.js'
+      }
     };
 
     var args = {
@@ -63,22 +63,22 @@ describe('Plugin', function () {
   it('updates output between compiler calls when options.update is true', function (done) {
     var config_1 = {
       entry: {
-          one: path.join(__dirname, 'fixtures/one.js')
-        },
+        one: path.join(__dirname, 'fixtures/one.js')
+      },
       output: {
-          path: OUTPUT_DIR,
-          filename: 'one-bundle.js'
-        },
+        path: OUTPUT_DIR,
+        filename: 'one-bundle.js'
+      },
       plugins: [new Plugin({path: 'tmp', update: true})]
     };
     var config_2 = {
       entry: {
-          two: path.join(__dirname, 'fixtures/two.js')
-        },
+        two: path.join(__dirname, 'fixtures/two.js')
+      },
       output: {
-          path: OUTPUT_DIR,
-          filename: 'two-bundle.js'
-        },
+        path: OUTPUT_DIR,
+        filename: 'two-bundle.js'
+      },
       plugins: [new Plugin({path: 'tmp', update: true})]
     };
 
@@ -95,22 +95,22 @@ describe('Plugin', function () {
   it('overwrites output between compiler calls when options.update is false', function (done) {
     var config_1 = {
       entry: {
-          one: path.join(__dirname, 'fixtures/one.js')
-        },
+        one: path.join(__dirname, 'fixtures/one.js')
+      },
       output: {
-          path: OUTPUT_DIR,
-          filename: 'one-bundle.js'
-        },
+        path: OUTPUT_DIR,
+        filename: 'one-bundle.js'
+      },
       plugins: [new Plugin({path: 'tmp', update: false})]
     };
     var config_2 = {
       entry: {
-          two: path.join(__dirname, 'fixtures/two.js')
-        },
+        two: path.join(__dirname, 'fixtures/two.js')
+      },
       output: {
-          path: OUTPUT_DIR,
-          filename: 'two-bundle.js'
-        },
+        path: OUTPUT_DIR,
+        filename: 'two-bundle.js'
+      },
       plugins: [new Plugin({path: 'tmp', update: false})]
     };
 

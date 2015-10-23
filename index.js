@@ -30,18 +30,18 @@ AssetsWebpackPlugin.prototype = {
 
       var options = compiler.options;
       var stats = compilation.getStats().toJson({
-          hash: true,
-          publicPath: true,
-          assets: true,
-          chunks: false,
-          modules: false,
-          source: false,
-          errorDetails: false,
-          timings: false
-        });
+        hash: true,
+        publicPath: true,
+        assets: true,
+        chunks: false,
+        modules: false,
+        source: false,
+        errorDetails: false,
+        timings: false
+      });
             // publicPath with resolved [hash] placeholder
 
-      var assetPath  = stats.publicPath && self.options.fullPath ? stats.publicPath : '';
+      var assetPath = (stats.publicPath && self.options.fullPath) ? stats.publicPath : '';
             // assetsByChunkName contains a hash with the bundle names and the produced files
             // e.g. { one: 'one-bundle.js', two: 'two-bundle.js' }
             // in some cases (when using a plugin or source maps) it might contain an array of produced files
@@ -53,30 +53,30 @@ AssetsWebpackPlugin.prototype = {
       var assetsByChunkName = stats.assetsByChunkName;
 
       var output = Object.keys(assetsByChunkName).reduce(function (chunkMap, chunkName) {
-          var assets = assetsByChunkName[chunkName];
-          if (!Array.isArray(assets)) {
-              assets = [assets];
-            }
-          chunkMap[chunkName] = assets.reduce(function (typeMap, asset) {
-              if (isHMRUpdate(options, asset) || isSourceMap(options, asset)) {
-                  return typeMap;
-                }
+        var assets = assetsByChunkName[chunkName];
+        if (!Array.isArray(assets)) {
+          assets = [assets];
+        }
+        chunkMap[chunkName] = assets.reduce(function (typeMap, asset) {
+          if (isHMRUpdate(options, asset) || isSourceMap(options, asset)) {
+            return typeMap;
+          }
 
-              var typeName = getAssetKind(options, asset);
-              typeMap[typeName] = assetPath + asset;
+          var typeName = getAssetKind(options, asset);
+          typeMap[typeName] = assetPath + asset;
 
-              return typeMap;
-            }, {});
-
-          return chunkMap;
+          return typeMap;
         }, {});
 
+        return chunkMap;
+      }, {});
+
       self.writer(output, function (err) {
-          if (err) {
-              compilation.errors.push(err);
-            }
-          callback();
-        });
+        if (err) {
+          compilation.errors.push(err);
+        }
+        callback();
+      });
 
     });
   }

@@ -12,7 +12,7 @@ describe('parseTemplate', function () {
     it('parses the empty string', function () {
       expect(parseTemplate('').fields).to.eql([
                 {prefix: '', placeholder: null}
-        ]);
+      ]);
     });
 
     it('parses consecutive placeholders', function () {
@@ -21,7 +21,7 @@ describe('parseTemplate', function () {
                 {prefix: '', placeholder: 'name'},
                 {prefix: '', placeholder: 'query'},
                 {prefix: '', placeholder: null}
-        ]);
+      ]);
     });
 
     it('parses placeholders and prefixes', function () {
@@ -30,7 +30,7 @@ describe('parseTemplate', function () {
                 {prefix: 'and', placeholder: 'name'},
                 {prefix: 'then', placeholder: 'query'},
                 {prefix: '', placeholder: null}
-        ]);
+      ]);
     });
 
     it('handles unknown placeholders', function () {
@@ -38,7 +38,7 @@ describe('parseTemplate', function () {
                 {prefix: 'some[unknown]', placeholder: 'id'},
                 {prefix: 'then[hash:pwnd]', placeholder: 'query'},
                 {prefix: '', placeholder: null}
-        ]);
+      ]);
     });
 
     it('handles wierdly formatted placeholders', function () {
@@ -46,7 +46,7 @@ describe('parseTemplate', function () {
                 {prefix: 'some[chunk', placeholder: 'id'},
                 {prefix: 'then[whoops', placeholder: 'query'},
                 {prefix: ']', placeholder: null}
-        ]);
+      ]);
     });
 
     it('parses hash width syntax', function () {
@@ -54,7 +54,7 @@ describe('parseTemplate', function () {
                 {prefix: '', placeholder: 'hash', width: 10},
                 {prefix: 'and', placeholder: 'chunkhash', width: 42},
                 {prefix: '', placeholder: null}
-        ]);
+      ]);
     });
 
   });

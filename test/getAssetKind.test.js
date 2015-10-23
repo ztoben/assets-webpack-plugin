@@ -9,9 +9,9 @@ describe('getAssetKind', function () {
   beforeEach(function () {
     webpackConfig = {
       output: {
-          filename: '[name].js?[hash]',
-          sourceMapFilename: '[file].map[query]'
-        },
+        filename: '[name].js?[hash]',
+        sourceMapFilename: '[file].map[query]'
+      },
       devtool: 'sourcemap'
     };
   });
