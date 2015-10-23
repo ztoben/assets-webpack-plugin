@@ -13,7 +13,8 @@ function AssetsWebpackPlugin (options) {
     path: '.',
     filename: 'webpack-assets.json',
     prettyPrint: false,
-    update: false
+    update: false,
+    fullPath: true
   }, options);
   this.writer = createQueuedWriter(createOutputWriter(this.options));
 }
@@ -27,19 +28,20 @@ AssetsWebpackPlugin.prototype = {
 
     compiler.plugin('after-emit', function (compilation, callback) {
 
-        var options = compiler.options;
-        var stats = compilation.getStats().toJson({
-            hash: true,
-            publicPath: true,
-            assets: true,
-            chunks: false,
-            modules: false,
-            source: false,
-            errorDetails: false,
-            timings: false
-          });
+      var options = compiler.options;
+      var stats = compilation.getStats().toJson({
+        hash: true,
+        publicPath: true,
+        assets: true,
+        chunks: false,
+        modules: false,
+        source: false,
+        errorDetails: false,
+        timings: false
+      });
             // publicPath with resolved [hash] placeholder
-        var publicPath = stats.publicPath || '';
+
+      var assetPath = (stats.publicPath && self.options.fullPath) ? stats.publicPath : '';
             // assetsByChunkName contains a hash with the bundle names and the produced files
             // e.g. { one: 'one-bundle.js', two: 'two-bundle.js' }
             // in some cases (when using a plugin or source maps) it might contain an array of produced files
@@ -48,35 +50,35 @@ AssetsWebpackPlugin.prototype = {
             //   [ 'index-bundle-42b6e1ec4fa8c5f0303e.js',
             //     'index-bundle-42b6e1ec4fa8c5f0303e.js.map' ]
             // }
-        var assetsByChunkName = stats.assetsByChunkName;
+      var assetsByChunkName = stats.assetsByChunkName;
 
-        var output = Object.keys(assetsByChunkName).reduce(function (chunkMap, chunkName) {
-            var assets = assetsByChunkName[chunkName];
-            if (!Array.isArray(assets)) {
-                assets = [assets];
-              }
-            chunkMap[chunkName] = assets.reduce(function (typeMap, asset) {
-                if (isHMRUpdate(options, asset) || isSourceMap(options, asset)) {
-                    return typeMap;
-                  }
+      var output = Object.keys(assetsByChunkName).reduce(function (chunkMap, chunkName) {
+        var assets = assetsByChunkName[chunkName];
+        if (!Array.isArray(assets)) {
+          assets = [assets];
+        }
+        chunkMap[chunkName] = assets.reduce(function (typeMap, asset) {
+          if (isHMRUpdate(options, asset) || isSourceMap(options, asset)) {
+            return typeMap;
+          }
 
-                var typeName = getAssetKind(options, asset);
-                typeMap[typeName] = publicPath + asset;
+          var typeName = getAssetKind(options, asset);
+          typeMap[typeName] = assetPath + asset;
 
-                return typeMap;
-              }, {});
+          return typeMap;
+        }, {});
 
-            return chunkMap;
-          }, {});
+        return chunkMap;
+      }, {});
 
-        self.writer(output, function (err) {
-            if (err) {
-                compilation.errors.push(err);
-              }
-            callback();
-          });
-
+      self.writer(output, function (err) {
+        if (err) {
+          compilation.errors.push(err);
+        }
+        callback();
       });
+
+    });
   }
 };
 

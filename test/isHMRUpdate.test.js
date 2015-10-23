@@ -8,10 +8,10 @@ describe('isHMRUpdate', function () {
 
   it('detects HMR updates', function () {
     var config = {
-        output: {
-            hotUpdateChunkFilename: 'hmr-yo[id].[hash].js[query]'
-          }
-      };
+      output: {
+        hotUpdateChunkFilename: 'hmr-yo[id].[hash].js[query]'
+      }
+    };
     var input = 'hmr-yo42.b4d455.js?f00b43';
     var res = isHMRUpdate(config, input);
     expect(res).to.eq(true);
@@ -19,10 +19,10 @@ describe('isHMRUpdate', function () {
 
   it('detects HMR updates with tricky templates', function () {
     var config = {
-        output: {
-            hotUpdateChunkFilename: '[id][hash][name]hmr.js[query]'
-          }
-      };
+      output: {
+        hotUpdateChunkFilename: '[id][hash][name]hmr.js[query]'
+      }
+    };
     var input = '42940455foo-hmr.js?f00b43';
     var res = isHMRUpdate(config, input);
     expect(res).to.eq(true);
@@ -30,10 +30,10 @@ describe('isHMRUpdate', function () {
 
   it('doesn\'t yield false positives', function () {
     var config = {
-        output: {
-            hotUpdateChunkFilename: '[id][hash][name]hmr.js[query]'
-          }
-      };
+      output: {
+        hotUpdateChunkFilename: '[id][hash][name]hmr.js[query]'
+      }
+    };
     expect(isHMRUpdate(config, '42940455foo-hmr?f00b43')).to.eq(false);
   });
 
