@@ -116,6 +116,16 @@ __prettyPrint__: Whether to format the json output for readability. Defaults to 
 new AssetsPlugin({prettyPrint: true})
 ```
 
+__postProcess__: Format the raw assets to output string. Deafyults is JSON stringify function.
+
+```js
+new AssetsPlugin({
+    postProcess: function (assets) {
+        return 'window.staticMap = ' + JSON.stringify(assets);
+    }
+})
+```
+
 __update__: When set to true, the output json file will be updated instead of overwritten. Defaults to false.
 
 ```js
@@ -186,5 +196,5 @@ npm test
 
 ## Changelog
 
-__ v3.1.0__ Config now accepts a `fullPath` option. 
+__ v3.1.0__ Config now accepts a `fullPath` option.
 
