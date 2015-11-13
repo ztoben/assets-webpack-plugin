@@ -116,7 +116,7 @@ __prettyPrint__: Whether to format the json output for readability. Defaults to 
 new AssetsPlugin({prettyPrint: true})
 ```
 
-__postProcess__: Format the raw assets to output string. Deafyults is JSON stringify function.
+__postProcess__: Format the raw assets to output string. Defaults is JSON stringify function.
 
 ```js
 new AssetsPlugin({
