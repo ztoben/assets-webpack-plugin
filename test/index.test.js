@@ -300,4 +300,26 @@ describe('Plugin', function () {
 
   });
 
+  context('when a trailing slash in the publicPath is missing', function () {
+    it('normalizes publicPath', function (done) {
+      var webpackConfig = {
+        entry: path.join(__dirname, 'fixtures/one.js'),
+        output: {
+          path: OUTPUT_DIR,
+          publicPath: '/bundles',
+          filename: 'index-bundle.js'
+        },
+        plugins: [new Plugin({path: 'tmp'})]
+      };
+
+      var expected = new RegExp('/bundles/index-bundle.js', 'i');
+
+      var args = {
+        config: webpackConfig,
+        expected: expected
+      };
+
+      expectOutput(args, done);
+    });
+  });
 });
