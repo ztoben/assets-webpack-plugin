@@ -1,3 +1,4 @@
+var path = require('path');
 var merge = require('lodash.merge');
 
 var getAssetKind = require('./lib/getAssetKind');
@@ -63,7 +64,7 @@ AssetsWebpackPlugin.prototype = {
           }
 
           var typeName = getAssetKind(options, asset);
-          typeMap[typeName] = assetPath + asset;
+          typeMap[typeName] = path.join(assetPath, asset);
 
           return typeMap;
         }, {});
