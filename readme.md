@@ -196,5 +196,7 @@ npm test
 
 ## Changelog
 
-__ v3.1.0__ Config now accepts a `fullPath` option.
+__3.2.0__ Added `processOutput` option
+
+__3.1.0__ Config now accepts a `fullPath` option.
 
