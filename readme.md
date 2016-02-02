@@ -132,6 +132,13 @@ __update__: When set to true, the output json file will be updated instead of ov
 new AssetsPlugin({update: true})
 ```
 
+__inject__: Inject top level key-value pairs into the output file. Defaults to `{}`.
+
+```js
+new AssetsPlugin({inject: {version: 123}})
+```
+
+
 ### Using in multi-compiler mode
 
 If you use webpack multi-compiler mode and want your assets written to a single file,
