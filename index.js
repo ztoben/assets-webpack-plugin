@@ -14,8 +14,7 @@ function AssetsWebpackPlugin (options) {
     filename: 'webpack-assets.json',
     prettyPrint: false,
     update: false,
-    fullPath: true,
-    inject: {}
+    fullPath: true
   }, options);
   this.writer = createQueuedWriter(createOutputWriter(this.options));
 }
@@ -72,9 +71,9 @@ AssetsWebpackPlugin.prototype = {
         return chunkMap;
       }, {});
 
-      Object.keys(self.options.inject).forEach(function(key) {
-        output[key] = self.options.inject[key];
-      });
+      if (self.options.metadata) {
+        output.metadata = self.options.metadata;
+      }
 
       self.writer(output, function (err) {
         if (err) {

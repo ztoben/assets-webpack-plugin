@@ -300,7 +300,7 @@ describe('Plugin', function () {
 
   });
 
-  it('allows injection of arbitrary values', function (done) {
+  it('allows injection of metadata', function (done) {
     var webpackConfig = {
       entry: path.join(__dirname, 'fixtures/one.js'),
       output: {
@@ -309,7 +309,7 @@ describe('Plugin', function () {
       },
       plugins: [new Plugin({
         path: 'tmp',
-        inject: {
+        metadata: {
           foo: 'bar',
           baz: 'buz'
         }
@@ -320,8 +320,10 @@ describe('Plugin', function () {
       main: {
         js: 'index-bundle.js'
       },
-      foo: 'bar',
-      baz: 'buz'
+      metadata: {
+        foo: 'bar',
+        baz: 'buz'
+      }
     };
     expected = JSON.stringify(expected);
 

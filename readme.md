@@ -132,10 +132,15 @@ __update__: When set to true, the output json file will be updated instead of ov
 new AssetsPlugin({update: true})
 ```
 
-__inject__: Inject top level key-value pairs into the output file. Defaults to `{}`.
+__metadata__: Inject metadata into the into the output file. All values will be injected into the key "metadata".
 
 ```js
-new AssetsPlugin({inject: {version: 123}})
+new AssetsPlugin({metadata: {version: 123}})
+
+// Manifest will now contain:
+// {
+//   metadata: {version: 123}
+// }
 ```
 
 
