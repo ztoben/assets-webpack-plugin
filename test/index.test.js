@@ -300,4 +300,39 @@ describe('Plugin', function () {
 
   });
 
+  it('allows injection of metadata', function (done) {
+    var webpackConfig = {
+      entry: path.join(__dirname, 'fixtures/one.js'),
+      output: {
+        path: OUTPUT_DIR,
+        filename: 'index-bundle.js'
+      },
+      plugins: [new Plugin({
+        path: 'tmp',
+        metadata: {
+          foo: 'bar',
+          baz: 'buz'
+        }
+      })]
+    };
+
+    var expected = {
+      main: {
+        js: 'index-bundle.js'
+      },
+      metadata: {
+        foo: 'bar',
+        baz: 'buz'
+      }
+    };
+    expected = JSON.stringify(expected);
+
+    var args = {
+      config: webpackConfig,
+      expected: expected
+    };
+
+    expectOutput(args, done);
+  });
+
 });

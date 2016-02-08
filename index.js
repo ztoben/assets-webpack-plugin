@@ -71,6 +71,10 @@ AssetsWebpackPlugin.prototype = {
         return chunkMap;
       }, {});
 
+      if (self.options.metadata) {
+        output.metadata = self.options.metadata;
+      }
+
       self.writer(output, function (err) {
         if (err) {
           compilation.errors.push(err);
