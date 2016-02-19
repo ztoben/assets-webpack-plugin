@@ -132,7 +132,7 @@ __update__: When set to true, the output json file will be updated instead of ov
 new AssetsPlugin({update: true})
 ```
 
-__metadata__: Inject metadata into the into the output file. All values will be injected into the key "metadata".
+__metadata__: Inject metadata into the output file. All values will be injected into the key "metadata".
 
 ```js
 new AssetsPlugin({metadata: {version: 123}})
