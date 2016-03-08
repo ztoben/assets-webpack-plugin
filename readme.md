@@ -4,6 +4,7 @@ assets-webpack-plugin
 [ ![Codeship Status for sporto/assets-webpack-plugin](https://codeship.com/projects/c9171f30-f64d-0132-8e3e-02d99c35d383/status?branch=master)](https://codeship.com/projects/85994)
 
 Webpack plugin that emits a json file with assets paths.
+
 __I'm looking for a new maintainer, please contact me if you are interested.__
 
 ## Why is this useful?
