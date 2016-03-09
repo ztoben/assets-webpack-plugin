@@ -210,6 +210,8 @@ npm test
 
 ## Changelog
 
+__3.4.0__ Do not write to assets file if output hasn't changed
+
 __3.2.0__ Added `processOutput` option
 
 __3.1.0__ Config now accepts a `fullPath` option.
