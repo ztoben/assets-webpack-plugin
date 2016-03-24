@@ -1,12 +1,11 @@
-var merge = require('lodash.merge');
+var merge = require('lodash.merge')
 
-var getAssetKind = require('./lib/getAssetKind');
-var isHMRUpdate = require('./lib/isHMRUpdate');
-var isSourceMap = require('./lib/isSourceMap');
+var getAssetKind = require('./lib/getAssetKind')
+var isHMRUpdate = require('./lib/isHMRUpdate')
+var isSourceMap = require('./lib/isSourceMap')
 
-var createQueuedWriter = require('./lib/output/createQueuedWriter');
-var createOutputWriter = require('./lib/output/createOutputWriter');
-
+var createQueuedWriter = require('./lib/output/createQueuedWriter')
+var createOutputWriter = require('./lib/output/createOutputWriter')
 
 function AssetsWebpackPlugin (options) {
   this.options = merge({}, {
@@ -15,8 +14,8 @@ function AssetsWebpackPlugin (options) {
     prettyPrint: false,
     update: false,
     fullPath: true
-  }, options);
-  this.writer = createQueuedWriter(createOutputWriter(this.options));
+  }, options)
+  this.writer = createQueuedWriter(createOutputWriter(this.options))
 }
 
 AssetsWebpackPlugin.prototype = {
@@ -24,11 +23,10 @@ AssetsWebpackPlugin.prototype = {
   constructor: AssetsWebpackPlugin,
 
   apply: function (compiler) {
-    var self = this;
+    var self = this
 
     compiler.plugin('after-emit', function (compilation, callback) {
-
-      var options = compiler.options;
+      var options = compiler.options
       var stats = compilation.getStats().toJson({
         hash: true,
         publicPath: true,
@@ -38,10 +36,10 @@ AssetsWebpackPlugin.prototype = {
         source: false,
         errorDetails: false,
         timings: false
-      });
+      })
             // publicPath with resolved [hash] placeholder
 
-      var assetPath = (stats.publicPath && self.options.fullPath) ? stats.publicPath : '';
+      var assetPath = (stats.publicPath && self.options.fullPath) ? stats.publicPath : ''
             // assetsByChunkName contains a hash with the bundle names and the produced files
             // e.g. { one: 'one-bundle.js', two: 'two-bundle.js' }
             // in some cases (when using a plugin or source maps) it might contain an array of produced files
@@ -50,40 +48,39 @@ AssetsWebpackPlugin.prototype = {
             //   [ 'index-bundle-42b6e1ec4fa8c5f0303e.js',
             //     'index-bundle-42b6e1ec4fa8c5f0303e.js.map' ]
             // }
-      var assetsByChunkName = stats.assetsByChunkName;
+      var assetsByChunkName = stats.assetsByChunkName
 
       var output = Object.keys(assetsByChunkName).reduce(function (chunkMap, chunkName) {
-        var assets = assetsByChunkName[chunkName];
+        var assets = assetsByChunkName[chunkName]
         if (!Array.isArray(assets)) {
-          assets = [assets];
+          assets = [assets]
         }
         chunkMap[chunkName] = assets.reduce(function (typeMap, asset) {
           if (isHMRUpdate(options, asset) || isSourceMap(options, asset)) {
-            return typeMap;
+            return typeMap
           }
 
-          var typeName = getAssetKind(options, asset);
-          typeMap[typeName] = assetPath + asset;
+          var typeName = getAssetKind(options, asset)
+          typeMap[typeName] = assetPath + asset
 
-          return typeMap;
-        }, {});
+          return typeMap
+        }, {})
 
-        return chunkMap;
-      }, {});
+        return chunkMap
+      }, {})
 
       if (self.options.metadata) {
-        output.metadata = self.options.metadata;
+        output.metadata = self.options.metadata
       }
 
       self.writer(output, function (err) {
         if (err) {
-          compilation.errors.push(err);
+          compilation.errors.push(err)
         }
-        callback();
-      });
-
-    });
+        callback()
+      })
+    })
   }
-};
+}
 
-module.exports = AssetsWebpackPlugin;
+module.exports = AssetsWebpackPlugin

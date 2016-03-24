@@ -1,11 +1,8 @@
-assets-webpack-plugin
-=====================
+# assets-webpack-plugin
 
 [ ![Codeship Status for sporto/assets-webpack-plugin](https://codeship.com/projects/c9171f30-f64d-0132-8e3e-02d99c35d383/status?branch=master)](https://codeship.com/projects/85994)
 
 Webpack plugin that emits a json file with assets paths.
-
-__I'm looking for a new maintainer, please contact me if you are interested.__
 
 ## Why is this useful?
 
@@ -70,9 +67,9 @@ npm install assets-webpack-plugin --save-dev
 In your webpack config include the plug-in. And add it to your config:
 
 ```js
-var path = require('path');
-var AssetsPlugin = require('assets-webpack-plugin');
-var assetsPluginInstance = new AssetsPlugin();
+var path = require('path')
+var AssetsPlugin = require('assets-webpack-plugin')
+var assetsPluginInstance = new AssetsPlugin()
 
 module.exports = {
     // ...
@@ -83,7 +80,7 @@ module.exports = {
     },
     // ....
     plugins: [assetsPluginInstance]
-};
+}
 ```
 
 ### Options
@@ -123,7 +120,7 @@ __processOutput__: Formats the assets output. Defaults is JSON stringify functio
 ```js
 new AssetsPlugin({
     processOutput: function (assets) {
-        return 'window.staticMap = ' + JSON.stringify(assets);
+        return 'window.staticMap = ' + JSON.stringify(assets)
     }
 })
 ```
@@ -154,9 +151,9 @@ you __must__ use the same instance of the plugin in the different configurations
 For example:
 
 ```js
-var webpack = require('webpack');
-var AssetsPlugin = require('assets-webpack-plugin');
-var assetsPluginInstance = new AssetsPlugin();
+var webpack = require('webpack')
+var AssetsPlugin = require('assets-webpack-plugin')
+var assetsPluginInstance = new AssetsPlugin()
 
 webpack([
     {
@@ -169,7 +166,7 @@ webpack([
         output: {path: 'build', filename: 'two-bundle.js'},
         plugins: [assetsPluginInstance]
     }
-]);
+])
 ```
 
 
