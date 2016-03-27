@@ -1,10 +1,11 @@
-var getAssetKind = require('../lib/getAssetKind.js');
-var chai = require('chai');
-var expect = chai.expect;
+/* eslint-env mocha */
 
+var getAssetKind = require('../lib/getAssetKind.js')
+var chai = require('chai')
+var expect = chai.expect
 
 describe('getAssetKind', function () {
-  var webpackConfig;
+  var webpackConfig
 
   beforeEach(function () {
     webpackConfig = {
@@ -13,24 +14,20 @@ describe('getAssetKind', function () {
         sourceMapFilename: '[file].map[query]'
       },
       devtool: 'sourcemap'
-    };
-  });
+    }
+  })
 
   describe('js', function () {
-
     it('returns js', function () {
-      var input = 'desktop.js';
-      var res = getAssetKind(webpackConfig, input);
-      expect(res).to.eq('js');
-    });
+      var input = 'desktop.js'
+      var res = getAssetKind(webpackConfig, input)
+      expect(res).to.eq('js')
+    })
 
     it('returns js with hash', function () {
-      var input = 'desktop.js?9b913c8594ce98e06b21';
-      var res = getAssetKind(webpackConfig, input);
-      expect(res).to.eq('js');
-    });
-
-  });
-
-});
-
+      var input = 'desktop.js?9b913c8594ce98e06b21'
+      var res = getAssetKind(webpackConfig, input)
+      expect(res).to.eq('js')
+    })
+  })
+})

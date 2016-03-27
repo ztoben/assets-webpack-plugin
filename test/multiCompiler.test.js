@@ -1,24 +1,22 @@
-/*jshint expr: true*/
+/* eslint-env mocha */
 
-var path = require('path');
-var expect = require('chai').expect;
-var webpack = require('webpack');
-var rm_rf = require('rimraf');
+var path = require('path')
+var expect = require('chai').expect
+var webpack = require('webpack')
+var rmRf = require('rimraf')
 
-var Plugin = require('../index.js');
+var Plugin = require('../index.js')
 
-var OUTPUT_DIR = path.join(__dirname, '../tmp');
-var expectOutput = require('./utils/expectOutput')(OUTPUT_DIR);
-
+var OUTPUT_DIR = path.join(__dirname, '../tmp')
+var expectOutput = require('./utils/expectOutput')(OUTPUT_DIR)
 
 describe('Plugin', function () {
-
   beforeEach(function (done) {
-    rm_rf(OUTPUT_DIR, done);
-  });
+    rmRf(OUTPUT_DIR, done)
+  })
 
   it('works in multi-compiler mode', function (done) {
-    var plugin = new Plugin({path: 'tmp'});
+    var plugin = new Plugin({path: 'tmp'})
 
     var webpackConfig = [
       {
@@ -41,7 +39,7 @@ describe('Plugin', function () {
         },
         plugins: [plugin]
       }
-    ];
+    ]
 
     var expected = {
       one: {
@@ -50,15 +48,15 @@ describe('Plugin', function () {
       two: {
         js: 'two-bundle.js'
       }
-    };
+    }
 
     var args = {
       config: webpackConfig,
       expected: expected
-    };
+    }
 
-    expectOutput(args, done);
-  });
+    expectOutput(args, done)
+  })
 
   it('updates output between compiler calls when options.update is true', function (done) {
     var config_1 = {
@@ -70,7 +68,7 @@ describe('Plugin', function () {
         filename: 'one-bundle.js'
       },
       plugins: [new Plugin({path: 'tmp', update: true})]
-    };
+    }
     var config_2 = {
       entry: {
         two: path.join(__dirname, 'fixtures/two.js')
@@ -80,17 +78,17 @@ describe('Plugin', function () {
         filename: 'two-bundle.js'
       },
       plugins: [new Plugin({path: 'tmp', update: true})]
-    };
+    }
 
-    var expected = {one: {js: 'one-bundle.js'}, two: {js: 'two-bundle.js'}};
-    var args = {config: config_2, expected: expected};
+    var expected = {one: {js: 'one-bundle.js'}, two: {js: 'two-bundle.js'}}
+    var args = {config: config_2, expected: expected}
 
     webpack(config_1, function (err, stats) {
-      expect(err).to.be.null;
-      expect(stats.hasErrors()).to.be.false;
-      expectOutput(args, done);
-    });
-  });
+      expect(err).to.be.null
+      expect(stats.hasErrors()).to.be.false
+      expectOutput(args, done)
+    })
+  })
 
   it('overwrites output between compiler calls when options.update is false', function (done) {
     var config_1 = {
@@ -102,7 +100,7 @@ describe('Plugin', function () {
         filename: 'one-bundle.js'
       },
       plugins: [new Plugin({path: 'tmp', update: false})]
-    };
+    }
     var config_2 = {
       entry: {
         two: path.join(__dirname, 'fixtures/two.js')
@@ -112,15 +110,15 @@ describe('Plugin', function () {
         filename: 'two-bundle.js'
       },
       plugins: [new Plugin({path: 'tmp', update: false})]
-    };
+    }
 
-    var expected = {two: {js: 'two-bundle.js'}};
-    var args = {config: config_2, expected: expected};
+    var expected = {two: {js: 'two-bundle.js'}}
+    var args = {config: config_2, expected: expected}
 
     webpack(config_1, function (err, stats) {
-      expect(err).to.be.null;
-      expect(stats.hasErrors()).to.be.false;
-      expectOutput(args, done);
-    });
-  });
-});
+      expect(err).to.be.null
+      expect(stats.hasErrors()).to.be.false
+      expectOutput(args, done)
+    })
+  })
+})

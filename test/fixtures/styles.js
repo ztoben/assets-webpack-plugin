@@ -1,1 +1,1 @@
-require('./stylesheet.css');
+require('./stylesheet.css')
