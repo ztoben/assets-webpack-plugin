@@ -4,7 +4,21 @@
 
 Webpack plugin that emits a json file with assets paths.
 
-## Why is this useful?
+## Table of Contents
+
+- [Why Is This Useful?](#why-is-this-useful)
+
+- [Install](#install)
+
+- [Configuration](#configuration)
+
+- [Test](#test)
+
+- [Change Log](./CHANGELOG.md)
+
+- [Contributing Guidelines](./CONTRIBUTING.md)
+
+## Why Is This Useful?
 
 When working with Webpack you might want to generate your bundles with a generated hash in them (for cache busting).
 
@@ -204,12 +218,3 @@ And finally in the views:
 ```sh
 npm test
 ```
-
-## Changelog
-
-__3.4.0__ Do not write to assets file if output hasn't changed
-
-__3.2.0__ Added `processOutput` option
-
-__3.1.0__ Config now accepts a `fullPath` option.
-
