@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "lint": "standard --verbose | snazzy",
-    "test": "mocha test"
+    "test": "mocha test",
+    "tdd": "mocha test --watch"
   },
   "repository": {
     "type": "git",

@@ -26,6 +26,7 @@ AssetsWebpackPlugin.prototype = {
     var self = this
 
     compiler.plugin('after-emit', function (compilation, callback) {
+      var output = {}
       var options = compiler.options
       var stats = compilation.getStats().toJson({
         hash: true,
@@ -50,7 +51,7 @@ AssetsWebpackPlugin.prototype = {
             // }
       var assetsByChunkName = stats.assetsByChunkName
 
-      var output = Object.keys(assetsByChunkName).reduce(function (chunkMap, chunkName) {
+      output.chunks = Object.keys(assetsByChunkName).reduce(function (chunkMap, chunkName) {
         var assets = assetsByChunkName[chunkName]
         if (!Array.isArray(assets)) {
           assets = [assets]
