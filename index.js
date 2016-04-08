@@ -70,6 +70,13 @@ AssetsWebpackPlugin.prototype = {
         return chunkMap
       }, {})
 
+      var imagesRegex = /\.(jpe?g|png|gif|svg)$/
+      output.images = stats.assets.filter(function (asset) {
+        return imagesRegex.test(asset.name)
+      }).map(function (asset) {
+        return { name: asset.name, path: assetPath + asset.name }
+      })
+
       if (self.options.metadata) {
         output.metadata = self.options.metadata
       }

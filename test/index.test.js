@@ -31,7 +31,8 @@ describe('Plugin', function () {
         main: {
           js: 'index-bundle.js'
         }
-      }
+      },
+      images: []
     }
     expected = JSON.stringify(expected)
 
@@ -64,7 +65,8 @@ describe('Plugin', function () {
         two: {
           js: 'two-bundle.js'
         }
-      }
+      },
+      images: []
     }
 
     var args = {
@@ -93,7 +95,8 @@ describe('Plugin', function () {
         main: {
           js: 'index-bundle.js'
         }
-      }
+      },
+      images: []
     }
 
     var args = {
@@ -121,7 +124,8 @@ describe('Plugin', function () {
         main: {
           js: 'index-bundle.js'
         }
-      }
+      },
+      images: []
     }
 
     var args = {
@@ -142,7 +146,7 @@ describe('Plugin', function () {
       plugins: [new Plugin({path: 'tmp'})]
     }
 
-    var expected = /{"chunks":{"main":{"js":"index-bundle-[0-9a-f]+\.js"}}}/
+    var expected = /{"chunks":{"main":{"js":"index-bundle-[0-9a-f]+\.js"}},"images":\[\]}/
 
     var args = {
       config: webpackConfig,
@@ -162,7 +166,7 @@ describe('Plugin', function () {
       plugins: [new Plugin({path: 'tmp'})]
     }
 
-    var expected = /{"chunks":{"main":{"js":"main\.js\?[0-9a-f]+"}}}/
+    var expected = /{"chunks":{"main":{"js":"main\.js\?[0-9a-f]+"}},"images":\[\]}/
 
     var args = {
       config: webpackConfig,
@@ -208,7 +212,8 @@ describe('Plugin', function () {
           js: 'styles-bundle.js',
           css: 'styles-bundle.css'
         }
-      }
+      },
+      images: []
     }
 
     var args = {
@@ -255,9 +260,12 @@ describe('Plugin', function () {
     }
 
     var expected = {
-      main: {
-        js: 'index-bundle.js'
-      }
+      chunks: {
+        main: {
+          js: 'index-bundle.js'
+        }
+      },
+      images: []
     }
 
     expected = JSON.stringify(expected)
@@ -291,7 +299,8 @@ describe('Plugin', function () {
         one: {js: 'one.js'},
         two: {js: 'two.js'},
         common: {js: 'common.js'}
-      }
+      },
+      images: []
     }
 
     var args = {
@@ -324,6 +333,7 @@ describe('Plugin', function () {
           js: 'index-bundle.js'
         }
       },
+      images: [],
       metadata: {
         foo: 'bar',
         baz: 'buz'
