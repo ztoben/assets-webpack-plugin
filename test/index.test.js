@@ -278,7 +278,7 @@ describe('Plugin', function () {
     expectOutput(args, done)
   })
 
-  it('works with CommonentriesPlugin', function (done) {
+  it('works with CommonChunksPlugin', function (done) {
     var webpackConfig = {
       entry: {
         one: path.join(__dirname, 'fixtures/common-chunks/one.js'),

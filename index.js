@@ -13,7 +13,8 @@ function AssetsWebpackPlugin (options) {
     filename: 'webpack-assets.json',
     prettyPrint: false,
     update: false,
-    fullPath: true
+    fullPath: true,
+    imagesRegex: /\.(jpe?g|png|gif|svg)$/
   }, options)
   this.writer = createQueuedWriter(createOutputWriter(this.options))
 }
@@ -70,9 +71,8 @@ AssetsWebpackPlugin.prototype = {
         return chunkMap
       }, {})
 
-      var imagesRegex = /\.(jpe?g|png|gif|svg)$/
       output.images = stats.assets.filter(function (asset) {
-        return imagesRegex.test(asset.name)
+        return self.options.imagesRegex.test(asset.name)
       }).map(function (asset) {
         return { name: asset.name, path: assetPath + asset.name }
       })
