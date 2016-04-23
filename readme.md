@@ -177,6 +177,12 @@ new AssetsPlugin({metadata: {version: 123}})
 // }
 ```
 
+__imagesRegex__: Regex for images that should be extracted from Webpack stats. Defaults to `/\.(jpe?g|png|gif|svg)$/`
+
+```js
+new AssetsPlugin({imagesRegex: /\.(svg)$/})
+```
+
 
 ### Using in multi-compiler mode
 
