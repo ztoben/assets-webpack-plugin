@@ -35,7 +35,7 @@ The output is a JSON object in the form:
           "asset_kind": "/public/path/to/asset"
       }
     },
-    "images": [{
+    "assets": [{
         "name": "hello.svg",
         "path": "/public/path/to/asset/hello.svg"
       }
@@ -48,7 +48,7 @@ Where:
   * `entries` is an object that contains all entry points listed in your webpack config
     * `"bundle_name"` is the name of the bundle (the key of the entry object in your webpack config, or "main" if your entry is an array).
     * `"asset_kind"` is the camel-cased file extension of the asset
-  * `images` is an array containing all images processed by webpack
+  * `assets` is an array containing all assets processed by webpack
     * `name` is the name of the image (path used in `require` or `import`)
     * `path` is the webpack generated public path to the image
 
@@ -84,7 +84,7 @@ The plugin will output the following json file:
     "two": {
         "js": "/js/two_2bb80372ebe8047a68d4.bundle.js"
     },
-    "images":[{
+    "assets":[{
       "name":"assets/images/user.svg",
       "path":"/js/assets/images/user.svg"
     }]
@@ -177,10 +177,10 @@ new AssetsPlugin({metadata: {version: 123}})
 // }
 ```
 
-__imagesRegex__: Regex for images that should be extracted from Webpack stats. Defaults to `/\.(jpe?g|png|gif|svg)$/`
+__assetsRegex__: Regex for assets that should be extracted from Webpack stats. Defaults to `/\.(jpe?g|png|gif|svg)$/`
 
 ```js
-new AssetsPlugin({imagesRegex: /\.(svg)$/})
+new AssetsPlugin({assetsRegex: /\.(svg)$/})
 ```
 
 

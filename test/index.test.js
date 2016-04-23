@@ -32,7 +32,7 @@ describe('Plugin', function () {
           js: 'index-bundle.js'
         }
       },
-      images: []
+      assets: []
     }
     expected = JSON.stringify(expected)
 
@@ -66,7 +66,7 @@ describe('Plugin', function () {
           js: 'two-bundle.js'
         }
       },
-      images: []
+      assets: []
     }
 
     var args = {
@@ -96,7 +96,7 @@ describe('Plugin', function () {
           js: 'index-bundle.js'
         }
       },
-      images: []
+      assets: []
     }
 
     var args = {
@@ -125,7 +125,7 @@ describe('Plugin', function () {
           js: 'index-bundle.js'
         }
       },
-      images: []
+      assets: []
     }
 
     var args = {
@@ -146,7 +146,7 @@ describe('Plugin', function () {
       plugins: [new Plugin({path: 'tmp'})]
     }
 
-    var expected = /{"entries":{"main":{"js":"index-bundle-[0-9a-f]+\.js"}},"images":\[\]}/
+    var expected = /{"entries":{"main":{"js":"index-bundle-[0-9a-f]+\.js"}},"assets":\[\]}/
 
     var args = {
       config: webpackConfig,
@@ -166,7 +166,7 @@ describe('Plugin', function () {
       plugins: [new Plugin({path: 'tmp'})]
     }
 
-    var expected = /{"entries":{"main":{"js":"main\.js\?[0-9a-f]+"}},"images":\[\]}/
+    var expected = /{"entries":{"main":{"js":"main\.js\?[0-9a-f]+"}},"assets":\[\]}/
 
     var args = {
       config: webpackConfig,
@@ -213,7 +213,7 @@ describe('Plugin', function () {
           css: 'styles-bundle.css'
         }
       },
-      images: []
+      assets: []
     }
 
     var args = {
@@ -265,7 +265,7 @@ describe('Plugin', function () {
           js: 'index-bundle.js'
         }
       },
-      images: []
+      assets: []
     }
 
     expected = JSON.stringify(expected)
@@ -300,7 +300,7 @@ describe('Plugin', function () {
         two: {js: 'two.js'},
         common: {js: 'common.js'}
       },
-      images: []
+      assets: []
     }
 
     var args = {
@@ -333,7 +333,7 @@ describe('Plugin', function () {
           js: 'index-bundle.js'
         }
       },
-      images: [],
+      assets: [],
       metadata: {
         foo: 'bar',
         baz: 'buz'

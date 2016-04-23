@@ -7,12 +7,12 @@ var Plugin = require('../index.js')
 var OUTPUT_DIR = path.join(__dirname, '../tmp')
 var expectOutput = require('./utils/expectOutput')(OUTPUT_DIR)
 
-describe.only('Images', function () {
+describe('Assets', function () {
   beforeEach(function (done) {
     rmRf(OUTPUT_DIR, done)
   })
 
-  it('generates a default file with images', function (done) {
+  it('generates a default file with assets', function (done) {
     var webpackConfig = {
       entry: path.join(__dirname, 'fixtures/images.js'),
       output: {
@@ -35,7 +35,7 @@ describe.only('Images', function () {
           js: 'index-bundle.js'
         }
       },
-      images: [{
+      assets: [{
         name: 'test/fixtures/home.svg',
         path: 'test/fixtures/home.svg'
       }]
@@ -50,7 +50,7 @@ describe.only('Images', function () {
     expectOutput(args, done)
   })
 
-  it('allows overriding of imagesRegex', function (done) {
+  it('allows overriding of assetsRegex', function (done) {
     var webpackConfig = {
       entry: path.join(__dirname, 'fixtures/multiple-images.js'),
       output: {
@@ -64,7 +64,7 @@ describe.only('Images', function () {
       },
       plugins: [new Plugin({
         path: 'tmp',
-        imagesRegex: /\.(png)$/
+        assetsRegex: /\.(png)$/
       })]
     }
 
@@ -74,7 +74,7 @@ describe.only('Images', function () {
           js: 'index-bundle.js'
         }
       },
-      images: [{
+      assets: [{
         name: 'test/fixtures/home.png',
         path: 'test/fixtures/home.png'
       }]

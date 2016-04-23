@@ -18,7 +18,7 @@ This change log follows the format documented in [Keep a CHANGELOG].
 
 ### Added
 
-- Images are extracted and saved in `images` array
+- Assets are extracted and saved in `assets` array
 
 ## 3.4.0 - 2016-03-09
 
