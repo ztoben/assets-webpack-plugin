@@ -27,9 +27,12 @@ describe('Plugin', function () {
     }
 
     var expected = {
-      main: {
-        js: 'index-bundle.js'
-      }
+      entries: {
+        main: {
+          js: 'index-bundle.js'
+        }
+      },
+      assets: []
     }
     expected = JSON.stringify(expected)
 
@@ -55,12 +58,15 @@ describe('Plugin', function () {
     }
 
     var expected = {
-      one: {
-        js: 'one-bundle.js'
+      entries: {
+        one: {
+          js: 'one-bundle.js'
+        },
+        two: {
+          js: 'two-bundle.js'
+        }
       },
-      two: {
-        js: 'two-bundle.js'
-      }
+      assets: []
     }
 
     var args = {
@@ -85,9 +91,12 @@ describe('Plugin', function () {
     }
 
     var expected = {
-      main: {
-        js: 'index-bundle.js'
-      }
+      entries: {
+        main: {
+          js: 'index-bundle.js'
+        }
+      },
+      assets: []
     }
 
     var args = {
@@ -111,9 +120,12 @@ describe('Plugin', function () {
     }
 
     var expected = {
-      main: {
-        js: 'index-bundle.js'
-      }
+      entries: {
+        main: {
+          js: 'index-bundle.js'
+        }
+      },
+      assets: []
     }
 
     var args = {
@@ -134,7 +146,7 @@ describe('Plugin', function () {
       plugins: [new Plugin({path: 'tmp'})]
     }
 
-    var expected = /{"main":{"js":"index-bundle-[0-9a-f]+\.js"}}/
+    var expected = /{"entries":{"main":{"js":"index-bundle-[0-9a-f]+\.js"}},"assets":\[\]}/
 
     var args = {
       config: webpackConfig,
@@ -154,7 +166,7 @@ describe('Plugin', function () {
       plugins: [new Plugin({path: 'tmp'})]
     }
 
-    var expected = /{"main":{"js":"main\.js\?[0-9a-f]+"}}/
+    var expected = /{"entries":{"main":{"js":"main\.js\?[0-9a-f]+"}},"assets":\[\]}/
 
     var args = {
       config: webpackConfig,
@@ -189,16 +201,19 @@ describe('Plugin', function () {
     }
 
     var expected = {
-      one: {
-        js: 'one-bundle.js'
+      entries: {
+        one: {
+          js: 'one-bundle.js'
+        },
+        two: {
+          js: 'two-bundle.js'
+        },
+        styles: {
+          js: 'styles-bundle.js',
+          css: 'styles-bundle.css'
+        }
       },
-      two: {
-        js: 'two-bundle.js'
-      },
-      styles: {
-        js: 'styles-bundle.js',
-        css: 'styles-bundle.css'
-      }
+      assets: []
     }
 
     var args = {
@@ -245,9 +260,12 @@ describe('Plugin', function () {
     }
 
     var expected = {
-      main: {
-        js: 'index-bundle.js'
-      }
+      entries: {
+        main: {
+          js: 'index-bundle.js'
+        }
+      },
+      assets: []
     }
 
     expected = JSON.stringify(expected)
@@ -277,9 +295,12 @@ describe('Plugin', function () {
     }
 
     var expected = {
-      one: {js: 'one.js'},
-      two: {js: 'two.js'},
-      common: {js: 'common.js'}
+      entries: {
+        one: {js: 'one.js'},
+        two: {js: 'two.js'},
+        common: {js: 'common.js'}
+      },
+      assets: []
     }
 
     var args = {
@@ -307,9 +328,12 @@ describe('Plugin', function () {
     }
 
     var expected = {
-      main: {
-        js: 'index-bundle.js'
+      entries: {
+        main: {
+          js: 'index-bundle.js'
+        }
       },
+      assets: [],
       metadata: {
         foo: 'bar',
         baz: 'buz'
