@@ -30,7 +30,7 @@ describe('Images', function () {
     }
 
     var expected = {
-      chunks: {
+      entries: {
         main: {
           js: 'index-bundle.js'
         }

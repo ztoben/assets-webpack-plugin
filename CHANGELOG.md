@@ -14,7 +14,7 @@ This change log follows the format documented in [Keep a CHANGELOG].
 
 ### Changed
 
-- Assets for entry points are now located in `chunks` object
+- Assets for entry points are now located in `entries` object
 
 ### Added
 

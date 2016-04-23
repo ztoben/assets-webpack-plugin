@@ -42,7 +42,7 @@ describe('Plugin', function () {
     ]
 
     var expected = {
-      chunks: {
+      entries: {
         one: {
           js: 'one-bundle.js'
         },
@@ -83,7 +83,7 @@ describe('Plugin', function () {
       plugins: [new Plugin({path: 'tmp', update: true})]
     }
 
-    var expected = {chunks: {one: {js: 'one-bundle.js'}, two: {js: 'two-bundle.js'}}, images: []}
+    var expected = {entries: {one: {js: 'one-bundle.js'}, two: {js: 'two-bundle.js'}}, images: []}
     var args = {config: config_2, expected: expected}
 
     webpack(config_1, function (err, stats) {
@@ -115,7 +115,7 @@ describe('Plugin', function () {
       plugins: [new Plugin({path: 'tmp', update: false})]
     }
 
-    var expected = {chunks: {two: {js: 'two-bundle.js'}}, images: []}
+    var expected = {entries: {two: {js: 'two-bundle.js'}}, images: []}
     var args = {config: config_2, expected: expected}
 
     webpack(config_1, function (err, stats) {

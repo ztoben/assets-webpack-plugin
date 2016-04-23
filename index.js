@@ -51,7 +51,7 @@ AssetsWebpackPlugin.prototype = {
             // }
       var assetsByChunkName = stats.assetsByChunkName
 
-      output.chunks = Object.keys(assetsByChunkName).reduce(function (chunkMap, chunkName) {
+      output.entries = Object.keys(assetsByChunkName).reduce(function (chunkMap, chunkName) {
         var assets = assetsByChunkName[chunkName]
         if (!Array.isArray(assets)) {
           assets = [assets]

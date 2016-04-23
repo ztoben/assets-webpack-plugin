@@ -27,7 +27,7 @@ describe('Plugin', function () {
     }
 
     var expected = {
-      chunks: {
+      entries: {
         main: {
           js: 'index-bundle.js'
         }
@@ -58,7 +58,7 @@ describe('Plugin', function () {
     }
 
     var expected = {
-      chunks: {
+      entries: {
         one: {
           js: 'one-bundle.js'
         },
@@ -91,7 +91,7 @@ describe('Plugin', function () {
     }
 
     var expected = {
-      chunks: {
+      entries: {
         main: {
           js: 'index-bundle.js'
         }
@@ -120,7 +120,7 @@ describe('Plugin', function () {
     }
 
     var expected = {
-      chunks: {
+      entries: {
         main: {
           js: 'index-bundle.js'
         }
@@ -146,7 +146,7 @@ describe('Plugin', function () {
       plugins: [new Plugin({path: 'tmp'})]
     }
 
-    var expected = /{"chunks":{"main":{"js":"index-bundle-[0-9a-f]+\.js"}},"images":\[\]}/
+    var expected = /{"entries":{"main":{"js":"index-bundle-[0-9a-f]+\.js"}},"images":\[\]}/
 
     var args = {
       config: webpackConfig,
@@ -166,7 +166,7 @@ describe('Plugin', function () {
       plugins: [new Plugin({path: 'tmp'})]
     }
 
-    var expected = /{"chunks":{"main":{"js":"main\.js\?[0-9a-f]+"}},"images":\[\]}/
+    var expected = /{"entries":{"main":{"js":"main\.js\?[0-9a-f]+"}},"images":\[\]}/
 
     var args = {
       config: webpackConfig,
@@ -201,7 +201,7 @@ describe('Plugin', function () {
     }
 
     var expected = {
-      chunks: {
+      entries: {
         one: {
           js: 'one-bundle.js'
         },
@@ -260,7 +260,7 @@ describe('Plugin', function () {
     }
 
     var expected = {
-      chunks: {
+      entries: {
         main: {
           js: 'index-bundle.js'
         }
@@ -278,7 +278,7 @@ describe('Plugin', function () {
     expectOutput(args, done)
   })
 
-  it('works with CommonChunksPlugin', function (done) {
+  it('works with CommonentriesPlugin', function (done) {
     var webpackConfig = {
       entry: {
         one: path.join(__dirname, 'fixtures/common-chunks/one.js'),
@@ -295,7 +295,7 @@ describe('Plugin', function () {
     }
 
     var expected = {
-      chunks: {
+      entries: {
         one: {js: 'one.js'},
         two: {js: 'two.js'},
         common: {js: 'common.js'}
@@ -328,7 +328,7 @@ describe('Plugin', function () {
     }
 
     var expected = {
-      chunks: {
+      entries: {
         main: {
           js: 'index-bundle.js'
         }
