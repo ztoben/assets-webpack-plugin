@@ -1,6 +1,5 @@
 # assets-webpack-plugin
-
-[ ![Codeship Status for sporto/assets-webpack-plugin](https://codeship.com/projects/c9171f30-f64d-0132-8e3e-02d99c35d383/status?branch=master)](https://codeship.com/projects/85994)
+[![Build Status](https://travis-ci.org/kossnocorp/assets-webpack-plugin.svg?branch=master)](https://travis-ci.org/kossnocorp/assets-webpack-plugin) [![Build status](https://ci.appveyor.com/api/projects/status/qmvi3h6lk0xu8833?svg=true)](https://ci.appveyor.com/project/kossnocorp/assets-webpack-plugin)
 
 Webpack plugin that emits a json file with assets paths.
 
