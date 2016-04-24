@@ -1,0 +1,12 @@
+environment:
+  nodejs_version: 4.4
+
+install:
+  - ps: Install-Product node $env:nodejs_version
+  - npm install
+
+test_script:
+  - npm test
+
+# Disable missing build step
+build: off
