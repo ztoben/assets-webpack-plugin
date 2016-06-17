@@ -77,6 +77,15 @@ AssetsWebpackPlugin.prototype = {
         return { name: asset.name, path: assetPath + asset.name }
       })
 
+      var manifestName = self.options.includeManifest === true ? 'manifest' : self.options.includeManifest
+      if (manifestName) {
+        var manifestEntry = output.entries[manifestName]
+        if (manifestEntry) {
+          var manifestAssetKey = manifestEntry.js.substr(assetPath.length)
+          manifestEntry.text = compilation.assets[manifestAssetKey]._cachedSource
+        }
+      }
+
       if (self.options.metadata) {
         output.metadata = self.options.metadata
       }
