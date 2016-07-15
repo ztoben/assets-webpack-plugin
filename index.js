@@ -25,7 +25,7 @@ AssetsWebpackPlugin.prototype = {
     var self = this
 
     compiler.plugin('after-emit', function (compilation, callback) {
-      var compilerOptions = compiler.options;
+      var compilerOptions = compiler.options
       var stats = compilation.getStats().toJson({
         hash: true,
         publicPath: true,
@@ -37,7 +37,7 @@ AssetsWebpackPlugin.prototype = {
         timings: false
       })
 
-      var output = self.options.generator(stats, self.options, compilerOptions);
+      var output = self.options.generator(stats, self.options, compilerOptions)
 
       self.writer(output, function (err) {
         if (err) {
