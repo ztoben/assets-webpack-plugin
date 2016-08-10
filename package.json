@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "standard --verbose | snazzy",
-    "test": "mocha test",
-    "tdd": "mocha test --watch"
+    "test": "mocha test"
   },
   "repository": {
     "type": "git",
@@ -29,7 +28,6 @@
     "chai": "^3.0.0",
     "css-loader": "^0.9.1",
     "extract-text-webpack-plugin": "^0.3.8",
-    "file-loader": "^0.8.5",
     "lodash": "^3.9.3",
     "mocha": "^2.2.5",
     "rimraf": "^2.2.8",

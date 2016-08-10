@@ -10,16 +10,6 @@ This change log follows the format documented in [Keep a CHANGELOG].
 
 ## Unreleased
 
-## 4.0.0
-
-### Changed
-
-- Assets for entry points are now located in `entries` object
-
-### Added
-
-- Assets are extracted and saved in `assets` array
-
 ## 3.4.0 - 2016-03-09
 
 ### Changed
