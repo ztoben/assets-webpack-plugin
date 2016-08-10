@@ -13,8 +13,7 @@ function AssetsWebpackPlugin (options) {
     filename: 'webpack-assets.json',
     prettyPrint: false,
     update: false,
-    fullPath: true,
-    assetsRegex: /\.(jpe?g|png|gif|svg)$/
+    fullPath: true
   }, options)
   this.writer = createQueuedWriter(createOutputWriter(this.options))
 }
@@ -27,7 +26,6 @@ AssetsWebpackPlugin.prototype = {
     var self = this
 
     compiler.plugin('after-emit', function (compilation, callback) {
-      var output = {}
       var options = compiler.options
       var stats = compilation.getStats().toJson({
         hash: true,
@@ -52,7 +50,7 @@ AssetsWebpackPlugin.prototype = {
             // }
       var assetsByChunkName = stats.assetsByChunkName
 
-      output.entries = Object.keys(assetsByChunkName).reduce(function (chunkMap, chunkName) {
+      var output = Object.keys(assetsByChunkName).reduce(function (chunkMap, chunkName) {
         var assets = assetsByChunkName[chunkName]
         if (!Array.isArray(assets)) {
           assets = [assets]
@@ -70,12 +68,6 @@ AssetsWebpackPlugin.prototype = {
 
         return chunkMap
       }, {})
-
-      output.assets = stats.assets.filter(function (asset) {
-        return self.options.assetsRegex.test(asset.name)
-      }).map(function (asset) {
-        return { name: asset.name, path: assetPath + asset.name }
-      })
 
       if (self.options.metadata) {
         output.metadata = self.options.metadata
