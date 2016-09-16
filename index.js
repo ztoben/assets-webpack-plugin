@@ -73,7 +73,7 @@ AssetsWebpackPlugin.prototype = {
         output.metadata = self.options.metadata
       }
 
-      self.writer(output, function (err) {
+      self.writer(compiler.inputFileSystem, compiler.outputFileSystem, output, function (err) {
         if (err) {
           compilation.errors.push(err)
         }
