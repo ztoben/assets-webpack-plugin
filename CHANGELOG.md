@@ -10,6 +10,10 @@ This change log follows the format documented in [Keep a CHANGELOG].
 
 ## Unreleased
 
+### Changed
+
+- Use filesystem objects (e.g. memoryfs) from the compiler
+
 ## 3.4.0 - 2016-03-09
 
 ### Changed
