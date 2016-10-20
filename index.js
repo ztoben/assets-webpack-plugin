@@ -69,15 +69,9 @@ AssetsWebpackPlugin.prototype = {
         return chunkMap
       }, {})
 
-      output.assets = stats.assets.filter(function (asset) {
-        return self.options.assetsRegex.test(asset.name)
-      }).map(function (asset) {
-        return { name: asset.name, path: assetPath + asset.name }
-      })
-
       var manifestName = self.options.includeManifest === true ? 'manifest' : self.options.includeManifest
       if (manifestName) {
-        var manifestEntry = output.entries[manifestName]
+        var manifestEntry = output[manifestName]
         if (manifestEntry) {
           var manifestAssetKey = manifestEntry.js.substr(assetPath.length)
           var parentSource = compilation.assets[manifestAssetKey]

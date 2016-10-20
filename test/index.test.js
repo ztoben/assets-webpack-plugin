@@ -343,16 +343,13 @@ describe('Plugin', function () {
     }
 
     var expected = {
-      entries: {
-        one: {js: 'one.js'},
-        two: {js: 'two.js'},
-        common: {js: 'common.js'},
-        manifest: {
-          js: 'manifest.js',
-          text: manifestStr
-        }
-      },
-      assets: []
+      one: {js: 'one.js'},
+      two: {js: 'two.js'},
+      common: {js: 'common.js'},
+      manifest: {
+        js: 'manifest.js',
+        text: manifestStr
+      }
     }
 
     var args = {
@@ -380,16 +377,13 @@ describe('Plugin', function () {
     }
 
     var expected = {
-      entries: {
-        one: {js: 'one.js'},
-        two: {js: 'two.js'},
-        common: {js: 'common.js'},
-        manifesto: {
-          js: 'manifesto.js',
-          text: manifestStr
-        }
-      },
-      assets: []
+      one: {js: 'one.js'},
+      two: {js: 'two.js'},
+      common: {js: 'common.js'},
+      manifesto: {
+        js: 'manifesto.js',
+        text: manifestStr
+      }
     }
 
     var args = {
