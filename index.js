@@ -82,7 +82,13 @@ AssetsWebpackPlugin.prototype = {
         var manifestEntry = output.entries[manifestName]
         if (manifestEntry) {
           var manifestAssetKey = manifestEntry.js.substr(assetPath.length)
-          manifestEntry.text = compilation.assets[manifestAssetKey]._cachedSource
+          var parentSource = compilation.assets[manifestAssetKey]
+          var entryText = parentSource._value || parentSource._cachedSource
+          if (!entryText) {
+            throw new Error('Could not locate manifest function in source', parentSource)
+          }
+          // use _value if the uglify plugin was applied
+          manifestEntry.text = entryText
         }
       }
 
