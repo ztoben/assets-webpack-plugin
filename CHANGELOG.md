@@ -10,6 +10,13 @@ This change log follows the format documented in [Keep a CHANGELOG].
 
 ## Unreleased
 
+## 3.5.0 - 2016-10-21
+
+### Added
+
+- `includeManifest` option (kudos to Matt Krick [@mattkrick](https://github.com/mattkrick)).
+  [See docs](./README.md#includemanifest) for more details.
+
 ## 3.4.0 - 2016-03-09
 
 ### Changed

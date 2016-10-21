@@ -100,13 +100,22 @@ module.exports = {
 
 You can pass the following options:
 
-__filename__: Name for the created json file. Defaults to `webpack-assets.json`
+#### `filename`
+
+Optinal. `webpack-assets.json` by default.
+
+Name for the created json file.
 
 ```js
 new AssetsPlugin({filename: 'assets.json'})
 ```
 
-__fullPath__: True by default. If false the output will not include the full path of the generated file.
+#### `fullPath`
+
+Optinal. `true` by default.
+
+If `false` the output will not include the full path
+of the generated file.
 
 ```js
 new AssetsPlugin({fullPath: false})
@@ -116,72 +125,89 @@ e.g.
 
 `/public/path/bundle.js` vs `bundle.js vs`
 
-__includeManifest__: Inserts the manifest javascript as a `text` property in your assets.
-False by default. Accepts the name of your manifest chunk.
-A manifest is the last CommonChunk that only contains the webpack bootstrap code.
-This is useful for production use when you want to inline the manifest in your HTML skeleton for long-term caching.
+#### `includeManifest`
+
+Optional. `false` by default.
+
+Inserts the manifest javascript as a `text` property in your assets.
+Accepts the name of your manifest chunk. A manifest is the last CommonChunk that
+only contains the webpack bootstrap code. This is useful for production
+use when you want to inline the manifest in your HTML skeleton for long-term caching.
 See [issue #1315](https://github.com/webpack/webpack/issues/1315)
 or [a blog post](https://medium.com/@matt.krick/a-production-ready-realtime-saas-with-webpack-7b11ba2fa5b0#.p1vvfr3bm)
 to learn more.
 
 ```js
-// webpack.config.js
-new AssetsPlugin({includeManifest: 'manifest'});
+new AssetsPlugin({includeManifest: 'manifest'})
+// assets.json:
+// {entries: {manifest: {js: `hashed_manifest.js`, text: 'function(modules)...'}}}
+//
+// Your html template:
+// <script>
+// {assets.entries.manifest.text}
+// </script>
+```
 
-//assets.json
-{entries: {manifest: {js: `hashed_manifest.js`, text: 'function(modules)...'}}}
+#### `path`
 
-// your html template
-<script>
-{assets.entries.manifest.text}
-</script>
+Optional. Defaults to the current directory.
 
-````
-
-__path__: Path where to save the created json file. Defaults to the current directory.
+Path where to save the created JSON file.
 
 ```js
 new AssetsPlugin({path: path.join(__dirname, 'app', 'views')})
 ```
 
-__prettyPrint__: Whether to format the json output for readability. Defaults to false.
+#### `prettyPrint`
+
+Optional. `false` by default.
+
+Whether to format the JSON output for readability.
 
 ```js
 new AssetsPlugin({prettyPrint: true})
 ```
 
-__processOutput__: Formats the assets output. Defaults is JSON stringify function.
+#### `processOutput`
+
+Optional. Defaults is JSON stringify function.
+
+Formats the assets output.
 
 ```js
 new AssetsPlugin({
-    processOutput: function (assets) {
-        return 'window.staticMap = ' + JSON.stringify(assets)
-    }
+  processOutput: function (assets) {
+    return 'window.staticMap = ' + JSON.stringify(assets)
+  }
 })
 ```
 
-__update__: When set to true, the output json file will be updated instead of overwritten. Defaults to false.
+#### `update`
+
+Optinal. `false` by default.
+
+When set to `true`, the output JSON file will be updated instead of overwritten.
 
 ```js
 new AssetsPlugin({update: true})
 ```
 
-__metadata__: Inject metadata into the output file. All values will be injected into the key "metadata".
+#### `metadata`
+
+Inject metadata into the output file. All values will be injected into the key "metadata".
 
 ```js
 new AssetsPlugin({metadata: {version: 123}})
-
 // Manifest will now contain:
 // {
 //   metadata: {version: 123}
 // }
 ```
 
-
 ### Using in multi-compiler mode
 
 If you use webpack multi-compiler mode and want your assets written to a single file,
-you __must__ use the same instance of the plugin in the different configurations.
+you **must** use the same instance of the plugin in the different configurations.
 
 For example:
 
@@ -191,23 +217,24 @@ var AssetsPlugin = require('assets-webpack-plugin')
 var assetsPluginInstance = new AssetsPlugin()
 
 webpack([
-    {
-        entry: {one: 'src/one.js'},
-        output: {path: 'build', filename: 'one-bundle.js'},
-        plugins: [assetsPluginInstance]
-    },
-    {
-        entry: {two:'src/two.js'},
-        output: {path: 'build', filename: 'two-bundle.js'},
-        plugins: [assetsPluginInstance]
-    }
+  {
+    entry: {one: 'src/one.js'},
+    output: {path: 'build', filename: 'one-bundle.js'},
+    plugins: [assetsPluginInstance]
+  },
+  {
+    entry: {two:'src/two.js'},
+    output: {path: 'build', filename: 'two-bundle.js'},
+    plugins: [assetsPluginInstance]
+  }
 ])
 ```
 
 
 ### Using this with Rails
 
-You can use this with Rails to find the bundled Webpack assets via sprockets. In `ApplicationController` you might have:
+You can use this with Rails to find the bundled Webpack assets via Sprockets.
+In `ApplicationController` you might have:
 
 ```ruby
 def script_for(bundle)
