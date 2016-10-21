@@ -116,6 +116,28 @@ e.g.
 
 `/public/path/bundle.js` vs `bundle.js vs`
 
+__includeManifest__: Inserts the manifest javascript as a `text` property in your assets.
+False by default. Accepts the name of your manifest chunk.
+A manifest is the last CommonChunk that only contains the webpack bootstrap code.
+This is useful for production use when you want to inline the manifest in your HTML skeleton for long-term caching.
+See [issue #1315](https://github.com/webpack/webpack/issues/1315)
+or [a blog post](https://medium.com/@matt.krick/a-production-ready-realtime-saas-with-webpack-7b11ba2fa5b0#.p1vvfr3bm)
+to learn more.
+
+```js
+// webpack.config.js
+new AssetsPlugin({includeManifest: 'manifest'});
+
+//assets.json
+{entries: {manifest: {js: `hashed_manifest.js`, text: 'function(modules)...'}}}
+
+// your html template
+<script>
+{assets.entries.manifest.text}
+</script>
+
+````
+
 __path__: Path where to save the created json file. Defaults to the current directory.
 
 ```js

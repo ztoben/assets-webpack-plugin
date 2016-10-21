@@ -5,6 +5,7 @@ var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var rmRf = require('rimraf')
 var Plugin = require('../index.js')
+var manifestStr = require('./fixtures/manifest.js')
 
 var OUTPUT_DIR = path.join(__dirname, '../tmp')
 var expectOutput = require('./utils/expectOutput')(OUTPUT_DIR)
@@ -316,6 +317,74 @@ describe('Plugin', function () {
       }
     }
     expected = JSON.stringify(expected)
+
+    var args = {
+      config: webpackConfig,
+      expected: expected
+    }
+
+    expectOutput(args, done)
+  })
+
+  it('works with default includeManifest', function (done) {
+    var webpackConfig = {
+      entry: {
+        one: path.join(__dirname, 'fixtures/common-chunks/one.js'),
+        two: path.join(__dirname, 'fixtures/common-chunks/two.js')
+      },
+      output: {
+        path: OUTPUT_DIR,
+        filename: '[name].js'
+      },
+      plugins: [
+        new webpack.optimize.CommonsChunkPlugin({names: ['common', 'manifest']}),
+        new Plugin({path: 'tmp', includeManifest: true})
+      ]
+    }
+
+    var expected = {
+      one: {js: 'one.js'},
+      two: {js: 'two.js'},
+      common: {js: 'common.js'},
+      manifest: {
+        js: 'manifest.js',
+        text: manifestStr
+      }
+    }
+
+    var args = {
+      config: webpackConfig,
+      expected: expected
+    }
+
+    expectOutput(args, done)
+  })
+
+  it('works with custom includeManifest', function (done) {
+    var webpackConfig = {
+      entry: {
+        one: path.join(__dirname, 'fixtures/common-chunks/one.js'),
+        two: path.join(__dirname, 'fixtures/common-chunks/two.js')
+      },
+      output: {
+        path: OUTPUT_DIR,
+        filename: '[name].js'
+      },
+      plugins: [
+        new webpack.optimize.CommonsChunkPlugin({names: ['common', 'manifesto']}),
+        new Plugin({path: 'tmp', includeManifest: 'manifesto'})
+      ]
+    }
+
+    var expected = {
+      one: {js: 'one.js'},
+      two: {js: 'two.js'},
+      common: {js: 'common.js'},
+      manifesto: {
+        js: 'manifesto.js',
+        text: manifestStr
+      }
+    }
 
     var args = {
       config: webpackConfig,

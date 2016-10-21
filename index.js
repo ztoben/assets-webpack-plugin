@@ -69,6 +69,21 @@ AssetsWebpackPlugin.prototype = {
         return chunkMap
       }, {})
 
+      var manifestName = self.options.includeManifest === true ? 'manifest' : self.options.includeManifest
+      if (manifestName) {
+        var manifestEntry = output[manifestName]
+        if (manifestEntry) {
+          var manifestAssetKey = manifestEntry.js.substr(assetPath.length)
+          var parentSource = compilation.assets[manifestAssetKey]
+          var entryText = parentSource._value || parentSource._cachedSource
+          if (!entryText) {
+            throw new Error('Could not locate manifest function in source', parentSource)
+          }
+          // use _value if the uglify plugin was applied
+          manifestEntry.text = entryText
+        }
+      }
+
       if (self.options.metadata) {
         output.metadata = self.options.metadata
       }
