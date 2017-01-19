@@ -75,7 +75,7 @@ AssetsWebpackPlugin.prototype = {
         if (manifestEntry) {
           var manifestAssetKey = manifestEntry.js.substr(assetPath.length)
           var parentSource = compilation.assets[manifestAssetKey]
-          var entryText = parentSource._value || parentSource._cachedSource
+          var entryText = parentSource.source()
           if (!entryText) {
             throw new Error('Could not locate manifest function in source', parentSource)
           }

@@ -393,4 +393,39 @@ describe('Plugin', function () {
 
     expectOutput(args, done)
   })
+
+  it('supports source maps with includeManifest', function (done) {
+    var webpackConfig = {
+      devtool: 'sourcemap',
+      entry: {
+        one: path.join(__dirname, 'fixtures/common-chunks/one.js'),
+        two: path.join(__dirname, 'fixtures/common-chunks/two.js')
+      },
+      output: {
+        path: OUTPUT_DIR,
+        filename: '[name].js'
+      },
+      plugins: [
+        new webpack.optimize.CommonsChunkPlugin({names: ['common', 'manifesto']}),
+        new Plugin({path: 'tmp', includeManifest: 'manifesto'})
+      ]
+    }
+
+    var expected = {
+      one: {js: 'one.js'},
+      two: {js: 'two.js'},
+      common: {js: 'common.js'},
+      manifesto: {
+        js: 'manifesto.js',
+        text: require('./fixtures/manifestWithSourceMap')
+      }
+    }
+
+    var args = {
+      config: webpackConfig,
+      expected: expected
+    }
+
+    expectOutput(args, done)
+  })
 })
