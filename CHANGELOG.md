@@ -10,11 +10,13 @@ This change log follows the format documented in [Keep a CHANGELOG].
 
 ## Unreleased
 
-## 3.5.0 - 2016-10-21
+## 3.5.1 - 2017-01-20
 
-### Added
+### Fixed
 
 - Support for source maps when `includeManifest` option is set.
+
+## 3.5.0 - 2016-10-21
 
 ### Added
 
