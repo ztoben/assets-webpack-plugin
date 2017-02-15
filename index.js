@@ -88,6 +88,7 @@ AssetsWebpackPlugin.prototype = {
         output.metadata = self.options.metadata
       }
 
+      self.options.path = compiler.outputFileSystem.join(this.outputPath, self.options.path)
       self.writer(compiler.inputFileSystem, compiler.outputFileSystem, output, function (err) {
         if (err) {
           compilation.errors.push(err)
