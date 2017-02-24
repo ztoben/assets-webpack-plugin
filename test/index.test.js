@@ -29,7 +29,7 @@ describe('Plugin', function () {
 
     var expected = {
       main: {
-        js: ['index-bundle.js']
+        js: 'index-bundle.js'
       }
     }
     expected = JSON.stringify(expected)
@@ -57,10 +57,10 @@ describe('Plugin', function () {
 
     var expected = {
       one: {
-        js: ['one-bundle.js']
+        js: 'one-bundle.js'
       },
       two: {
-        js: ['two-bundle.js']
+        js: 'two-bundle.js'
       }
     }
 
@@ -87,7 +87,7 @@ describe('Plugin', function () {
 
     var expected = {
       main: {
-        js: ['index-bundle.js']
+        js: 'index-bundle.js'
       }
     }
 
@@ -113,7 +113,7 @@ describe('Plugin', function () {
 
     var expected = {
       main: {
-        js: ['index-bundle.js']
+        js: 'index-bundle.js'
       }
     }
 
@@ -135,7 +135,7 @@ describe('Plugin', function () {
       plugins: [new Plugin({path: 'tmp'})]
     }
 
-    var expected = /{"main":{"js":\["index-bundle-[0-9a-f]+\.js"\]}}/
+    var expected = /{"main":{"js":"index-bundle-[0-9a-f]+\.js"}}/
 
     var args = {
       config: webpackConfig,
@@ -155,7 +155,7 @@ describe('Plugin', function () {
       plugins: [new Plugin({path: 'tmp'})]
     }
 
-    var expected = /{"main":{"js":\["main\.js\?[0-9a-f]+"\]}}/
+    var expected = /{"main":{"js":"main\.js\?[0-9a-f]+"}}/
 
     var args = {
       config: webpackConfig,
@@ -191,14 +191,14 @@ describe('Plugin', function () {
 
     var expected = {
       one: {
-        js: ['one-bundle.js']
+        js: 'one-bundle.js'
       },
       two: {
-        js: ['two-bundle.js']
+        js: 'two-bundle.js'
       },
       styles: {
-        js: ['styles-bundle.js'],
-        css: ['styles-bundle.css']
+        js: 'styles-bundle.js',
+        css: 'styles-bundle.css'
       }
     }
 
@@ -240,13 +240,13 @@ describe('Plugin', function () {
 
     var expected = {
       one: {
-        js: ['one-bundle.js']
+        js: 'one-bundle.js'
       },
       two: {
-        js: ['two-bundle.js']
+        js: 'two-bundle.js'
       },
       styles: {
-        js: ['styles-bundle.js'],
+        js: 'styles-bundle.js',
         css: ['styles-bundle1.css', 'styles-bundle2.css']
       }
     }
@@ -296,7 +296,7 @@ describe('Plugin', function () {
 
     var expected = {
       main: {
-        js: ['index-bundle.js']
+        js: 'index-bundle.js'
       }
     }
 
@@ -327,9 +327,9 @@ describe('Plugin', function () {
     }
 
     var expected = {
-      one: {js: ['one.js']},
-      two: {js: ['two.js']},
-      common: {js: ['common.js']}
+      one: {js: 'one.js'},
+      two: {js: 'two.js'},
+      common: {js: 'common.js'}
     }
 
     var args = {
@@ -358,7 +358,7 @@ describe('Plugin', function () {
 
     var expected = {
       main: {
-        js: ['index-bundle.js']
+        js: 'index-bundle.js'
       },
       metadata: {
         foo: 'bar',
@@ -392,11 +392,11 @@ describe('Plugin', function () {
     }
 
     var expected = {
-      one: {js: ['one.js']},
-      two: {js: ['two.js']},
-      common: {js: ['common.js']},
+      one: {js: 'one.js'},
+      two: {js: 'two.js'},
+      common: {js: 'common.js'},
       manifest: {
-        js: ['manifest.js'],
+        js: 'manifest.js',
         text: manifestStr
       }
     }
@@ -426,11 +426,11 @@ describe('Plugin', function () {
     }
 
     var expected = {
-      one: {js: ['one.js']},
-      two: {js: ['two.js']},
-      common: {js: ['common.js']},
+      one: {js: 'one.js'},
+      two: {js: 'two.js'},
+      common: {js: 'common.js'},
       manifesto: {
-        js: ['manifesto.js'],
+        js: 'manifesto.js',
         text: manifestStr
       }
     }
@@ -461,11 +461,11 @@ describe('Plugin', function () {
     }
 
     var expected = {
-      one: {js: ['one.js']},
-      two: {js: ['two.js']},
-      common: {js: ['common.js']},
+      one: {js: 'one.js'},
+      two: {js: 'two.js'},
+      common: {js: 'common.js'},
       manifesto: {
-        js: ['manifesto.js'],
+        js: 'manifesto.js',
         text: require('./fixtures/manifestWithSourceMap')
       }
     }

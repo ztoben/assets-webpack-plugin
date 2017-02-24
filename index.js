@@ -61,10 +61,15 @@ AssetsWebpackPlugin.prototype = {
           }
 
           var typeName = getAssetKind(options, asset)
-          if (typeof typeMap[typeName] === 'undefined') {
-            typeMap[typeName] = []
+          var type = typeof typeMap[typeName]
+          if (type === 'undefined') {
+            typeMap[typeName] = assetPath + asset
+          } else {
+            if (type === 'string') {
+              typeMap[typeName] = [typeMap[typeName]]
+            }
+            typeMap[typeName].push(assetPath + asset)
           }
-          typeMap[typeName].push(assetPath + asset)
 
           return typeMap
         }, {})
@@ -76,7 +81,11 @@ AssetsWebpackPlugin.prototype = {
       if (manifestName) {
         var manifestEntry = output[manifestName]
         if (manifestEntry) {
-          var manifestAssetKey = manifestEntry.js[manifestEntry.js.length - 1].substr(assetPath.length)
+          var js = manifestEntry.js
+          if (!Array.isArray(js)) {
+            js = [js]
+          }
+          var manifestAssetKey = js[js.length - 1].substr(assetPath.length)
           var parentSource = compilation.assets[manifestAssetKey]
           var entryText = parentSource.source()
           if (!entryText) {
