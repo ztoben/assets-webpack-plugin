@@ -29,7 +29,7 @@ describe('Plugin', function () {
 
     var expected = {
       main: {
-        js: 'index-bundle.js'
+        js: ['index-bundle.js']
       }
     }
     expected = JSON.stringify(expected)
@@ -57,10 +57,10 @@ describe('Plugin', function () {
 
     var expected = {
       one: {
-        js: 'one-bundle.js'
+        js: ['one-bundle.js']
       },
       two: {
-        js: 'two-bundle.js'
+        js: ['two-bundle.js']
       }
     }
 
@@ -87,7 +87,7 @@ describe('Plugin', function () {
 
     var expected = {
       main: {
-        js: 'index-bundle.js'
+        js: ['index-bundle.js']
       }
     }
 
@@ -113,7 +113,7 @@ describe('Plugin', function () {
 
     var expected = {
       main: {
-        js: 'index-bundle.js'
+        js: ['index-bundle.js']
       }
     }
 
@@ -135,7 +135,7 @@ describe('Plugin', function () {
       plugins: [new Plugin({path: 'tmp'})]
     }
 
-    var expected = /{"main":{"js":"index-bundle-[0-9a-f]+\.js"}}/
+    var expected = /{"main":{"js":\["index-bundle-[0-9a-f]+\.js"\]}}/
 
     var args = {
       config: webpackConfig,
@@ -155,7 +155,7 @@ describe('Plugin', function () {
       plugins: [new Plugin({path: 'tmp'})]
     }
 
-    var expected = /{"main":{"js":"main\.js\?[0-9a-f]+"}}/
+    var expected = /{"main":{"js":\["main\.js\?[0-9a-f]+"\]}}/
 
     var args = {
       config: webpackConfig,
@@ -191,14 +191,63 @@ describe('Plugin', function () {
 
     var expected = {
       one: {
-        js: 'one-bundle.js'
+        js: ['one-bundle.js']
       },
       two: {
-        js: 'two-bundle.js'
+        js: ['two-bundle.js']
       },
       styles: {
-        js: 'styles-bundle.js',
-        css: 'styles-bundle.css'
+        js: ['styles-bundle.js'],
+        css: ['styles-bundle.css']
+      }
+    }
+
+    var args = {
+      config: webpackConfig,
+      expected: expected
+    }
+
+    expectOutput(args, done)
+  })
+
+  it('works with ExtractTextPlugin for multiple stylesheets', function (done) {
+    var extractTextPlugin1 = new ExtractTextPlugin('[name]-bundle1.css', {allChunks: true});
+    var extractTextPlugin2 = new ExtractTextPlugin('[name]-bundle2.css', {allChunks: true});
+    var webpackConfig = {
+      entry: {
+        one: path.join(__dirname, 'fixtures/one.js'),
+        two: path.join(__dirname, 'fixtures/two.js'),
+        styles: path.join(__dirname, 'fixtures/styles.js')
+      },
+      output: {
+        path: OUTPUT_DIR,
+        filename: '[name]-bundle.js'
+      },
+      module: {
+        loaders: [
+                {test: /stylesheet1.css$/, loader: extractTextPlugin1.extract('style-loader', 'css-loader')},
+                {test: /stylesheet2.css$/, loader: extractTextPlugin2.extract('style-loader', 'css-loader')}
+        ]
+      },
+      plugins: [
+        extractTextPlugin1,
+        extractTextPlugin2,
+        new Plugin({
+          path: 'tmp'
+        })
+      ]
+    }
+
+    var expected = {
+      one: {
+        js: ['one-bundle.js']
+      },
+      two: {
+        js: ['two-bundle.js']
+      },
+      styles: {
+        js: ['styles-bundle.js'],
+        css: ['styles-bundle1.css', 'styles-bundle2.css']
       }
     }
 
@@ -247,7 +296,7 @@ describe('Plugin', function () {
 
     var expected = {
       main: {
-        js: 'index-bundle.js'
+        js: ['index-bundle.js']
       }
     }
 
@@ -278,9 +327,9 @@ describe('Plugin', function () {
     }
 
     var expected = {
-      one: {js: 'one.js'},
-      two: {js: 'two.js'},
-      common: {js: 'common.js'}
+      one: {js: ['one.js']},
+      two: {js: ['two.js']},
+      common: {js: ['common.js']}
     }
 
     var args = {
@@ -309,7 +358,7 @@ describe('Plugin', function () {
 
     var expected = {
       main: {
-        js: 'index-bundle.js'
+        js: ['index-bundle.js']
       },
       metadata: {
         foo: 'bar',
@@ -343,11 +392,11 @@ describe('Plugin', function () {
     }
 
     var expected = {
-      one: {js: 'one.js'},
-      two: {js: 'two.js'},
-      common: {js: 'common.js'},
+      one: {js: ['one.js']},
+      two: {js: ['two.js']},
+      common: {js: ['common.js']},
       manifest: {
-        js: 'manifest.js',
+        js: ['manifest.js'],
         text: manifestStr
       }
     }
@@ -377,11 +426,11 @@ describe('Plugin', function () {
     }
 
     var expected = {
-      one: {js: 'one.js'},
-      two: {js: 'two.js'},
-      common: {js: 'common.js'},
+      one: {js: ['one.js']},
+      two: {js: ['two.js']},
+      common: {js: ['common.js']},
       manifesto: {
-        js: 'manifesto.js',
+        js: ['manifesto.js'],
         text: manifestStr
       }
     }
@@ -412,11 +461,11 @@ describe('Plugin', function () {
     }
 
     var expected = {
-      one: {js: 'one.js'},
-      two: {js: 'two.js'},
-      common: {js: 'common.js'},
+      one: {js: ['one.js']},
+      two: {js: ['two.js']},
+      common: {js: ['common.js']},
       manifesto: {
-        js: 'manifesto.js',
+        js: ['manifesto.js'],
         text: require('./fixtures/manifestWithSourceMap')
       }
     }

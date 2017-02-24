@@ -61,10 +61,10 @@ The plugin will output the following json file:
 ```json
 {
     "one": {
-        "js": "/js/one_2bb80372ebe8047a68d4.bundle.js"
+        "js": ["/js/one_2bb80372ebe8047a68d4.bundle.js"]
     },
     "two": {
-        "js": "/js/two_2bb80372ebe8047a68d4.bundle.js"
+        "js": ["/js/two_2bb80372ebe8047a68d4.bundle.js"]
     }
 }
 ```
