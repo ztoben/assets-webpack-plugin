@@ -210,6 +210,55 @@ describe('Plugin', function () {
     expectOutput(args, done)
   })
 
+  it('works with ExtractTextPlugin for multiple stylesheets', function (done) {
+    var extractTextPlugin1 = new ExtractTextPlugin('[name]-bundle1.css', {allChunks: true})
+    var extractTextPlugin2 = new ExtractTextPlugin('[name]-bundle2.css', {allChunks: true})
+    var webpackConfig = {
+      entry: {
+        one: path.join(__dirname, 'fixtures/one.js'),
+        two: path.join(__dirname, 'fixtures/two.js'),
+        styles: path.join(__dirname, 'fixtures/styles.js')
+      },
+      output: {
+        path: OUTPUT_DIR,
+        filename: '[name]-bundle.js'
+      },
+      module: {
+        loaders: [
+                {test: /stylesheet1.css$/, loader: extractTextPlugin1.extract('style-loader', 'css-loader')},
+                {test: /stylesheet2.css$/, loader: extractTextPlugin2.extract('style-loader', 'css-loader')}
+        ]
+      },
+      plugins: [
+        extractTextPlugin1,
+        extractTextPlugin2,
+        new Plugin({
+          path: 'tmp'
+        })
+      ]
+    }
+
+    var expected = {
+      one: {
+        js: 'one-bundle.js'
+      },
+      two: {
+        js: 'two-bundle.js'
+      },
+      styles: {
+        js: 'styles-bundle.js',
+        css: ['styles-bundle1.css', 'styles-bundle2.css']
+      }
+    }
+
+    var args = {
+      config: webpackConfig,
+      expected: expected
+    }
+
+    expectOutput(args, done)
+  })
+
   it('includes full publicPath', function (done) {
     var webpackConfig = {
       entry: path.join(__dirname, 'fixtures/one.js'),

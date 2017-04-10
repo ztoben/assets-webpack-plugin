@@ -14,6 +14,7 @@ This change log follows the format documented in [Keep a CHANGELOG].
 
 ### Added
 
+- Support for multiple assets of the same type per chunk.
 - Support for source maps when `includeManifest` option is set.
 
 ### Added
