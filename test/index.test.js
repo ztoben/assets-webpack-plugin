@@ -211,8 +211,8 @@ describe('Plugin', function () {
   })
 
   it('works with ExtractTextPlugin for multiple stylesheets', function (done) {
-    var extractTextPlugin1 = new ExtractTextPlugin('[name]-bundle1.css', {allChunks: true});
-    var extractTextPlugin2 = new ExtractTextPlugin('[name]-bundle2.css', {allChunks: true});
+    var extractTextPlugin1 = new ExtractTextPlugin('[name]-bundle1.css', {allChunks: true})
+    var extractTextPlugin2 = new ExtractTextPlugin('[name]-bundle2.css', {allChunks: true})
     var webpackConfig = {
       entry: {
         one: path.join(__dirname, 'fixtures/one.js'),
