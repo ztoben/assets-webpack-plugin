@@ -13,7 +13,26 @@ function AssetsWebpackPlugin (options) {
     filename: 'webpack-assets.json',
     prettyPrint: false,
     update: false,
-    fullPath: true
+    fullPath: true,
+    /**
+     * binaryRegex something like /^(\w+)\.(png|jpg)$/,
+     * which will match the chunk created by file-loader of options `name=[name].[ext]`
+     * first captured will be used as name of chunk,
+     * last captured will be used as ext of chunk
+     */
+    binaryRegex: undefined,
+    /**
+     * key for binary files, default 'assets'
+     * manifest.json
+     * {
+     *   ...,
+     *    assets: {
+     *      key: v,
+     *      key, v
+     *    }
+     * }
+    */
+    binaryKey: 'assets'
   }, options)
   this.writer = createQueuedWriter(createOutputWriter(this.options))
 }
@@ -49,6 +68,8 @@ AssetsWebpackPlugin.prototype = {
             //     'index-bundle-42b6e1ec4fa8c5f0303e.js.map' ]
             // }
       var assetsByChunkName = stats.assetsByChunkName
+      var allAssets = stats.assets
+      var chunkSet = []
 
       var output = Object.keys(assetsByChunkName).reduce(function (chunkMap, chunkName) {
         var assets = assetsByChunkName[chunkName]
@@ -60,6 +81,8 @@ AssetsWebpackPlugin.prototype = {
             return typeMap
           }
 
+          chunkSet.push(asset)
+
           var typeName = getAssetKind(options, asset)
           typeMap[typeName] = assetPath + asset
 
@@ -68,6 +91,26 @@ AssetsWebpackPlugin.prototype = {
 
         return chunkMap
       }, {})
+
+      if (self.options.binaryRegex) {
+        var assetObj = allAssets.reduce(function (chunkMap, asset) {
+          // if asset isn't in assetsByChunkNameObject
+          // then try to add it to assetManifest
+          var assetName = asset.name;
+          if (chunkSet.indexOf(assetName) === -1) {
+            var matches = assetName.match(self.options.binaryRegex)
+            if (matches) {
+              var name = matches[1]
+              var ext = matches[matches.length - 1] || '';
+              var chunkKey = ext ? name + '.' + ext : name;
+              chunkMap[chunkKey] = assetPath + assetName
+            }
+          }
+          return chunkMap
+        }, {})
+
+        output[self.options.binaryKey] = assetObj;
+      }
 
       var manifestName = self.options.includeManifest === true ? 'manifest' : self.options.includeManifest
       if (manifestName) {
