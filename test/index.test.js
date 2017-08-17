@@ -428,4 +428,65 @@ describe('Plugin', function () {
 
     expectOutput(args, done)
   })
+
+
+  it('support binary chunk from file-loader', function (done) {
+    var webpackConfig = {
+      devtool: 'sourcemap',
+      entry: {
+        one: path.join(__dirname, './fixtures/common-chunks/one.js'),
+        two: path.join(__dirname, './fixtures/common-chunks/two.js'),
+        three: path.join(__dirname, './fixtures/common-chunks/three.js')
+      },
+      output: {
+        path: OUTPUT_DIR,
+        filename: '[name].js'
+      },
+      module: {
+        loaders: [
+          {
+            test: /\.(png|jpg|gif)$/,
+            loader: 'file?name=[name].[ext]'
+          }
+        ]
+      },
+      resolveLoader: {
+        modulesDirectories: ["node_modules"],
+      },
+      plugins: [
+        new webpack.optimize.CommonsChunkPlugin({ names: ['common'] }),
+        new Plugin({
+          path: 'tmp',
+          binaryRegex: /^(\w+)\.(png|jpg|gif)$/
+        })
+      ]
+    }
+
+    var expected = {
+      one: {
+        js: "one.js"
+      },
+      three: {
+        js: "three.js"
+      },
+      two: {
+        js: "two.js"
+      },
+      common: {
+        js: "common.js"
+      },
+      assets: {
+        "demo1.png": "demo1.png",
+        "demo.jpg": "demo.jpg",
+        "Martin.jpg": "Martin.jpg"
+      }
+    }
+
+    var args = {
+      config: webpackConfig,
+      expected: expected
+    }
+
+    expectOutput(args, done)
+  })
 })
