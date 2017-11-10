@@ -29,6 +29,7 @@
     "css-loader": "^0.9.1",
     "extract-text-webpack-plugin": "^0.3.8",
     "lodash": "^3.9.3",
+    "mkdirp": "^0.5.1",
     "mocha": "^2.2.5",
     "rimraf": "^2.2.8",
     "snazzy": "^3.0.0",
@@ -40,7 +41,6 @@
     "camelcase": "^1.2.1",
     "escape-string-regexp": "^1.0.3",
     "lodash.assign": "^3.2.0",
-    "lodash.merge": "^3.3.2",
-    "mkdirp": "^0.5.1"
+    "lodash.merge": "^3.3.2"
   }
 }
