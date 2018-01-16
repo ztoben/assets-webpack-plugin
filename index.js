@@ -69,18 +69,24 @@ AssetsWebpackPlugin.prototype = {
         return chunkMap
       }, {})
 
-      var manifestName = self.options.includeManifest === true ? 'manifest' : self.options.includeManifest
-      if (manifestName) {
-        var manifestEntry = output[manifestName]
-        if (manifestEntry) {
-          var manifestAssetKey = manifestEntry.js.substr(assetPath.length)
-          var parentSource = compilation.assets[manifestAssetKey]
-          var entryText = parentSource.source()
-          if (!entryText) {
-            throw new Error('Could not locate manifest function in source', parentSource)
+      var manifestNames = self.options.includeManifest === true ? ['manifest'] : self.options.includeManifest
+      if(typeof manifestNames === 'string') {
+        manifestNames = [manifestNames];
+      }
+      if (manifestNames) {
+        for(var i = 0; i < manifestNames.length; i++) {
+          var manifestName = manifestNames[i];
+          var manifestEntry = output[manifestName]
+          if (manifestEntry) {
+            var manifestAssetKey = manifestEntry.js.substr(assetPath.length)
+            var parentSource = compilation.assets[manifestAssetKey]
+            var entryText = parentSource.source()
+            if (!entryText) {
+              throw new Error('Could not locate manifest function in source', parentSource)
+            }
+            // use _value if the uglify plugin was applied
+            manifestEntry.text = entryText
           }
-          // use _value if the uglify plugin was applied
-          manifestEntry.text = entryText
         }
       }
 
