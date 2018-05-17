@@ -25,7 +25,7 @@ AssetsWebpackPlugin.prototype = {
   apply: function (compiler) {
     var self = this
 
-    compiler.plugin('after-emit', function (compilation, callback) {
+    var afterEmit = (compilation, callback) => {
       var options = compiler.options
       var stats = compilation.getStats().toJson({
         hash: true,
@@ -37,17 +37,17 @@ AssetsWebpackPlugin.prototype = {
         errorDetails: false,
         timings: false
       })
-            // publicPath with resolved [hash] placeholder
+      // publicPath with resolved [hash] placeholder
 
       var assetPath = (stats.publicPath && self.options.fullPath) ? stats.publicPath : ''
-            // assetsByChunkName contains a hash with the bundle names and the produced files
-            // e.g. { one: 'one-bundle.js', two: 'two-bundle.js' }
-            // in some cases (when using a plugin or source maps) it might contain an array of produced files
-            // e.g. {
-            // main:
-            //   [ 'index-bundle-42b6e1ec4fa8c5f0303e.js',
-            //     'index-bundle-42b6e1ec4fa8c5f0303e.js.map' ]
-            // }
+      // assetsByChunkName contains a hash with the bundle names and the produced files
+      // e.g. { one: 'one-bundle.js', two: 'two-bundle.js' }
+      // in some cases (when using a plugin or source maps) it might contain an array of produced files
+      // e.g. {
+      // main:
+      //   [ 'index-bundle-42b6e1ec4fa8c5f0303e.js',
+      //     'index-bundle-42b6e1ec4fa8c5f0303e.js.map' ]
+      // }
       var assetsByChunkName = stats.assetsByChunkName
 
       var output = Object.keys(assetsByChunkName).reduce(function (chunkMap, chunkName) {
@@ -94,7 +94,15 @@ AssetsWebpackPlugin.prototype = {
         }
         callback()
       })
-    })
+    }
+
+    if (compiler.hooks) {
+      const plugin = {name: 'AssetsWebpackPlugin'}
+
+      compiler.hooks.afterEmit.tapAsync(plugin, afterEmit)
+    } else {
+      compiler.plugin('after-emit', afterEmit)
+    }
   }
 }
 
