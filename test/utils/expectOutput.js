@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-expressions */
+
 var _ = require('lodash')
 var expect = require('chai').expect
 var mkdirp = require('mkdirp')

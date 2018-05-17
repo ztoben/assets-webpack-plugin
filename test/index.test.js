@@ -1,10 +1,8 @@
 /* eslint-env mocha */
 
 var path = require('path')
-var webpack = require('webpack')
 var rmRf = require('rimraf')
 var Plugin = require('../index.js')
-var manifestStr = require('./fixtures/manifest.js')
 
 var OUTPUT_DIR = path.join(__dirname, '../tmp')
 var expectOutput = require('./utils/expectOutput')(OUTPUT_DIR)
