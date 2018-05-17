@@ -97,7 +97,7 @@ AssetsWebpackPlugin.prototype = {
     }
 
     if (compiler.hooks) {
-      const plugin = {name: 'AssetsWebpackPlugin'}
+      var plugin = {name: 'AssetsWebpackPlugin'}
 
       compiler.hooks.afterEmit.tapAsync(plugin, afterEmit)
     } else {
