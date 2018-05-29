@@ -66,7 +66,7 @@ describe('parseTemplate', function () {
     it('matches strings with [id] placeholder', function () {
       var tpl = parseTemplate('foo-bar.[id].js')
       expect(tpl.matches('foo-bar.666.js')).to.eq(true)
-      expect(tpl.matches('foo-bar.nope.js')).to.eq(false)
+      expect(tpl.matches('foo-bar.chunk.js')).to.eq(true)
     })
 
     it('matches strings with [name] placeholder', function () {

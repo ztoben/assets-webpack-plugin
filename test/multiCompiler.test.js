@@ -1,4 +1,5 @@
 /* eslint-env mocha */
+/* eslint-disable no-unused-expressions */
 
 var path = require('path')
 var expect = require('chai').expect
@@ -59,7 +60,7 @@ describe('Plugin', function () {
   })
 
   it('updates output between compiler calls when options.update is true', function (done) {
-    var config_1 = {
+    var config1 = {
       entry: {
         one: path.join(__dirname, 'fixtures/one.js')
       },
@@ -69,7 +70,7 @@ describe('Plugin', function () {
       },
       plugins: [new Plugin({path: 'tmp', update: true})]
     }
-    var config_2 = {
+    var config2 = {
       entry: {
         two: path.join(__dirname, 'fixtures/two.js')
       },
@@ -81,9 +82,9 @@ describe('Plugin', function () {
     }
 
     var expected = {one: {js: 'one-bundle.js'}, two: {js: 'two-bundle.js'}}
-    var args = {config: config_2, expected: expected}
+    var args = {config: config2, expected: expected}
 
-    webpack(config_1, function (err, stats) {
+    webpack(config1, function (err, stats) {
       expect(err).to.be.null
       expect(stats.hasErrors()).to.be.false
       expectOutput(args, done)
@@ -91,7 +92,7 @@ describe('Plugin', function () {
   })
 
   it('overwrites output between compiler calls when options.update is false', function (done) {
-    var config_1 = {
+    var config1 = {
       entry: {
         one: path.join(__dirname, 'fixtures/one.js')
       },
@@ -101,7 +102,7 @@ describe('Plugin', function () {
       },
       plugins: [new Plugin({path: 'tmp', update: false})]
     }
-    var config_2 = {
+    var config2 = {
       entry: {
         two: path.join(__dirname, 'fixtures/two.js')
       },
@@ -113,9 +114,9 @@ describe('Plugin', function () {
     }
 
     var expected = {two: {js: 'two-bundle.js'}}
-    var args = {config: config_2, expected: expected}
+    var args = {config: config2, expected: expected}
 
-    webpack(config_1, function (err, stats) {
+    webpack(config1, function (err, stats) {
       expect(err).to.be.null
       expect(stats.hasErrors()).to.be.false
       expectOutput(args, done)
