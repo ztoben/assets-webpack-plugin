@@ -10,6 +10,12 @@ This change log follows the format documented in [Keep a CHANGELOG].
 
 ## Unreleased
 
+## 3.6.0 - 2018-05-29
+
+### Changed
+
+- webpack 4 support (kudos to [@ztoben](https://github.com/ztoben) and [@saveman71](https://github.com/saveman71) see [#89](https://github.com/kossnocorp/assets-webpack-plugin/pull/89))
+
 ## 3.5.1 - 2017-01-20
 
 ### Fixed
