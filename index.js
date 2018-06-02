@@ -91,8 +91,8 @@ AssetsWebpackPlugin.prototype = {
       }
 
       if (!compiler.outputFileSystem.readFile) {
-        compiler.outputFileSystem.readFile = fs.readFile.bind(fs);
-        compiler.outputFileSystem.join = path.join.bind(path);
+        compiler.outputFileSystem.readFile = fs.readFile.bind(fs)
+        compiler.outputFileSystem.join = path.join.bind(path)
       }
 
       self.writer(compiler.outputFileSystem, output, function (err) {
