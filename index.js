@@ -15,7 +15,8 @@ function AssetsWebpackPlugin (options) {
     filename: 'webpack-assets.json',
     prettyPrint: false,
     update: false,
-    fullPath: true
+    fullPath: true,
+    arrayOfPaths: false
   }, options)
   this.writer = createQueuedWriter(createOutputWriter(this.options))
 }
@@ -63,7 +64,13 @@ AssetsWebpackPlugin.prototype = {
           }
 
           var typeName = getAssetKind(options, asset)
-          typeMap[typeName] = assetPath + asset
+
+          if (self.options.arrayOfPaths) {
+            typeMap[typeName] = typeMap[typeName] || []
+            typeMap[typeName].push(`${assetPath}${asset}`)
+          } else {
+            typeMap[typeName] = assetPath + asset
+          }
 
           return typeMap
         }, {})
