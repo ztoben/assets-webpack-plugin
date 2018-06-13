@@ -52,7 +52,7 @@ AssetsWebpackPlugin.prototype = {
       var seenAssets = {}
 
       var chunks = Object.keys(assetsByChunkName)
-      chunks.push("")  // push "unamed" chunk
+      chunks.push('')  // push "unamed" chunk
       var output = chunks.reduce(function (chunkMap, chunkName) {
         var assets = chunkName ? assetsByChunkName[chunkName] : stats.assets
         if (!Array.isArray(assets)) {
@@ -69,7 +69,7 @@ AssetsWebpackPlugin.prototype = {
           typeMap[typeName] = assetPath + asset
 
           added = true
-          seenAssets[asset] = true;
+          seenAssets[asset] = true
           return typeMap
         }, {})
 
