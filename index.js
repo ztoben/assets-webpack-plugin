@@ -15,8 +15,7 @@ function AssetsWebpackPlugin (options) {
     filename: 'webpack-assets.json',
     prettyPrint: false,
     update: false,
-    fullPath: true,
-    arrayOfPaths: false
+    fullPath: true
   }, options)
   this.writer = createQueuedWriter(createOutputWriter(this.options))
 }
