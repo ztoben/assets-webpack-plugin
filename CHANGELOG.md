@@ -10,6 +10,12 @@ This change log follows the format documented in [Keep a CHANGELOG].
 
 ## Unreleased
 
+## 3.7.1 - 2018-06-13
+
+### Changed
+
+- Fixes a parsing error with the asset path introduced by the fix for [#88](https://github.com/kossnocorp/assets-webpack-plugin/issues/88)
+
 ## 3.7.0 - 2018-06-13
 
 ### Changed
