@@ -10,6 +10,12 @@ This change log follows the format documented in [Keep a CHANGELOG].
 
 ## Unreleased
 
+## 3.7.0 - 2018-06-13
+
+### Changed
+
+- Adds all assets to the manifest that aren't in a chunk (kudos to [@Kronuz](https://github.com/Kronuz) see [#65](https://github.com/kossnocorp/assets-webpack-plugin/pull/65))
+
 ## 3.6.3 - 2018-06-13
 
 ### Changed
