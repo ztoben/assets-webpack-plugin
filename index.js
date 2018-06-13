@@ -54,7 +54,7 @@ AssetsWebpackPlugin.prototype = {
       var seenAssets = {}
 
       var chunks = Object.keys(assetsByChunkName)
-      chunks.push('')  // push "unamed" chunk
+      chunks.push('')// push "unamed" chunk
       var output = chunks.reduce(function (chunkMap, chunkName) {
         var assets = chunkName ? assetsByChunkName[chunkName] : stats.assets
         if (!Array.isArray(assets)) {
@@ -63,7 +63,7 @@ AssetsWebpackPlugin.prototype = {
         var added = false
         var typeMap = assets.reduce(function (typeMap, obj) {
           var asset = obj.name || obj
-          if (isHMRUpdate(options, asset) || isSourceMap(options, asset) || !chunkName && seenAssets[asset]) {
+          if (isHMRUpdate(options, asset) || isSourceMap(options, asset) || (!chunkName && seenAssets[asset])) {
             return typeMap
           }
 
