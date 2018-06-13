@@ -68,7 +68,7 @@ AssetsWebpackPlugin.prototype = {
           }
 
           var typeName = getAssetKind(options, asset)
-          var combinedPath = assetPath ? `${assetPath}/${asset}`.replace(/\/\//, '/') : asset
+          var combinedPath = assetPath && assetPath.slice(-1) !== '/' ? `${assetPath}/${asset}` : assetPath + asset
           var type = typeof typeMap[typeName]
           if (type === 'undefined') {
             typeMap[typeName] = combinedPath
