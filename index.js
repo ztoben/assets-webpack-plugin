@@ -63,7 +63,7 @@ AssetsWebpackPlugin.prototype = {
           }
 
           var typeName = getAssetKind(options, asset)
-          typeMap[typeName] = path.join(assetPath, asset)
+          typeMap[typeName] = !!assetPath ? `${assetPath}/${asset}`.replace(/\/\//, '/') : asset
 
           return typeMap
         }, {})
