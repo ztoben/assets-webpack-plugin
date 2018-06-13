@@ -10,10 +10,11 @@ This change log follows the format documented in [Keep a CHANGELOG].
 
 ## Unreleased
 
-## 3.6.1 - 2018-06-02
+## 3.6.1 - 2018-06-13
 
 ### Changed
 
+- Fixed incorrect concatination of asset file names and directory path see [#88](https://github.com/kossnocorp/assets-webpack-plugin/issues/88)
 - webpack-dev-server (which uses memory-fs) correctly generates the manifest inside the memory file system (kudos to [@Kronuz](https://github.com/Kronuz) see [#90](https://github.com/kossnocorp/assets-webpack-plugin/pull/90))
 
 ## 3.6.0 - 2018-05-29
