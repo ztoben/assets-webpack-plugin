@@ -6,6 +6,7 @@ var Plugin = require('../index.js')
 
 var OUTPUT_DIR = path.join(__dirname, '../tmp')
 var expectOutput = require('./utils/expectOutput')(OUTPUT_DIR)
+var MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 describe('Plugin', function () {
   beforeEach(function (done) {
@@ -49,7 +50,7 @@ describe('Plugin', function () {
         path: OUTPUT_DIR,
         filename: '[name]-bundle.js'
       },
-      plugins: [new Plugin({path: 'tmp'})]
+      plugins: [new Plugin({ path: 'tmp' })]
     }
 
     var expected = {
@@ -105,7 +106,7 @@ describe('Plugin', function () {
         path: OUTPUT_DIR,
         filename: 'index-bundle.js'
       },
-      plugins: [new Plugin({path: 'tmp'})]
+      plugins: [new Plugin({ path: 'tmp' })]
     }
 
     var expected = {
@@ -129,7 +130,7 @@ describe('Plugin', function () {
         path: OUTPUT_DIR,
         filename: 'index-bundle-[hash].js'
       },
-      plugins: [new Plugin({path: 'tmp'})]
+      plugins: [new Plugin({ path: 'tmp' })]
     }
 
     var expected = /{"main":{"js":"index-bundle-[0-9a-f]+\.js"}}/
@@ -149,10 +150,71 @@ describe('Plugin', function () {
         path: OUTPUT_DIR,
         filename: '[name].js?[hash]'
       },
-      plugins: [new Plugin({path: 'tmp'})]
+      plugins: [new Plugin({ path: 'tmp' })]
     }
 
     var expected = /{"main":{"js":"main\.js\?[0-9a-f]+"}}/
+
+    var args = {
+      config: webpackConfig,
+      expected: expected
+    }
+
+    expectOutput(args, done)
+  })
+
+  it('works with ExtractTextPlugin for multiple stylesheets', function (done) {
+    var extractTextPlugin1 = new MiniCssExtractPlugin({filename: '[name]-bundle1.css', chunkFilename: '[id].css'})
+    var extractTextPlugin2 = new MiniCssExtractPlugin({filename: '[name]-bundle2.css', chunkFilename: '[id].css'})
+    var webpackConfig = {
+      entry: {
+        one: path.join(__dirname, 'fixtures/one.js'),
+        two: path.join(__dirname, 'fixtures/two.js'),
+        styles: path.join(__dirname, 'fixtures/styles.js')
+      },
+      output: {
+        path: OUTPUT_DIR,
+        filename: '[name]-bundle.js'
+      },
+      module: {
+        rules: [
+          {
+            test: /1\.css$/,
+            use: [
+              MiniCssExtractPlugin.loader,
+              'css-loader'
+            ]
+          },
+          {
+            test: /2\.css$/,
+            use: [
+              MiniCssExtractPlugin.loader,
+              'css-loader'
+            ]
+          }
+        ]
+      },
+      plugins: [
+        extractTextPlugin1,
+        extractTextPlugin2,
+        new Plugin({
+          path: 'tmp'
+        })
+      ]
+    }
+
+    var expected = {
+      one: {
+        js: 'one-bundle.js'
+      },
+      two: {
+        js: 'two-bundle.js'
+      },
+      styles: {
+        js: 'styles-bundle.js',
+        css: ['styles-bundle1.css', 'styles-bundle2.css']
+      }
+    }
 
     var args = {
       config: webpackConfig,
@@ -170,7 +232,7 @@ describe('Plugin', function () {
         publicPath: '/public/path/[hash]/',
         filename: 'index-bundle.js'
       },
-      plugins: [new Plugin({path: 'tmp'})]
+      plugins: [new Plugin({ path: 'tmp' })]
     }
 
     var expected = new RegExp('/public/path/[0-9a-f]+/index-bundle.js', 'i')

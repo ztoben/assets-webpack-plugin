@@ -10,6 +10,12 @@ This change log follows the format documented in [Keep a CHANGELOG].
 
 ## Unreleased
 
+## 3.6.3 - 2018-06-13
+
+### Changed
+
+- Add support for multiple files of the same extension (kudos to [@aaronatmycujoo](https://github.com/aaronatmycujoo) see [#79](https://github.com/kossnocorp/assets-webpack-plugin/pull/79) and [@Kronuz](https://github.com/Kronuz) see [#64](https://github.com/kossnocorp/assets-webpack-plugin/pull/64))
+
 ## 3.6.2 - 2018-06-13
 
 ### Changed

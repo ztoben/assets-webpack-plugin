@@ -28,12 +28,13 @@
     "chai": "^4.1.2",
     "css-loader": "^0.28.11",
     "lodash": "^3.9.3",
+    "mini-css-extract-plugin": "^0.4.0",
     "mocha": "^5.2.0",
     "rimraf": "^2.6.2",
     "snazzy": "^7.1.1",
     "standard": "^11.0.1",
     "style-loader": "^0.21.0",
-    "webpack": "^4.8.3"
+    "webpack": "^4.10.2"
   },
   "dependencies": {
     "camelcase": "^5.0.0",

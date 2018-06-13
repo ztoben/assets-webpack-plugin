@@ -65,11 +65,14 @@ AssetsWebpackPlugin.prototype = {
 
           var typeName = getAssetKind(options, asset)
           var combinedPath = assetPath ? `${assetPath}/${asset}`.replace(/\/\//, '/') : asset
-          if (self.options.arrayOfPaths) {
-            typeMap[typeName] = typeMap[typeName] || []
-            typeMap[typeName].push(combinedPath)
-          } else {
+          var type = typeof typeMap[typeName]
+          if (type === 'undefined') {
             typeMap[typeName] = combinedPath
+          } else {
+            if (type === 'string') {
+              typeMap[typeName] = [typeMap[typeName]]
+            }
+            typeMap[typeName].push(combinedPath)
           }
 
           return typeMap
@@ -82,7 +85,11 @@ AssetsWebpackPlugin.prototype = {
       if (manifestName) {
         var manifestEntry = output[manifestName]
         if (manifestEntry) {
-          var manifestAssetKey = manifestEntry.js.substr(assetPath.length)
+          var js = manifestEntry.js
+          if (!Array.isArray(js)) {
+            js = [js]
+          }
+          var manifestAssetKey = js[js.length - 1].substr(assetPath.length)
           var parentSource = compilation.assets[manifestAssetKey]
           var entryText = parentSource.source()
           if (!entryText) {
