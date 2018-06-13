@@ -51,14 +51,19 @@ AssetsWebpackPlugin.prototype = {
       //     'index-bundle-42b6e1ec4fa8c5f0303e.js.map' ]
       // }
       var assetsByChunkName = stats.assetsByChunkName
+      var seenAssets = {}
 
-      var output = Object.keys(assetsByChunkName).reduce(function (chunkMap, chunkName) {
-        var assets = assetsByChunkName[chunkName]
+      var chunks = Object.keys(assetsByChunkName)
+      chunks.push('')  // push "unamed" chunk
+      var output = chunks.reduce(function (chunkMap, chunkName) {
+        var assets = chunkName ? assetsByChunkName[chunkName] : stats.assets
         if (!Array.isArray(assets)) {
           assets = [assets]
         }
-        chunkMap[chunkName] = assets.reduce(function (typeMap, asset) {
-          if (isHMRUpdate(options, asset) || isSourceMap(options, asset)) {
+        var added = false
+        var typeMap = assets.reduce(function (typeMap, obj) {
+          var asset = obj.name || obj
+          if (isHMRUpdate(options, asset) || isSourceMap(options, asset) || !chunkName && seenAssets[asset]) {
             return typeMap
           }
 
@@ -74,9 +79,14 @@ AssetsWebpackPlugin.prototype = {
             typeMap[typeName].push(combinedPath)
           }
 
+          added = true
+          seenAssets[asset] = true
           return typeMap
         }, {})
 
+        if (added) {
+          chunkMap[chunkName] = typeMap
+        }
         return chunkMap
       }, {})
 
