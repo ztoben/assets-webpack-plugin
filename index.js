@@ -63,7 +63,7 @@ AssetsWebpackPlugin.prototype = {
           }
 
           var typeName = getAssetKind(options, asset)
-          typeMap[typeName] = assetPath + asset
+          typeMap[typeName] = path.join(assetPath, asset)
 
           return typeMap
         }, {})
