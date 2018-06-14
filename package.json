@@ -24,6 +24,10 @@
     "url": "https://github.com/kossnocorp/assets-webpack-plugin/issues"
   },
   "homepage": "https://github.com/kossnocorp/assets-webpack-plugin",
+  "files": [
+    "index.js",
+    "lib/"
+  ],
   "devDependencies": {
     "chai": "^4.1.2",
     "css-loader": "^0.28.11",
