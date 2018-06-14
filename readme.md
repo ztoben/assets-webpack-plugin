@@ -13,9 +13,11 @@ Webpack plugin that emits a json file with assets paths.
 
 - [Test](#test)
 
-- [Change Log](./CHANGELOG.md)
+- [Change Log](./changelog.md)
 
-- [Contributing Guidelines](./CONTRIBUTING.md)
+- [Contributing Guidelines](./contributing.md)
+
+- [Contributors](./contributors.md)
 
 ## Why Is This Useful?
 
