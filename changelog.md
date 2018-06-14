@@ -10,6 +10,12 @@ This change log follows the format documented in [Keep a CHANGELOG].
 
 ## Unreleased
 
+## 3.7.2 - 2018-06-14
+
+### Changed
+
+- Reduces npm package size [#67](https://github.com/kossnocorp/assets-webpack-plugin/issues/67)
+
 ## 3.7.1 - 2018-06-13
 
 ### Changed
