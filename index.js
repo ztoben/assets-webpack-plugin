@@ -1,5 +1,3 @@
-var fs = require('fs')
-var path = require('path')
 var merge = require('lodash.merge')
 
 var getAssetKind = require('./lib/getAssetKind')
@@ -113,12 +111,7 @@ AssetsWebpackPlugin.prototype = {
         output.metadata = self.options.metadata
       }
 
-      if (!compiler.outputFileSystem.readFile) {
-        compiler.outputFileSystem.readFile = fs.readFile.bind(fs)
-        compiler.outputFileSystem.join = path.join.bind(path)
-      }
-
-      self.writer(compiler.outputFileSystem, output, function (err) {
+      self.writer(output, function (err) {
         if (err) {
           compilation.errors.push(err)
         }
