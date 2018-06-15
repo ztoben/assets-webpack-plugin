@@ -10,6 +10,12 @@ This change log follows the format documented in [Keep a CHANGELOG].
 
 ## Unreleased
 
+## 3.8.0 - 2018-06-15
+
+### Changed
+
+- Reverts [#90](https://github.com/kossnocorp/assets-webpack-plugin/pull/90), fixes [93](https://github.com/kossnocorp/assets-webpack-plugin/issues/93) and [92](https://github.com/kossnocorp/assets-webpack-plugin/issues/92)
+
 ## 3.7.2 - 2018-06-14
 
 ### Changed
