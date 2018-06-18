@@ -1,8 +1,8 @@
 {
   "name": "assets-webpack-plugin",
-  "version": "3.8.2",
+  "version": "3.8.3",
   "description": "Emits a json file with assets paths",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "lint": "standard --verbose | snazzy",
     "test": "mocha test",
