@@ -10,6 +10,12 @@ This change log follows the format documented in [Keep a CHANGELOG].
 
 ## Unreleased
 
+## 3.8.3 - 2018-06-18
+
+### Changed
+
+- Package json was pointing to the wrong index file.
+
 ## 3.8.2 - 2018-06-18
 
 ### Changed
