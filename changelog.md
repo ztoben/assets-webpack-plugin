@@ -10,6 +10,12 @@ This change log follows the format documented in [Keep a CHANGELOG].
 
 ## Unreleased
 
+## 3.8.1 - 2018-06-18
+
+### Changed
+
+- Support for listing the manifest entry first when `manifestFirst` option is set. See [#66](https://github.com/kossnocorp/assets-webpack-plugin/issues/66) for details.
+
 ## 3.8.0 - 2018-06-15
 
 ### Changed
