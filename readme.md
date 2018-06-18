@@ -150,6 +150,17 @@ new AssetsPlugin({includeManifest: 'manifest'})
 // </script>
 ```
 
+#### `manifestFirst`
+
+Optional. `false` by default.
+
+Orders the assets output so that manifest is the first entry. This is useful for cases where script tags are generated
+from the assets json output, and order of import is important.
+
+```js
+new AssetsPlugin({manifestFirst: true})
+``` 
+
 #### `path`
 
 Optional. Defaults to the current directory.

@@ -13,13 +13,13 @@ function AssetsWebpackPlugin (options) {
     filename: 'webpack-assets.json',
     prettyPrint: false,
     update: false,
-    fullPath: true
+    fullPath: true,
+    manifestFirst: true
   }, options)
   this.writer = createQueuedWriter(createOutputWriter(this.options))
 }
 
 AssetsWebpackPlugin.prototype = {
-
   constructor: AssetsWebpackPlugin,
 
   apply: function (compiler) {
