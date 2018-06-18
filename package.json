@@ -1,11 +1,13 @@
 {
   "name": "assets-webpack-plugin",
-  "version": "3.8.1",
+  "version": "3.8.2",
   "description": "Emits a json file with assets paths",
   "main": "index.js",
   "scripts": {
     "lint": "standard --verbose | snazzy",
-    "test": "mocha test"
+    "test": "mocha test",
+    "build": "babel index.js --out-dir dist && babel lib --out-dir dist/lib",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -26,9 +28,12 @@
   "homepage": "https://github.com/kossnocorp/assets-webpack-plugin",
   "files": [
     "index.js",
-    "lib/"
+    "dist/"
   ],
   "devDependencies": {
+    "babel-cli": "6.26.0",
+    "babel-core": "6.26.3",
+    "babel-preset-env": "1.7.0",
     "chai": "^4.1.2",
     "css-loader": "^0.28.11",
     "lodash": "^3.9.3",
