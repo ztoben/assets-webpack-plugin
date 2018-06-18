@@ -10,6 +10,12 @@ This change log follows the format documented in [Keep a CHANGELOG].
 
 ## Unreleased
 
+## 3.8.2 - 2018-06-18
+
+### Changed
+
+- Add babel to the build process.
+
 ## 3.8.1 - 2018-06-18
 
 ### Changed
