@@ -10,6 +10,12 @@ This change log follows the format documented in [Keep a CHANGELOG].
 
 ## Unreleased
 
+## 3.8.4 - 2018-06-20
+
+### Changed
+
+- No code changed. Purely for testing tagged releases on git.
+
 ## 3.8.3 - 2018-06-18
 
 ### Changed
