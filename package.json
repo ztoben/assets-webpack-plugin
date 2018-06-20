@@ -36,7 +36,7 @@
     "babel-preset-env": "1.7.0",
     "chai": "^4.1.2",
     "css-loader": "^0.28.11",
-    "lodash": "^3.9.3",
+    "lodash": "^4.17.10",
     "mini-css-extract-plugin": "^0.4.0",
     "mocha": "^5.2.0",
     "rimraf": "^2.6.2",
