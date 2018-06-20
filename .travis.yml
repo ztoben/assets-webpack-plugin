@@ -16,3 +16,16 @@ before_install:
 - npm install -g greenkeeper-lockfile@1
 before_script: greenkeeper-lockfile-update
 after_script: greenkeeper-lockfile-upload
+
+before_deploy:
+  - git config --local user.name "ztoben"
+  - git config --local user.email "zach.toben@gmail.com"
+  - git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
+deploy:
+  provider: releases
+  api_key: $GH_TOKEN
+  file: dist/*
+  skip_cleanup: true
+  on:
+    branch: master
+    tags: true
