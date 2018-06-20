@@ -1,5 +1,5 @@
 # assets-webpack-plugin
-[![Build Status](https://travis-ci.org/kossnocorp/assets-webpack-plugin.svg?branch=master)](https://travis-ci.org/kossnocorp/assets-webpack-plugin) [![Build status](https://ci.appveyor.com/api/projects/status/qmvi3h6lk0xu8833?svg=true)](https://ci.appveyor.com/project/kossnocorp/assets-webpack-plugin)
+[![Build Status](https://travis-ci.org/kossnocorp/assets-webpack-plugin.svg?branch=master)](https://travis-ci.org/kossnocorp/assets-webpack-plugin) [![Build status](https://ci.appveyor.com/api/projects/status/qmvi3h6lk0xu8833?svg=true)](https://ci.appveyor.com/project/kossnocorp/assets-webpack-plugin) [![Greenkeeper badge](https://badges.greenkeeper.io/ztoben/assets-webpack-plugin.svg)](https://greenkeeper.io/)
 
 Webpack plugin that emits a json file with assets paths.
 
