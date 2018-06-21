@@ -55,6 +55,7 @@
   "contributors": [
     {
       "name": "Danny Guo",
+      "email": null,
       "url": "https://github.com/dguo",
       "contributions": 1,
       "additions": 1,
@@ -62,71 +63,8 @@
       "hireable": null
     },
     {
-      "name": "Kane",
-      "url": "https://github.com/kane-c",
-      "contributions": 1,
-      "additions": 3,
-      "deletions": 3,
-      "hireable": true
-    },
-    {
-      "name": "Dmitriy Kubyshkin",
-      "url": "https://github.com/grassator",
-      "contributions": 1,
-      "additions": 10,
-      "deletions": 24,
-      "hireable": true
-    },
-    {
-      "name": null,
-      "url": "https://github.com/ju1ius",
-      "contributions": 15,
-      "additions": 1488,
-      "deletions": 992,
-      "hireable": null
-    },
-    {
-      "name": "airwin",
-      "url": "https://github.com/airwin",
-      "contributions": 1,
-      "additions": 3,
-      "deletions": 2,
-      "hireable": null
-    },
-    {
-      "name": "Joe Lencioni",
-      "url": "https://github.com/lencioni",
-      "contributions": 1,
-      "additions": 6,
-      "deletions": 7,
-      "hireable": null
-    },
-    {
-      "name": "Dido Arellano",
-      "url": "https://github.com/didoarellano",
-      "contributions": 1,
-      "additions": 2,
-      "deletions": 2,
-      "hireable": null
-    },
-    {
-      "name": "Germán Méndez Bravo",
-      "url": "https://github.com/Kronuz",
-      "contributions": 3,
-      "additions": 33,
-      "deletions": 17,
-      "hireable": true
-    },
-    {
-      "name": null,
-      "url": "https://github.com/dimchez",
-      "contributions": 6,
-      "additions": 369,
-      "deletions": 196,
-      "hireable": true
-    },
-    {
       "name": "Matt Krick",
+      "email": null,
       "url": "https://github.com/mattkrick",
       "contributions": 1,
       "additions": 107,
@@ -134,47 +72,44 @@
       "hireable": true
     },
     {
-      "name": "Zach Toben",
-      "url": "https://github.com/ztoben",
-      "contributions": 17,
-      "additions": 618,
-      "deletions": 396,
-      "hireable": null
-    },
-    {
-      "name": "Ernesto Rocha",
-      "url": "https://github.com/ernestorocha",
-      "contributions": 2,
-      "additions": 755,
-      "deletions": 722,
+      "name": "Kane",
+      "email": null,
+      "url": "https://github.com/kane-c",
+      "contributions": 1,
+      "additions": 3,
+      "deletions": 3,
       "hireable": true
     },
     {
-      "name": "Alex Afonin",
-      "url": "https://github.com/Tuch",
+      "name": "Hugo Monteiro",
+      "email": null,
+      "url": "https://github.com/monteiro",
       "contributions": 2,
-      "additions": 17,
-      "deletions": 3,
+      "additions": 19,
+      "deletions": 15,
       "hireable": null
     },
     {
-      "name": "Islam Sharabash",
-      "url": "https://github.com/ibash",
-      "contributions": 2,
-      "additions": 63,
-      "deletions": 12,
-      "hireable": null
-    },
-    {
-      "name": "Jonny Gerig Meyer",
-      "url": "https://github.com/jgerigmeyer",
+      "name": "airwin",
+      "email": null,
+      "url": "https://github.com/airwin",
       "contributions": 1,
-      "additions": 32,
-      "deletions": 6,
+      "additions": 3,
+      "deletions": 2,
       "hireable": null
+    },
+    {
+      "name": null,
+      "email": null,
+      "url": "https://github.com/dimchez",
+      "contributions": 6,
+      "additions": 369,
+      "deletions": 196,
+      "hireable": true
     },
     {
       "name": "Túlio Ornelas",
+      "email": null,
       "url": "https://github.com/tulios",
       "contributions": 1,
       "additions": 50,
@@ -183,6 +118,7 @@
     },
     {
       "name": "Sebastian Porto",
+      "email": null,
       "url": "https://github.com/sporto",
       "contributions": 40,
       "additions": 2822,
@@ -191,6 +127,7 @@
     },
     {
       "name": "Rostislav",
+      "email": null,
       "url": "https://github.com/galkinrost",
       "contributions": 3,
       "additions": 47,
@@ -198,15 +135,53 @@
       "hireable": null
     },
     {
-      "name": "Hugo Monteiro",
-      "url": "https://github.com/monteiro",
+      "name": "Dmitriy Kubyshkin",
+      "email": null,
+      "url": "https://github.com/grassator",
+      "contributions": 1,
+      "additions": 10,
+      "deletions": 24,
+      "hireable": true
+    },
+    {
+      "name": "Yuriy Grunin",
+      "email": null,
+      "url": "https://github.com/th0r",
+      "contributions": 1,
+      "additions": 41,
+      "deletions": 1,
+      "hireable": true
+    },
+    {
+      "name": "Ernesto Rocha",
+      "email": null,
+      "url": "https://github.com/ernestorocha",
       "contributions": 2,
-      "additions": 19,
-      "deletions": 15,
+      "additions": 755,
+      "deletions": 722,
+      "hireable": true
+    },
+    {
+      "name": "Germán Méndez Bravo",
+      "email": null,
+      "url": "https://github.com/Kronuz",
+      "contributions": 3,
+      "additions": 33,
+      "deletions": 17,
+      "hireable": true
+    },
+    {
+      "name": "Islam Sharabash",
+      "email": null,
+      "url": "https://github.com/ibash",
+      "contributions": 2,
+      "additions": 63,
+      "deletions": 12,
       "hireable": null
     },
     {
       "name": "Sasha Koss",
+      "email": null,
       "url": "https://github.com/kossnocorp",
       "contributions": 11,
       "additions": 726,
@@ -214,12 +189,67 @@
       "hireable": true
     },
     {
-      "name": "Yuriy Grunin",
-      "url": "https://github.com/th0r",
+      "name": "Jonny Gerig Meyer",
+      "email": null,
+      "url": "https://github.com/jgerigmeyer",
       "contributions": 1,
-      "additions": 41,
-      "deletions": 1,
-      "hireable": true
+      "additions": 32,
+      "deletions": 6,
+      "hireable": null
+    },
+    {
+      "name": "Zach Toben",
+      "email": null,
+      "url": "https://github.com/ztoben",
+      "contributions": 35,
+      "additions": 896,
+      "deletions": 598,
+      "hireable": null
+    },
+    {
+      "name": "Joe Lencioni",
+      "email": null,
+      "url": "https://github.com/lencioni",
+      "contributions": 1,
+      "additions": 6,
+      "deletions": 7,
+      "hireable": null
+    },
+    {
+      "name": "Dido Arellano",
+      "email": null,
+      "url": "https://github.com/didoarellano",
+      "contributions": 1,
+      "additions": 2,
+      "deletions": 2,
+      "hireable": null
+    },
+    {
+      "name": "Alex Afonin",
+      "email": null,
+      "url": "https://github.com/Tuch",
+      "contributions": 2,
+      "additions": 17,
+      "deletions": 3,
+      "hireable": null
+    },
+    {
+      "name": null,
+      "email": null,
+      "url": "https://github.com/ju1ius",
+      "contributions": 15,
+      "additions": 1488,
+      "deletions": 992,
+      "hireable": null
+    },
+    {
+      "name": null,
+      "email": null,
+      "url": "https://github.com/apps/greenkeeper",
+      "contributions": 2,
+      "additions": 2,
+      "deletions": 2,
+      "hireable": null
     }
   ]
 }
