@@ -41,14 +41,17 @@ AssetsWebpackPlugin.prototype = {
       })
       // publicPath with resolved [hash] placeholder
 
-      var assetPath = (stats.publicPath && self.options.fullPath) ? stats.publicPath : ''
-      var entrypoints = stats.entrypoints
+      var assetPath =
+        stats.publicPath && self.options.fullPath ? stats.publicPath : ''
+      var entries = stats.entrypoints || stats.assetsByChunkName
       var seenAssets = {}
 
-      var chunks = Object.keys(entrypoints)
-      chunks.push('')// push "unamed" chunk
-      var output = chunks.reduce(function (chunkMap, chunkName) {
-        var assets = chunkName ? entrypoints[chunkName].assets : stats.assets
+      var chunks = Object.keys(entries)
+      chunks.push('') // push "unamed" chunk
+      var output = chunks.reduce(function(chunkMap, chunkName) {
+        var assets = chunkName
+          ? entries[chunkName].assets || entries[chunkName]
+          : stats.assets
         if (!Array.isArray(assets)) {
           assets = [assets]
         }
