@@ -48,7 +48,7 @@ AssetsWebpackPlugin.prototype = {
 
       var chunks = Object.keys(entries)
       chunks.push('') // push "unamed" chunk
-      var output = chunks.reduce(function(chunkMap, chunkName) {
+      var output = chunks.reduce(function (chunkMap, chunkName) {
         var assets = chunkName
           ? entries[chunkName].assets || entries[chunkName]
           : stats.assets
