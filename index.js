@@ -11,7 +11,6 @@ var createOutputWriter = require('./lib/output/createOutputWriter')
 
 function AssetsWebpackPlugin (options) {
   this.options = merge({}, {
-    path: '.',
     filename: 'webpack-assets.json',
     prettyPrint: false,
     update: false,
@@ -26,6 +25,8 @@ AssetsWebpackPlugin.prototype = {
 
   apply: function (compiler) {
     var self = this
+
+    self.options.path = path.resolve(self.options.path || compiler.options.output.path || '.')
 
     var afterEmit = (compilation, callback) => {
       var options = compiler.options
