@@ -8,7 +8,11 @@ This change log follows the format documented in [Keep a CHANGELOG].
 [Semantic Versioning]: http://semver.org/
 [Keep a CHANGELOG]: http://keepachangelog.com/
 
-## Unreleased
+## 3.9.0 - 2018-08-06
+
+- Now supports webpack 4 entries with multiple chunks. See [#109](https://github.com/ztoben/assets-webpack-plugin/pull/109) for details.
+- Use compiler.outputFileSystem for output.
+- Fixes [#108](https://github.com/ztoben/assets-webpack-plugin/issues/108), [#111](https://github.com/ztoben/assets-webpack-plugin/issues/111), and [#92](https://github.com/ztoben/assets-webpack-plugin/issues/92).
 
 ## 3.8.4 - 2018-06-20
 
@@ -32,55 +36,55 @@ This change log follows the format documented in [Keep a CHANGELOG].
 
 ### Changed
 
-- Support for listing the manifest entry first when `manifestFirst` option is set. See [#66](https://github.com/kossnocorp/assets-webpack-plugin/issues/66) for details.
+- Support for listing the manifest entry first when `manifestFirst` option is set. See [#66](https://github.com/ztoben/assets-webpack-plugin/issues/66) for details.
 
 ## 3.8.0 - 2018-06-15
 
 ### Changed
 
-- Reverts [#90](https://github.com/kossnocorp/assets-webpack-plugin/pull/90), fixes [93](https://github.com/kossnocorp/assets-webpack-plugin/issues/93) and [92](https://github.com/kossnocorp/assets-webpack-plugin/issues/92)
+- Reverts [#90](https://github.com/ztoben/assets-webpack-plugin/pull/90), fixes [#93](https://github.com/ztoben/assets-webpack-plugin/issues/93) and [#92](https://github.com/ztoben/assets-webpack-plugin/issues/92)
 
 ## 3.7.2 - 2018-06-14
 
 ### Changed
 
-- Reduces npm package size [#67](https://github.com/kossnocorp/assets-webpack-plugin/issues/67)
+- Reduces npm package size [#67](https://github.com/ztoben/assets-webpack-plugin/issues/67)
 
 ## 3.7.1 - 2018-06-13
 
 ### Changed
 
-- Fixes a parsing error with the asset path introduced by the fix for [#88](https://github.com/kossnocorp/assets-webpack-plugin/issues/88)
+- Fixes a parsing error with the asset path introduced by the fix for [#88](https://github.com/ztoben/assets-webpack-plugin/issues/88)
 
 ## 3.7.0 - 2018-06-13
 
 ### Changed
 
-- Adds all assets to the manifest that aren't in a chunk (kudos to [@Kronuz](https://github.com/Kronuz) see [#65](https://github.com/kossnocorp/assets-webpack-plugin/pull/65))
+- Adds all assets to the manifest that aren't in a chunk (kudos to [@Kronuz](https://github.com/Kronuz) see [#65](https://github.com/ztoben/assets-webpack-plugin/pull/65))
 
 ## 3.6.3 - 2018-06-13
 
 ### Changed
 
-- Add support for multiple files of the same extension (kudos to [@aaronatmycujoo](https://github.com/aaronatmycujoo) see [#79](https://github.com/kossnocorp/assets-webpack-plugin/pull/79) and [@Kronuz](https://github.com/Kronuz) see [#64](https://github.com/kossnocorp/assets-webpack-plugin/pull/64))
+- Add support for multiple files of the same extension (kudos to [@aaronatmycujoo](https://github.com/aaronatmycujoo) see [#79](https://github.com/ztoben/assets-webpack-plugin/pull/79) and [@Kronuz](https://github.com/Kronuz) see [#64](https://github.com/ztoben/assets-webpack-plugin/pull/64))
 
 ## 3.6.2 - 2018-06-13
 
 ### Changed
 
-- Fixed incorrect concatination of asset file names and directory path see [#88](https://github.com/kossnocorp/assets-webpack-plugin/issues/88)
+- Fixed incorrect concatination of asset file names and directory path see [#88](https://github.com/ztoben/assets-webpack-plugin/issues/88)
 
 ## 3.6.1 - 2018-06-13
 
 ### Changed
 
-- webpack-dev-server (which uses memory-fs) correctly generates the manifest inside the memory file system (kudos to [@Kronuz](https://github.com/Kronuz) see [#90](https://github.com/kossnocorp/assets-webpack-plugin/pull/90))
+- webpack-dev-server (which uses memory-fs) correctly generates the manifest inside the memory file system (kudos to [@Kronuz](https://github.com/Kronuz) see [#90](https://github.com/ztoben/assets-webpack-plugin/pull/90))
 
 ## 3.6.0 - 2018-05-29
 
 ### Changed
 
-- webpack 4 support (kudos to [@ztoben](https://github.com/ztoben) and [@saveman71](https://github.com/saveman71) see [#89](https://github.com/kossnocorp/assets-webpack-plugin/pull/89))
+- webpack 4 support (kudos to [@ztoben](https://github.com/ztoben) and [@saveman71](https://github.com/saveman71) see [#89](https://github.com/ztoben/assets-webpack-plugin/pull/89))
 
 ## 3.5.1 - 2017-01-20
 
