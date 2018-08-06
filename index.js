@@ -15,7 +15,8 @@ function AssetsWebpackPlugin (options) {
     prettyPrint: false,
     update: false,
     fullPath: true,
-    manifestFirst: true
+    manifestFirst: true,
+    useCompilerPath: false
   }, options)
   this.writer = createQueuedWriter(createOutputWriter(this.options))
 }
@@ -26,7 +27,8 @@ AssetsWebpackPlugin.prototype = {
   apply: function (compiler) {
     var self = this
 
-    self.options.path = path.resolve(self.options.path || compiler.options.output.path || '.')
+    self.options.path = self.options.useCompilerPath
+      ? compiler.options.output.path : path.resolve(self.options.path || '.')
 
     var afterEmit = (compilation, callback) => {
       var options = compiler.options
@@ -100,7 +102,6 @@ AssetsWebpackPlugin.prototype = {
           if (!entryText) {
             throw new Error('Could not locate manifest function in source', parentSource)
           }
-          // use _value if the uglify plugin was applied
           manifestEntry.text = entryText
         }
       }

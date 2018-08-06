@@ -171,6 +171,16 @@ Optional. Defaults to the current directory.
 
 Path where to save the created JSON file.
 
+Will default to the highest level of the project unless useCompilerPath is specified.
+
+#### `useCompilerPath`
+
+```js
+new AssetsPlugin({useCompilerPath: true})
+```
+
+Will override the path to use the compiler output path set in your webpack config.
+
 ```js
 new AssetsPlugin({path: path.join(__dirname, 'app', 'views')})
 ```

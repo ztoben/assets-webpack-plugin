@@ -8,6 +8,10 @@ This change log follows the format documented in [Keep a CHANGELOG].
 [Semantic Versioning]: http://semver.org/
 [Keep a CHANGELOG]: http://keepachangelog.com/
 
+## 3.9.1 - 2018-08-06
+
+- `useCompilerPath` option to override path with webpack output path set in config.
+
 ## 3.9.0 - 2018-08-06
 
 - Now supports webpack 4 entries with multiple chunks. See [#109](https://github.com/ztoben/assets-webpack-plugin/pull/109) for details.
