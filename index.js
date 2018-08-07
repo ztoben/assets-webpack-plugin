@@ -44,17 +44,23 @@ AssetsWebpackPlugin.prototype = {
       })
       // publicPath with resolved [hash] placeholder
 
-      var assetPath =
-        stats.publicPath && self.options.fullPath ? stats.publicPath : ''
-      var entries = stats.entrypoints || stats.assetsByChunkName
+      var assetPath = (stats.publicPath && self.options.fullPath) ? stats.publicPath : ''
+      // assetsByChunkName contains a hash with the bundle names and the produced files
+      // e.g. { one: 'one-bundle.js', two: 'two-bundle.js' }
+      // in some cases (when using a plugin or source maps) it might contain an array of produced files
+      // e.g. {
+      // main:
+      //   [ 'index-bundle-42b6e1ec4fa8c5f0303e.js',
+      //     'index-bundle-42b6e1ec4fa8c5f0303e.js.map' ]
+      // }
+      var assetsByChunkName = stats.assetsByChunkName
       var seenAssets = {}
 
-      var chunks = Object.keys(entries)
+      var chunks = Object.keys(assetsByChunkName)
       chunks.push('') // push "unamed" chunk
       var output = chunks.reduce(function (chunkMap, chunkName) {
-        var assets = chunkName
-          ? entries[chunkName].assets || entries[chunkName]
-          : stats.assets
+        var assets = chunkName ? assetsByChunkName[chunkName] : stats.assets
+
         if (!Array.isArray(assets)) {
           assets = [assets]
         }
