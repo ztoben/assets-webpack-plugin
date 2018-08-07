@@ -8,6 +8,10 @@ This change log follows the format documented in [Keep a CHANGELOG].
 [Semantic Versioning]: http://semver.org/
 [Keep a CHANGELOG]: http://keepachangelog.com/
 
+## 3.9.3 - 2018-08-07
+
+- Fixes an issue where `useCompilerPath` wasn't correctly resolving the path.
+
 ## 3.9.2 - 2018-08-07
 
 - Reverts [#109](https://github.com/ztoben/assets-webpack-plugin/pull/109), fixes [#118](https://github.com/ztoben/assets-webpack-plugin/issues/118).
