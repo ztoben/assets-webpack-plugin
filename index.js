@@ -18,7 +18,8 @@ function AssetsWebpackPlugin (options) {
     manifestFirst: true,
     useCompilerPath: false,
     fileTypes: ['js', 'css'],
-    includeAllFileTypes: true
+    includeAllFileTypes: true,
+    keepInMemory: false
   }, options)
   this.writer = createQueuedWriter(createOutputWriter(this.options))
 }
