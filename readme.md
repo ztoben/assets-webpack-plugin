@@ -246,7 +246,17 @@ Optional. ```['js', 'css']``` by default.
 When set and `includeAllFileTypes` is set false, only assets matching these types will be included in the assets file.
 
 ```js
-new AssetsPlugin({fileTypes: ['js', 'jpg']]})
+new AssetsPlugin({fileTypes: ['js', 'jpg']})
+```
+
+#### `keepInMemory`
+
+Optional. `false` by default.
+
+When set the assets file will only be generated in memory while running `webpack-dev-server` and not written to disk.
+
+```js
+new AssetsPlugin({keepInMemory: true})
 ```
 
 ### Using in multi-compiler mode
