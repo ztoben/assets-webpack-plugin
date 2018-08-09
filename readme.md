@@ -229,6 +229,26 @@ new AssetsPlugin({metadata: {version: 123}})
 // }
 ```
 
+#### `includeAllFileTypes`
+
+Optional. `true` by default.
+
+When set false, falls back to the `fileTypes` option array to decide while file types to include in the assets file.
+
+```js
+new AssetsPlugin({includeAllFileTypes: false})
+```
+
+#### `fileTypes`
+
+Optional. ```['js', 'css']``` by default.
+
+When set and `includeAllFileTypes` is set false, only assets matching these types will be included in the assets file.
+
+```js
+new AssetsPlugin({fileTypes: ['js', 'jpg']]})
+```
+
 ### Using in multi-compiler mode
 
 If you use webpack multi-compiler mode and want your assets written to a single file,

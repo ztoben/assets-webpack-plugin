@@ -16,7 +16,9 @@ function AssetsWebpackPlugin (options) {
     update: false,
     fullPath: true,
     manifestFirst: true,
-    useCompilerPath: false
+    useCompilerPath: false,
+    fileTypes: ['js', 'css'],
+    includeAllFileTypes: true
   }, options)
   this.writer = createQueuedWriter(createOutputWriter(this.options))
 }
@@ -72,20 +74,22 @@ AssetsWebpackPlugin.prototype = {
           }
 
           var typeName = getAssetKind(options, asset)
-          var combinedPath = assetPath && assetPath.slice(-1) !== '/' ? `${assetPath}/${asset}` : assetPath + asset
-          var type = typeof typeMap[typeName]
-          if (type === 'undefined') {
-            typeMap[typeName] = combinedPath
-          } else {
-            if (type === 'string') {
-              typeMap[typeName] = [typeMap[typeName]]
+          if (self.options.includeAllFileTypes || self.options.fileTypes.includes(typeName)) {
+            var combinedPath = assetPath && assetPath.slice(-1) !== '/' ? `${assetPath}/${asset}` : assetPath + asset
+            var type = typeof typeMap[typeName]
+            if (type === 'undefined') {
+              typeMap[typeName] = combinedPath
+            } else {
+              if (type === 'string') {
+                typeMap[typeName] = [typeMap[typeName]]
+              }
+              typeMap[typeName].push(combinedPath)
             }
-            typeMap[typeName].push(combinedPath)
-          }
 
-          added = true
-          seenAssets[asset] = true
-          return typeMap
+            added = true
+            seenAssets[asset] = true
+            return typeMap
+          }
         }, {})
 
         if (added) {

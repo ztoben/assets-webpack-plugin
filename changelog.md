@@ -8,6 +8,10 @@ This change log follows the format documented in [Keep a CHANGELOG].
 [Semantic Versioning]: http://semver.org/
 [Keep a CHANGELOG]: http://keepachangelog.com/
 
+## 3.9.4 - 2018-08-08
+
+- Adds the `includeAllFileTypes`, and `fileTypes` options for controlling which files are included in the assets file.
+
 ## 3.9.3 - 2018-08-07
 
 - Fixes an issue where `useCompilerPath` wasn't correctly resolving the path.
