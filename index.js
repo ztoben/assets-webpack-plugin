@@ -77,7 +77,7 @@ AssetsWebpackPlugin.prototype = {
           var typeName = getAssetKind(options, asset)
           if (self.options.includeAllFileTypes || self.options.fileTypes.includes(typeName)) {
             var combinedPath = assetPath && assetPath.slice(-1) !== '/' ? `${assetPath}/${asset}` : assetPath + asset
-            var type = typeMap ? typeof typeMap[typeName] : 'undefined'
+            var type = typeof typeMap[typeName]
             if (type === 'undefined') {
               typeMap[typeName] = combinedPath
             } else {
@@ -89,8 +89,8 @@ AssetsWebpackPlugin.prototype = {
 
             added = true
             seenAssets[asset] = true
-            return typeMap
           }
+          return typeMap
         }, {})
 
         if (added) {
