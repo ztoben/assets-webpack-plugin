@@ -10,7 +10,7 @@ This change log follows the format documented in [Keep a CHANGELOG].
 
 ## 3.9.5 - 2018-08-09
 
--- Adds the `keepInMemory` option to toggle whether you want the assets file generated when running in `webpack-dev-server`.
+- Adds the `keepInMemory` option to toggle whether you want the assets file generated when running in `webpack-dev-server`.
 
 ## 3.9.4 - 2018-08-08
 
