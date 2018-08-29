@@ -17,7 +17,7 @@ describe('Plugin', function () {
   })
 
   it('works in multi-compiler mode', function (done) {
-    var plugin = new Plugin({path: 'tmp'})
+    var plugin = new Plugin({ path: 'tmp' })
 
     var webpackConfig = [
       {
@@ -68,7 +68,7 @@ describe('Plugin', function () {
         path: OUTPUT_DIR,
         filename: 'one-bundle.js'
       },
-      plugins: [new Plugin({path: 'tmp', update: true})]
+      plugins: [new Plugin({ path: 'tmp', update: true })]
     }
     var config2 = {
       entry: {
@@ -78,11 +78,11 @@ describe('Plugin', function () {
         path: OUTPUT_DIR,
         filename: 'two-bundle.js'
       },
-      plugins: [new Plugin({path: 'tmp', update: true})]
+      plugins: [new Plugin({ path: 'tmp', update: true })]
     }
 
-    var expected = {one: {js: 'one-bundle.js'}, two: {js: 'two-bundle.js'}}
-    var args = {config: config2, expected: expected}
+    var expected = { one: { js: 'one-bundle.js' }, two: { js: 'two-bundle.js' } }
+    var args = { config: config2, expected: expected }
 
     webpack(config1, function (err, stats) {
       expect(err).to.be.null
@@ -100,7 +100,7 @@ describe('Plugin', function () {
         path: OUTPUT_DIR,
         filename: 'one-bundle.js'
       },
-      plugins: [new Plugin({path: 'tmp', update: false})]
+      plugins: [new Plugin({ path: 'tmp', update: false })]
     }
     var config2 = {
       entry: {
@@ -110,11 +110,11 @@ describe('Plugin', function () {
         path: OUTPUT_DIR,
         filename: 'two-bundle.js'
       },
-      plugins: [new Plugin({path: 'tmp', update: false})]
+      plugins: [new Plugin({ path: 'tmp', update: false })]
     }
 
-    var expected = {two: {js: 'two-bundle.js'}}
-    var args = {config: config2, expected: expected}
+    var expected = { two: { js: 'two-bundle.js' } }
+    var args = { config: config2, expected: expected }
 
     webpack(config1, function (err, stats) {
       expect(err).to.be.null

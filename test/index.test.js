@@ -164,8 +164,8 @@ describe('Plugin', function () {
   })
 
   it('works with ExtractTextPlugin for multiple stylesheets', function (done) {
-    var extractTextPlugin1 = new MiniCssExtractPlugin({filename: '[name]-bundle1.css', chunkFilename: '[id].css'})
-    var extractTextPlugin2 = new MiniCssExtractPlugin({filename: '[name]-bundle2.css', chunkFilename: '[id].css'})
+    var extractTextPlugin1 = new MiniCssExtractPlugin({ filename: '[name]-bundle1.css', chunkFilename: '[id].css' })
+    var extractTextPlugin2 = new MiniCssExtractPlugin({ filename: '[name]-bundle2.css', chunkFilename: '[id].css' })
     var webpackConfig = {
       entry: {
         one: path.join(__dirname, 'fixtures/one.js'),
