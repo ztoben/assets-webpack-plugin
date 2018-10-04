@@ -8,6 +8,11 @@ This change log follows the format documented in [Keep a CHANGELOG].
 [Semantic Versioning]: http://semver.org/
 [Keep a CHANGELOG]: http://keepachangelog.com/
 
+## 3.9.7 - 2018-10-04
+
+- Allow webpack 4 entrypoints chunks
+- Fixes [#108](https://github.com/ztoben/assets-webpack-plugin/issues/108)
+
 ## 3.9.6 - 2018-08-20
 
 - Fixes [#125](https://github.com/ztoben/assets-webpack-plugin/issues/125)

@@ -259,6 +259,16 @@ When set the assets file will only be generated in memory while running `webpack
 new AssetsPlugin({keepInMemory: true})
 ```
 
+#### `entrypoints`
+
+Optional. `false` by default.
+
+If the 'entrypoints' option is given, the output will be limited to the endpoints and the chunks associated with them.
+
+```js
+new AssetsPlugin({entrypoints: true})
+```
+
 ### Using in multi-compiler mode
 
 If you use webpack multi-compiler mode and want your assets written to a single file,
