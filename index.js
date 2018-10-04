@@ -58,20 +58,20 @@ AssetsWebpackPlugin.prototype = {
       // }
 
       var seenAssets = {}
-      var chunks;
+      var chunks
 
-      if(self.options.entrypoints) {
-        chunks = Object.keys(stats.entrypoints);
+      if (self.options.entrypoints) {
+        chunks = Object.keys(stats.entrypoints)
       } else {
-        chunks = Object.keys(stats.assetsByChunkName);
+        chunks = Object.keys(stats.assetsByChunkName)
         chunks.push('') // push "unamed" chunk
       }
 
       var output = chunks.reduce(function (chunkMap, chunkName) {
-        var assets;
+        var assets
 
-        if(self.options.entrypoints) {
-          assets = stats.entrypoints[chunkName].assets;
+        if (self.options.entrypoints) {
+          assets = stats.entrypoints[chunkName].assets
         } else {
           assets = chunkName ? stats.assetsByChunkName[chunkName] : stats.assets
         }
