@@ -56,13 +56,25 @@ AssetsWebpackPlugin.prototype = {
       //   [ 'index-bundle-42b6e1ec4fa8c5f0303e.js',
       //     'index-bundle-42b6e1ec4fa8c5f0303e.js.map' ]
       // }
-      var assetsByChunkName = stats.assetsByChunkName
-      var seenAssets = {}
 
-      var chunks = Object.keys(assetsByChunkName)
-      chunks.push('') // push "unamed" chunk
+      var seenAssets = {}
+      var chunks;
+
+      if(self.options.entrypoints) {
+        chunks = Object.keys(stats.entrypoints);
+      } else {
+        chunks = Object.keys(stats.assetsByChunkName);
+        chunks.push('') // push "unamed" chunk
+      }
+
       var output = chunks.reduce(function (chunkMap, chunkName) {
-        var assets = chunkName ? assetsByChunkName[chunkName] : stats.assets
+        var assets;
+
+        if(self.options.entrypoints) {
+          assets = stats.entrypoints[chunkName].assets;
+        } else {
+          assets = chunkName ? stats.assetsByChunkName[chunkName] : stats.assets
+        }
 
         if (!Array.isArray(assets)) {
           assets = [assets]
