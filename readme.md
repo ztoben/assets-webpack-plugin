@@ -233,7 +233,7 @@ new AssetsPlugin({metadata: {version: 123}})
 
 Optional. `true` by default.
 
-When set false, falls back to the `fileTypes` option array to decide while file types to include in the assets file.
+When set false, falls back to the `fileTypes` option array to decide which file types to include in the assets file.
 
 ```js
 new AssetsPlugin({includeAllFileTypes: false})
@@ -263,7 +263,7 @@ new AssetsPlugin({keepInMemory: true})
 
 Optional. `false` by default.
 
-If the 'entrypoints' option is given, the output will be limited to the endpoints and the chunks associated with them.
+If the 'entrypoints' option is given, the output will be limited to the entrypoints and the chunks associated with them.
 
 ```js
 new AssetsPlugin({entrypoints: true})
