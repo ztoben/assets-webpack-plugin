@@ -260,6 +260,31 @@ When set the assets file will only be generated in memory while running `webpack
 new AssetsPlugin({keepInMemory: true})
 ```
 
+#### `integrity`
+
+Optional. `false` by default.
+
+When set the output from webpack-subresource-integrity is included in the assets file.
+
+```js
+new AssetsPlugin({integrity: true})
+```
+
+Output will now look like this:
+
+```json
+{
+  "main": {
+    "js": "/bundle.js",
+    "jsIntegrity": "sha256-ANGwtktWN96nvBI/cjekdTvd0Dwf7SciIFTQ2lpTxGc= sha384-Ly439pF3K+J8hnhk1BEcjKnv1R9BApFYVIVJvr64PcgBjdT4N7hfPzQynItHwcaO"
+  },
+  "vendors~main": {
+    "js": "/1.bundle.js",
+    "jsIntegrity": "sha256-yqNi1hgeAdkXVOORgmVMeX+cbuXikoj6I8qWZjPegsA= sha384-4X75tnsGDwnwL5kBUPsx2ko9DeWy0xM8BcDQdoR185yho+OnxjjPXl2wCdebLWTG"
+  }
+}
+```
+
 #### `entrypoints`
 
 Optional. `false` by default.

@@ -8,6 +8,11 @@ This change log follows the format documented in [Keep a CHANGELOG].
 [Semantic Versioning]: http://semver.org/
 [Keep a CHANGELOG]: http://keepachangelog.com/
 
+## 3.9.9 - 2019-02-28
+
+- Adds the `integrity` option to add output from webpack-subresource-integrity to the json file
+- Fixes [#63](https://github.com/ztoben/assets-webpack-plugin/issues/63)
+
 ## 3.9.8 - 2019-02-27
 
 - Dependency updates
