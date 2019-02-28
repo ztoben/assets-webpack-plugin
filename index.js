@@ -19,7 +19,8 @@ function AssetsWebpackPlugin (options) {
     useCompilerPath: false,
     fileTypes: ['js', 'css'],
     includeAllFileTypes: true,
-    keepInMemory: false
+    keepInMemory: false,
+    integrity: false
   }, options)
   this.writer = createQueuedWriter(createOutputWriter(this.options))
 }
@@ -90,8 +91,14 @@ AssetsWebpackPlugin.prototype = {
           if (self.options.includeAllFileTypes || self.options.fileTypes.includes(typeName)) {
             var combinedPath = assetPath && assetPath.slice(-1) !== '/' ? `${assetPath}/${asset}` : assetPath + asset
             var type = typeof typeMap[typeName]
+            var integrity = compilation.assets[asset].integrity
+
             if (type === 'undefined') {
               typeMap[typeName] = combinedPath
+
+              if (self.options.integrity && integrity) {
+                typeMap[typeName + 'Integrity'] = integrity
+              }
             } else {
               if (type === 'string') {
                 typeMap[typeName] = [typeMap[typeName]]
