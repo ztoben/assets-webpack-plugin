@@ -1,6 +1,6 @@
 var fs = require('fs')
 var path = require('path')
-var merge = require('lodash.merge')
+var _ = require('lodash')
 
 var getAssetKind = require('./lib/getAssetKind')
 var isHMRUpdate = require('./lib/isHMRUpdate')
@@ -10,7 +10,7 @@ var createQueuedWriter = require('./lib/output/createQueuedWriter')
 var createOutputWriter = require('./lib/output/createOutputWriter')
 
 function AssetsWebpackPlugin (options) {
-  this.options = merge({}, {
+  this.options = _.merge({}, {
     filename: 'webpack-assets.json',
     prettyPrint: false,
     update: false,
