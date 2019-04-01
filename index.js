@@ -19,7 +19,7 @@ function AssetsWebpackPlugin (options) {
     useCompilerPath: false,
     fileTypes: ['js', 'css'],
     includeAllFileTypes: true,
-    keepInMemory: false,
+    keepInMemory: !!process.argv.find(v => v.includes('webpack-dev-server')),
     integrity: false
   }, options)
   this.writer = createQueuedWriter(createOutputWriter(this.options))
