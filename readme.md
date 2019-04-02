@@ -264,7 +264,7 @@ new AssetsPlugin({keepInMemory: true})
 
 Optional. `false` by default.
 
-When set the output from webpack-subresource-integrity is included in the assets file.
+When set the output from [webpack-subresource-integrity](https://github.com/waysact/webpack-subresource-integrity) is included in the assets file.
 
 ```js
 new AssetsPlugin({integrity: true})
