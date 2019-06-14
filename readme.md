@@ -266,6 +266,8 @@ Optional. `false` by default.
 
 When set the output from [webpack-subresource-integrity](https://github.com/waysact/webpack-subresource-integrity) is included in the assets file.
 
+Please make sure you have `webpack-subresource-integrity` installed and included in your webpack plugins.
+
 ```js
 new AssetsPlugin({integrity: true})
 ```
