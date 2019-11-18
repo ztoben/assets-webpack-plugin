@@ -354,6 +354,10 @@ And finally in the views:
 </div>
 ```
 
+### Using this with ASP.NET Core
+
+You can use this with ASP.NET Core via the [WebpackTag](https://d.sb/webpacktag) library.
+
 ## Test
 
 ```sh
