@@ -49,7 +49,7 @@
     "camelcase": "5.3.1",
     "escape-string-regexp": "2.0.0",
     "lodash": "4.17.15",
-    "mkdirp": "0.5.4"
+    "mkdirp": "0.5.5"
   },
   "contributors": [
     {
