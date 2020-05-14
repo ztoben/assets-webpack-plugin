@@ -44,7 +44,7 @@
     "snazzy": "8.0.0",
     "standard": "13.1.0",
     "style-loader": "0.23.1",
-    "webpack": "4.36.1"
+    "webpack": "4.43.0"
   },
   "dependencies": {
     "camelcase": "5.3.1",
