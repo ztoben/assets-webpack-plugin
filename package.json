@@ -43,7 +43,7 @@
     "rimraf": "2.6.3",
     "snazzy": "8.0.0",
     "standard": "13.1.0",
-    "style-loader": "0.23.1",
+    "style-loader": "1.2.1",
     "webpack": "4.36.1"
   },
   "dependencies": {
