@@ -37,7 +37,7 @@
     "babel-core": "6.26.3",
     "babel-preset-env": "1.7.0",
     "chai": "4.2.0",
-    "css-loader": "3.1.0",
+    "css-loader": "3.5.3",
     "mini-css-extract-plugin": "0.8.0",
     "mocha": "6.2.0",
     "rimraf": "2.6.3",
