@@ -8,9 +8,6 @@
 [null](https://github.com/ju1ius)
 <font color="#999">15 Commits</font> / <font color="#6cc644">1488++</font> / <font color="#bd3c00"> 992--</font>
 <font color="#dedede">09.93%&nbsp;<font color="#dedede">||||||||||||||||||</font><font color="#f4f4f4">||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||</font><br><br>
-[null](https://github.com/apps/greenkeeper)
-<font color="#999">12 Commits</font> / <font color="#6cc644">12++</font> / <font color="#bd3c00"> 12--</font>
-<font color="#dedede">07.95%&nbsp;<font color="#dedede">||||||||||||||</font><font color="#f4f4f4">||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||</font><br><br>
 [Sasha Koss](https://github.com/kossnocorp)
 <font color="#999">11 Commits</font> / <font color="#6cc644">726++</font> / <font color="#bd3c00"> 801--</font>
 <font color="#dedede">07.28%&nbsp;<font color="#dedede">|||||||||||||</font><font color="#f4f4f4">|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||</font><br><br>
