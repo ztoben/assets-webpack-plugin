@@ -3,6 +3,9 @@
   "version": "3.9.12",
   "description": "Emits a json file with assets paths",
   "main": "dist/index.js",
+  "engines": {
+    "node": ">=10.x.x"
+  },
   "scripts": {
     "lint": "standard --verbose | snazzy",
     "fix-lint": "standard --fix",
