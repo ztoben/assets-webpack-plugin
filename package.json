@@ -11,8 +11,7 @@
     "fix-lint": "standard --fix",
     "test": "mocha test",
     "build": "babel index.js --out-dir dist && babel lib --out-dir dist/lib",
-    "prepublish": "npm run snyk-protect && npm run build",
-    "snyk-protect": "snyk protect"
+    "prepublish": "npm run build",
   },
   "repository": {
     "type": "git",
@@ -53,8 +52,7 @@
     "camelcase": "6.0.0",
     "escape-string-regexp": "4.0.0",
     "lodash": "4.17.15",
-    "mkdirp": "0.5.5",
-    "snyk": "^1.316.1"
+    "mkdirp": "0.5.5"
   },
   "contributors": [
     {
