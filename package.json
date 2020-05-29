@@ -11,7 +11,7 @@
     "fix-lint": "standard --fix",
     "test": "mocha test",
     "build": "babel index.js --out-dir dist && babel lib --out-dir dist/lib",
-    "prepublish": "npm run build",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
