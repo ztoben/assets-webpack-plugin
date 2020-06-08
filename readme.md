@@ -22,8 +22,6 @@ Webpack plugin that emits a json file with assets paths.
 
 - [Contributing Guidelines](./contributing.md)
 
-- [Contributors](./contributors.md)
-
 ## Why Is This Useful?
 
 When working with Webpack you might want to generate your bundles with a generated hash in them (for cache busting).
@@ -164,7 +162,7 @@ from the assets json output, and order of import is important.
 
 ```js
 new AssetsPlugin({manifestFirst: true})
-``` 
+```
 
 #### `path`
 

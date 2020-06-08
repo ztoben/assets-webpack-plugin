@@ -8,6 +8,11 @@ This change log follows the format documented in [Keep a CHANGELOG].
 [Semantic Versioning]: http://semver.org/
 [Keep a CHANGELOG]: http://keepachangelog.com/
 
+## 3.10.0 - 2020-06-08
+
+- Updates several dependencies
+- Fixes [#226](https://github.com/ztoben/assets-webpack-plugin/issues/226)
+
 ## 3.9.10 - 2019-02-28
 
 - Fixes [#169](https://github.com/ztoben/assets-webpack-plugin/issues/169)
