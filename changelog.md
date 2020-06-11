@@ -8,7 +8,12 @@ This change log follows the format documented in [Keep a CHANGELOG].
 [Semantic Versioning]: http://semver.org/
 [Keep a CHANGELOG]: http://keepachangelog.com/
 
-## 3.10.0 - 2020-06-08
+## 4.0.0 - 2020-06-11
+
+- Major bump due to now requiring node 10
+- Maintains the same changes as `3.10.0`, but properly warns when using an older version of node
+
+## 3.10.0 - 2020-06-08 (Deprecated)
 
 - Updates several dependencies
 - Fixes [#226](https://github.com/ztoben/assets-webpack-plugin/issues/226)
