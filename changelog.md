@@ -3,13 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning].
 
-This change log follows the format documented in [Keep a CHANGELOG].
-
 [Semantic Versioning]: http://semver.org/
-[Keep a CHANGELOG]: http://keepachangelog.com/
 
-## 4.0.0 - 2020-06-11
+## 5.0.0 - 2020-06-11
 
+- Unfortunately must bump to v5 instead of v4 due to an old botched release that can't be unpublished
 - Major bump due to now requiring node 10
 - Maintains the same changes as `3.10.0`, but properly warns when using an older version of node
 
