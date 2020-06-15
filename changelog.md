@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning].
 
 [Semantic Versioning]: http://semver.org/
 
+## 5.0.1 - 2020-06-15
+
+- Fixes [#234](https://github.com/ztoben/assets-webpack-plugin/issues/234)
+
 ## 5.0.0 - 2020-06-11
 
 - Unfortunately must bump to v5 instead of v4 due to an old botched release that can't be unpublished

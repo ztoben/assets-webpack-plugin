@@ -1,6 +1,6 @@
 {
   "name": "assets-webpack-plugin",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Emits a json file with assets paths",
   "main": "dist/index.js",
   "engines": {
@@ -24,7 +24,6 @@
     "assets",
     "hashes"
   ],
-  "author": "Sebastian Porto",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ztoben/assets-webpack-plugin/issues"
