@@ -1,13 +1,13 @@
-var fs = require('fs')
-var path = require('path')
-var _ = require('lodash')
+const fs = require('fs')
+const path = require('path')
+const _ = require('lodash')
 
-var getAssetKind = require('./lib/getAssetKind')
-var isHMRUpdate = require('./lib/isHMRUpdate')
-var isSourceMap = require('./lib/isSourceMap')
+const getAssetKind = require('./lib/getAssetKind')
+const isHMRUpdate = require('./lib/isHMRUpdate')
+const isSourceMap = require('./lib/isSourceMap')
 
-var createQueuedWriter = require('./lib/output/createQueuedWriter')
-var createOutputWriter = require('./lib/output/createOutputWriter')
+const createQueuedWriter = require('./lib/output/createQueuedWriter')
+const createOutputWriter = require('./lib/output/createOutputWriter')
 
 function AssetsWebpackPlugin (options) {
   this.options = _.merge({}, {
@@ -29,14 +29,14 @@ AssetsWebpackPlugin.prototype = {
   constructor: AssetsWebpackPlugin,
 
   apply: function (compiler) {
-    var self = this
+    const self = this
 
     self.options.path = path.resolve(self.options.useCompilerPath
       ? (compiler.options.output.path || '.') : (self.options.path || '.'))
 
-    var afterEmit = (compilation, callback) => {
-      var options = compiler.options
-      var stats = compilation.getStats().toJson({
+    const afterEmit = (compilation, callback) => {
+      const options = compiler.options
+      const stats = compilation.getStats().toJson({
         hash: true,
         publicPath: true,
         assets: true,
@@ -48,7 +48,7 @@ AssetsWebpackPlugin.prototype = {
       })
       // publicPath with resolved [hash] placeholder
 
-      var assetPath = (stats.publicPath && self.options.fullPath) ? stats.publicPath : ''
+      const assetPath = (stats.publicPath && self.options.fullPath) ? stats.publicPath : ''
       // assetsByChunkName contains a hash with the bundle names and the produced files
       // e.g. { one: 'one-bundle.js', two: 'two-bundle.js' }
       // in some cases (when using a plugin or source maps) it might contain an array of produced files
@@ -58,8 +58,8 @@ AssetsWebpackPlugin.prototype = {
       //     'index-bundle-42b6e1ec4fa8c5f0303e.js.map' ]
       // }
 
-      var seenAssets = {}
-      var chunks
+      const seenAssets = {}
+      let chunks
 
       if (self.options.entrypoints) {
         chunks = Object.keys(stats.entrypoints)
@@ -68,8 +68,8 @@ AssetsWebpackPlugin.prototype = {
         chunks.push('') // push "unamed" chunk
       }
 
-      var output = chunks.reduce(function (chunkMap, chunkName) {
-        var assets
+      const output = chunks.reduce(function (chunkMap, chunkName) {
+        let assets
 
         if (self.options.entrypoints) {
           assets = stats.entrypoints[chunkName].assets
@@ -80,19 +80,19 @@ AssetsWebpackPlugin.prototype = {
         if (!Array.isArray(assets)) {
           assets = [assets]
         }
-        var added = false
-        var typeMap = assets.reduce(function (typeMap, obj) {
-          var asset = obj.name || obj
+        let added = false
+        const typeMap = assets.reduce(function (typeMap, obj) {
+          const asset = obj.name || obj
           if (isHMRUpdate(options, asset) || isSourceMap(options, asset) || (!chunkName && seenAssets[asset])) {
             return typeMap
           }
 
-          var typeName = getAssetKind(options, asset)
+          const typeName = getAssetKind(options, asset)
           if (self.options.includeAllFileTypes || self.options.fileTypes.includes(typeName)) {
-            var combinedPath = assetPath && assetPath.slice(-1) !== '/' ? `${assetPath}/${asset}` : assetPath + asset
-            var type = typeof typeMap[typeName]
-            var compilationAsset = compilation.assets[asset]
-            var integrity = compilationAsset && compilationAsset.integrity
+            const combinedPath = assetPath && assetPath.slice(-1) !== '/' ? `${assetPath}/${asset}` : assetPath + asset
+            const type = typeof typeMap[typeName]
+            const compilationAsset = compilation.assets[asset]
+            const integrity = compilationAsset && compilationAsset.integrity
 
             if (type === 'undefined') {
               typeMap[typeName] = combinedPath
@@ -119,17 +119,17 @@ AssetsWebpackPlugin.prototype = {
         return chunkMap
       }, {})
 
-      var manifestName = self.options.includeManifest === true ? 'manifest' : self.options.includeManifest
+      const manifestName = self.options.includeManifest === true ? 'manifest' : self.options.includeManifest
       if (manifestName) {
-        var manifestEntry = output[manifestName]
+        const manifestEntry = output[manifestName]
         if (manifestEntry) {
-          var js = manifestEntry.js
+          let js = manifestEntry.js
           if (!Array.isArray(js)) {
             js = [js]
           }
-          var manifestAssetKey = js[js.length - 1].substr(assetPath.length)
-          var parentSource = compilation.assets[manifestAssetKey]
-          var entryText = parentSource.source()
+          const manifestAssetKey = js[js.length - 1].substr(assetPath.length)
+          const parentSource = compilation.assets[manifestAssetKey]
+          const entryText = parentSource.source()
           if (!entryText) {
             throw new Error('Could not locate manifest function in source', parentSource)
           }
@@ -155,7 +155,7 @@ AssetsWebpackPlugin.prototype = {
     }
 
     if (compiler.hooks) {
-      var plugin = { name: 'AssetsWebpackPlugin' }
+      const plugin = { name: 'AssetsWebpackPlugin' }
 
       compiler.hooks.afterEmit.tapAsync(plugin, afterEmit)
     } else {
