@@ -31,8 +31,11 @@ AssetsWebpackPlugin.prototype = {
   apply: function (compiler) {
     const self = this
 
-    self.options.path = path.resolve(self.options.useCompilerPath
-      ? (compiler.options.output.path || '.') : (self.options.path || '.'))
+    self.options.path = path.resolve(
+      self.options.useCompilerPath
+        ? (compiler.options.output.path || '.')
+        : (self.options.path || '.')
+    )
 
     const afterEmit = (compilation, callback) => {
       const options = compiler.options
