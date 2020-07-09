@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning].
 
 [Semantic Versioning]: http://semver.org/
 
+## 5.0.3 - 2020-07-09
+
+- Bumps several dependencies.
+
 ## 5.0.2 - 2020-06-15
 
 - Fixes an error when `keepInMemory` was turn on.
