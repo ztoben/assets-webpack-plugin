@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-expressions */
 
-var _ = require('lodash')
-var expect = require('chai').expect
-var mkdirp = require('mkdirp')
-var webpack = require('webpack')
-var fs = require('fs')
-var path = require('path')
+const _ = require('lodash')
+const expect = require('chai').expect
+const mkdirp = require('mkdirp')
+const webpack = require('webpack')
+const fs = require('fs')
+const path = require('path')
 
 module.exports = function (outputDir) {
   return function expectOutput (args, done) {
@@ -19,9 +19,9 @@ module.exports = function (outputDir) {
       throw new Error('Expected done')
     }
 
-    var webpackConfig = args.config
-    var expectedResult = args.expected
-    var outputFile = args.outputFile
+    const webpackConfig = args.config
+    const expectedResult = args.expected
+    let outputFile = args.outputFile
 
     // Create output folder
     mkdirp(outputDir)
@@ -37,7 +37,7 @@ module.exports = function (outputDir) {
           expect(err).to.be.null
           expect(stats.hasErrors()).to.be.false
 
-          var content = fs.readFileSync(path.join(outputDir, outputFile)).toString()
+          const content = fs.readFileSync(path.join(outputDir, outputFile)).toString()
 
           if (_.isRegExp(expectedResult)) {
             expect(content).to.match(expectedResult)
@@ -45,7 +45,7 @@ module.exports = function (outputDir) {
             expect(content).to.contain(expectedResult)
           } else {
             // JSON object provided
-            var actual = JSON.parse(content)
+            const actual = JSON.parse(content)
             expect(actual).to.eql(expectedResult)
           }
 

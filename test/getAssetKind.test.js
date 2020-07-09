@@ -1,11 +1,11 @@
 /* eslint-env mocha */
 
-var getAssetKind = require('../lib/getAssetKind.js')
-var chai = require('chai')
-var expect = chai.expect
+const getAssetKind = require('../lib/getAssetKind.js')
+const chai = require('chai')
+const expect = chai.expect
 
 describe('getAssetKind', function () {
-  var webpackConfig
+  let webpackConfig
 
   beforeEach(function () {
     webpackConfig = {
@@ -19,14 +19,14 @@ describe('getAssetKind', function () {
 
   describe('js', function () {
     it('returns js', function () {
-      var input = 'desktop.js'
-      var res = getAssetKind(webpackConfig, input)
+      const input = 'desktop.js'
+      const res = getAssetKind(webpackConfig, input)
       expect(res).to.eq('js')
     })
 
     it('returns js with hash', function () {
-      var input = 'desktop.js?9b913c8594ce98e06b21'
-      var res = getAssetKind(webpackConfig, input)
+      const input = 'desktop.js?9b913c8594ce98e06b21'
+      const res = getAssetKind(webpackConfig, input)
       expect(res).to.eq('js')
     })
   })

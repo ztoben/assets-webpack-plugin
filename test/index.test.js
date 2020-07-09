@@ -1,12 +1,12 @@
 /* eslint-env mocha */
 
-var path = require('path')
-var rmRf = require('rimraf')
-var Plugin = require('../index.js')
+const path = require('path')
+const rmRf = require('rimraf')
+const Plugin = require('../index.js')
 
-var OUTPUT_DIR = path.join(__dirname, '../tmp')
-var expectOutput = require('./utils/expectOutput')(OUTPUT_DIR)
-var MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OUTPUT_DIR = path.join(__dirname, '../tmp')
+const expectOutput = require('./utils/expectOutput')(OUTPUT_DIR)
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 describe('Plugin', function () {
   beforeEach(function (done) {
@@ -14,7 +14,7 @@ describe('Plugin', function () {
   })
 
   it('generates a default file for a single entry point', function (done) {
-    var webpackConfig = {
+    const webpackConfig = {
       entry: path.join(__dirname, 'fixtures/one.js'),
       output: {
         path: OUTPUT_DIR,
@@ -25,14 +25,14 @@ describe('Plugin', function () {
       })]
     }
 
-    var expected = {
+    let expected = {
       main: {
         js: 'index-bundle.js'
       }
     }
     expected = JSON.stringify(expected)
 
-    var args = {
+    const args = {
       config: webpackConfig,
       expected: expected
     }
@@ -41,7 +41,7 @@ describe('Plugin', function () {
   })
 
   it('generates a default file with multiple entry points', function (done) {
-    var webpackConfig = {
+    const webpackConfig = {
       entry: {
         one: path.join(__dirname, 'fixtures/one.js'),
         two: path.join(__dirname, 'fixtures/two.js')
@@ -53,7 +53,7 @@ describe('Plugin', function () {
       plugins: [new Plugin({ path: 'tmp' })]
     }
 
-    var expected = {
+    const expected = {
       one: {
         js: 'one-bundle.js'
       },
@@ -62,7 +62,7 @@ describe('Plugin', function () {
       }
     }
 
-    var args = {
+    const args = {
       config: webpackConfig,
       expected: expected
     }
@@ -71,7 +71,7 @@ describe('Plugin', function () {
   })
 
   it('allows you to specify your own filename', function (done) {
-    var webpackConfig = {
+    const webpackConfig = {
       entry: path.join(__dirname, 'fixtures/one.js'),
       output: {
         path: OUTPUT_DIR,
@@ -83,13 +83,13 @@ describe('Plugin', function () {
       })]
     }
 
-    var expected = {
+    const expected = {
       main: {
         js: 'index-bundle.js'
       }
     }
 
-    var args = {
+    const args = {
       config: webpackConfig,
       expected: expected,
       outputFile: 'foo.json'
@@ -99,7 +99,7 @@ describe('Plugin', function () {
   })
 
   it('skips source maps', function (done) {
-    var webpackConfig = {
+    const webpackConfig = {
       devtool: 'sourcemap',
       entry: path.join(__dirname, 'fixtures/one.js'),
       output: {
@@ -109,13 +109,13 @@ describe('Plugin', function () {
       plugins: [new Plugin({ path: 'tmp' })]
     }
 
-    var expected = {
+    const expected = {
       main: {
         js: 'index-bundle.js'
       }
     }
 
-    var args = {
+    const args = {
       config: webpackConfig,
       expected: expected
     }
@@ -124,7 +124,7 @@ describe('Plugin', function () {
   })
 
   it('handles hashes in bundle filenames', function (done) {
-    var webpackConfig = {
+    const webpackConfig = {
       entry: path.join(__dirname, 'fixtures/one.js'),
       output: {
         path: OUTPUT_DIR,
@@ -133,9 +133,9 @@ describe('Plugin', function () {
       plugins: [new Plugin({ path: 'tmp' })]
     }
 
-    var expected = /{"main":{"js":"index-bundle-[0-9a-f]+\.js"}}/
+    const expected = /{"main":{"js":"index-bundle-[0-9a-f]+\.js"}}/
 
-    var args = {
+    const args = {
       config: webpackConfig,
       expected: expected
     }
@@ -144,7 +144,7 @@ describe('Plugin', function () {
   })
 
   it('handles hashes in a different position', function (done) {
-    var webpackConfig = {
+    const webpackConfig = {
       entry: path.join(__dirname, 'fixtures/one.js'),
       output: {
         path: OUTPUT_DIR,
@@ -153,9 +153,9 @@ describe('Plugin', function () {
       plugins: [new Plugin({ path: 'tmp' })]
     }
 
-    var expected = /{"main":{"js":"main\.js\?[0-9a-f]+"}}/
+    const expected = /{"main":{"js":"main\.js\?[0-9a-f]+"}}/
 
-    var args = {
+    const args = {
       config: webpackConfig,
       expected: expected
     }
@@ -164,9 +164,9 @@ describe('Plugin', function () {
   })
 
   it('works with ExtractTextPlugin for multiple stylesheets', function (done) {
-    var extractTextPlugin1 = new MiniCssExtractPlugin({ filename: '[name]-bundle1.css', chunkFilename: '[id].css' })
-    var extractTextPlugin2 = new MiniCssExtractPlugin({ filename: '[name]-bundle2.css', chunkFilename: '[id].css' })
-    var webpackConfig = {
+    const extractTextPlugin1 = new MiniCssExtractPlugin({ filename: '[name]-bundle1.css', chunkFilename: '[id].css' })
+    const extractTextPlugin2 = new MiniCssExtractPlugin({ filename: '[name]-bundle2.css', chunkFilename: '[id].css' })
+    const webpackConfig = {
       entry: {
         one: path.join(__dirname, 'fixtures/one.js'),
         two: path.join(__dirname, 'fixtures/two.js'),
@@ -203,7 +203,7 @@ describe('Plugin', function () {
       ]
     }
 
-    var expected = {
+    const expected = {
       one: {
         js: 'one-bundle.js'
       },
@@ -216,7 +216,7 @@ describe('Plugin', function () {
       }
     }
 
-    var args = {
+    const args = {
       config: webpackConfig,
       expected: expected
     }
@@ -225,7 +225,7 @@ describe('Plugin', function () {
   })
 
   it('includes full publicPath', function (done) {
-    var webpackConfig = {
+    const webpackConfig = {
       entry: path.join(__dirname, 'fixtures/one.js'),
       output: {
         path: OUTPUT_DIR,
@@ -235,9 +235,9 @@ describe('Plugin', function () {
       plugins: [new Plugin({ path: 'tmp' })]
     }
 
-    var expected = new RegExp('/public/path/[0-9a-f]+/index-bundle.js', 'i')
+    const expected = new RegExp('/public/path/[0-9a-f]+/index-bundle.js', 'i')
 
-    var args = {
+    const args = {
       config: webpackConfig,
       expected: expected
     }
@@ -246,7 +246,7 @@ describe('Plugin', function () {
   })
 
   it('doesn\'t include full publicPath', function (done) {
-    var webpackConfig = {
+    const webpackConfig = {
       entry: path.join(__dirname, 'fixtures/one.js'),
       output: {
         path: OUTPUT_DIR,
@@ -259,7 +259,7 @@ describe('Plugin', function () {
       })]
     }
 
-    var expected = {
+    let expected = {
       main: {
         js: 'index-bundle.js'
       }
@@ -267,7 +267,7 @@ describe('Plugin', function () {
 
     expected = JSON.stringify(expected)
 
-    var args = {
+    const args = {
       config: webpackConfig,
       expected: expected
     }
@@ -276,7 +276,7 @@ describe('Plugin', function () {
   })
 
   it('allows injection of metadata', function (done) {
-    var webpackConfig = {
+    const webpackConfig = {
       entry: path.join(__dirname, 'fixtures/one.js'),
       output: {
         path: OUTPUT_DIR,
@@ -291,7 +291,7 @@ describe('Plugin', function () {
       })]
     }
 
-    var expected = {
+    let expected = {
       main: {
         js: 'index-bundle.js'
       },
@@ -302,7 +302,7 @@ describe('Plugin', function () {
     }
     expected = JSON.stringify(expected)
 
-    var args = {
+    const args = {
       config: webpackConfig,
       expected: expected
     }

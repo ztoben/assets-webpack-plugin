@@ -1,10 +1,10 @@
 /* eslint-env mocha */
 
-var getFileExtension = require('../lib/getFileExtension')
-var expect = require('chai').expect
+const getFileExtension = require('../lib/getFileExtension')
+const expect = require('chai').expect
 
 function expectExtension (fileName, expected) {
-  var actual = getFileExtension(fileName)
+  const actual = getFileExtension(fileName)
   expect(actual).to.eq(expected)
 }
 

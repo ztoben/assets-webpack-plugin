@@ -1,15 +1,15 @@
 /* eslint-env mocha */
 /* eslint-disable no-unused-expressions */
 
-var path = require('path')
-var expect = require('chai').expect
-var webpack = require('webpack')
-var rmRf = require('rimraf')
+const path = require('path')
+const expect = require('chai').expect
+const webpack = require('webpack')
+const rmRf = require('rimraf')
 
-var Plugin = require('../index.js')
+const Plugin = require('../index.js')
 
-var OUTPUT_DIR = path.join(__dirname, '../tmp')
-var expectOutput = require('./utils/expectOutput')(OUTPUT_DIR)
+const OUTPUT_DIR = path.join(__dirname, '../tmp')
+const expectOutput = require('./utils/expectOutput')(OUTPUT_DIR)
 
 describe('Plugin', function () {
   beforeEach(function (done) {
@@ -17,9 +17,9 @@ describe('Plugin', function () {
   })
 
   it('works in multi-compiler mode', function (done) {
-    var plugin = new Plugin({ path: 'tmp' })
+    const plugin = new Plugin({ path: 'tmp' })
 
-    var webpackConfig = [
+    const webpackConfig = [
       {
         entry: {
           one: path.join(__dirname, 'fixtures/one.js')
@@ -42,7 +42,7 @@ describe('Plugin', function () {
       }
     ]
 
-    var expected = {
+    const expected = {
       one: {
         js: 'one-bundle.js'
       },
@@ -51,7 +51,7 @@ describe('Plugin', function () {
       }
     }
 
-    var args = {
+    const args = {
       config: webpackConfig,
       expected: expected
     }
@@ -60,7 +60,7 @@ describe('Plugin', function () {
   })
 
   it('updates output between compiler calls when options.update is true', function (done) {
-    var config1 = {
+    const config1 = {
       entry: {
         one: path.join(__dirname, 'fixtures/one.js')
       },
@@ -70,7 +70,7 @@ describe('Plugin', function () {
       },
       plugins: [new Plugin({ path: 'tmp', update: true })]
     }
-    var config2 = {
+    const config2 = {
       entry: {
         two: path.join(__dirname, 'fixtures/two.js')
       },
@@ -81,8 +81,8 @@ describe('Plugin', function () {
       plugins: [new Plugin({ path: 'tmp', update: true })]
     }
 
-    var expected = { one: { js: 'one-bundle.js' }, two: { js: 'two-bundle.js' } }
-    var args = { config: config2, expected: expected }
+    const expected = { one: { js: 'one-bundle.js' }, two: { js: 'two-bundle.js' } }
+    const args = { config: config2, expected: expected }
 
     webpack(config1, function (err, stats) {
       expect(err).to.be.null
@@ -92,7 +92,7 @@ describe('Plugin', function () {
   })
 
   it('overwrites output between compiler calls when options.update is false', function (done) {
-    var config1 = {
+    const config1 = {
       entry: {
         one: path.join(__dirname, 'fixtures/one.js')
       },
@@ -102,7 +102,7 @@ describe('Plugin', function () {
       },
       plugins: [new Plugin({ path: 'tmp', update: false })]
     }
-    var config2 = {
+    const config2 = {
       entry: {
         two: path.join(__dirname, 'fixtures/two.js')
       },
@@ -113,8 +113,8 @@ describe('Plugin', function () {
       plugins: [new Plugin({ path: 'tmp', update: false })]
     }
 
-    var expected = { two: { js: 'two-bundle.js' } }
-    var args = { config: config2, expected: expected }
+    const expected = { two: { js: 'two-bundle.js' } }
+    const args = { config: config2, expected: expected }
 
     webpack(config1, function (err, stats) {
       expect(err).to.be.null
