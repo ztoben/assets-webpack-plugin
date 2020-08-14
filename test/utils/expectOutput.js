@@ -2,7 +2,6 @@
 
 const _ = require('lodash')
 const expect = require('chai').expect
-const mkdirp = require('mkdirp')
 const webpack = require('webpack')
 const fs = require('fs')
 const path = require('path')
@@ -20,37 +19,29 @@ module.exports = function (outputDir) {
     }
 
     const webpackConfig = args.config
+    if (webpackConfig.plugins && webpackConfig.plugins[0].options.path) {
+      outputDir = path.join(__dirname, `../../${webpackConfig.plugins[0].options.path}`)
+    }
     const expectedResult = args.expected
-    let outputFile = args.outputFile
+    const outputFile = args.outputFile || 'webpack-assets.json'
 
-    // Create output folder
-    mkdirp(outputDir)
-      .then(function () {
-        return null
-      })
-      .then(function (err) {
-        expect(err).to.be.null
+    webpack(webpackConfig, function (err, stats) {
+      expect(err).to.be.null
+      expect(stats.hasErrors()).to.be.false
 
-        outputFile = outputFile || 'webpack-assets.json'
+      const content = fs.readFileSync(path.join(outputDir, outputFile)).toString()
 
-        webpack(webpackConfig, function (err, stats) {
-          expect(err).to.be.null
-          expect(stats.hasErrors()).to.be.false
+      if (_.isRegExp(expectedResult)) {
+        expect(content).to.match(expectedResult)
+      } else if (_.isString(expectedResult)) {
+        expect(content).to.contain(expectedResult)
+      } else {
+        // JSON object provided
+        const actual = JSON.parse(content)
+        expect(actual).to.eql(expectedResult)
+      }
 
-          const content = fs.readFileSync(path.join(outputDir, outputFile)).toString()
-
-          if (_.isRegExp(expectedResult)) {
-            expect(content).to.match(expectedResult)
-          } else if (_.isString(expectedResult)) {
-            expect(content).to.contain(expectedResult)
-          } else {
-            // JSON object provided
-            const actual = JSON.parse(content)
-            expect(actual).to.eql(expectedResult)
-          }
-
-          done()
-        })
-      })
+      done()
+    })
   }
 }
