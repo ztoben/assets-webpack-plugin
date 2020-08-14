@@ -254,7 +254,7 @@ describe('Plugin', function () {
         filename: 'index-bundle.js'
       },
       plugins: [new Plugin({
-        path: 'tmp',
+        path: 'tmp/nested',
         fullPath: false
       })]
     }
