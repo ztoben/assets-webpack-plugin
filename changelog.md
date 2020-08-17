@@ -5,6 +5,11 @@ This project adheres to [Semantic Versioning].
 
 [Semantic Versioning]: http://semver.org/
 
+## 5.1.0 - 2020-08-17
+
+- Implements using more relaxed dependencies.
+- Fixes [#240](https://github.com/ztoben/assets-webpack-plugin/issues/240)
+
 ## 5.0.5 - 2020-08-17
 
 - Plugin will now parse the `.mjs` file extension.

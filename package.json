@@ -1,6 +1,6 @@
 {
   "name": "assets-webpack-plugin",
-  "version": "5.0.5",
+  "version": "5.1.0",
   "description": "Emits a json file with assets paths",
   "main": "dist/index.js",
   "engines": {
@@ -48,9 +48,9 @@
     "webpack": "4.44.1"
   },
   "dependencies": {
-    "camelcase": "6.0.0",
-    "escape-string-regexp": "4.0.0",
-    "lodash": "4.17.20",
-    "mkdirp": "1.0.4"
+    "camelcase": "^6.0.0",
+    "escape-string-regexp": "^4.0.0",
+    "lodash": "^4.17.20",
+    "mkdirp": "^1.0.4"
   }
 }
