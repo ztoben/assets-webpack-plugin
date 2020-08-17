@@ -135,7 +135,7 @@ e.g.
 Optional. `false` by default.
 
 Inserts the manifest javascript as a `text` property in your assets.
-Accepts the name of your manifest chunk. A manifest is the last CommonChunk that
+Accepts the name or names of your manifest chunk. A manifest is the last CommonChunk that
 only contains the webpack bootstrap code. This is useful for production
 use when you want to inline the manifest in your HTML skeleton for long-term caching.
 See [issue #1315](https://github.com/webpack/webpack/issues/1315)
@@ -151,6 +151,17 @@ new AssetsPlugin({includeManifest: 'manifest'})
 // <script>
 // {assets.entries.manifest.text}
 // </script>
+```
+
+The `includeManifest` option also accepts an array of manifests:
+
+```js
+new AssetsPlugin({includeManifest: ['manifest1', 'manifest2']})
+// assets.json:
+// {entries: {
+//    manifest1: {js: `hashed_manifest.js`, text: 'function(modules)...'},
+//    manifest2: {js: `hashed_manifest.js`, text: 'function(modules)...'}
+// }}
 ```
 
 #### `manifestFirst`

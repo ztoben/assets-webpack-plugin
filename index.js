@@ -122,21 +122,30 @@ AssetsWebpackPlugin.prototype = {
         return chunkMap
       }, {})
 
-      const manifestName = self.options.includeManifest === true ? 'manifest' : self.options.includeManifest
-      if (manifestName) {
-        const manifestEntry = output[manifestName]
-        if (manifestEntry) {
-          let js = manifestEntry.js || manifestEntry.mjs
-          if (!Array.isArray(js)) {
-            js = [js]
+      let manifestNames = self.options.includeManifest === true ? ['manifest'] : self.options.includeManifest
+
+      if (typeof manifestNames === 'string') {
+        manifestNames = [manifestNames]
+      }
+
+      if (manifestNames) {
+        for (let i = 0; i < manifestNames.length; i++) {
+          const manifestName = manifestNames[i]
+          const manifestEntry = output[manifestName]
+
+          if (manifestEntry) {
+            let js = manifestEntry.js || manifestEntry.mjs
+            if (!Array.isArray(js)) {
+              js = [js]
+            }
+            const manifestAssetKey = js[js.length - 1].substr(assetPath.length)
+            const parentSource = compilation.assets[manifestAssetKey]
+            const entryText = parentSource.source()
+            if (!entryText) {
+              throw new Error('Could not locate manifest function in source', parentSource)
+            }
+            manifestEntry.text = entryText
           }
-          const manifestAssetKey = js[js.length - 1].substr(assetPath.length)
-          const parentSource = compilation.assets[manifestAssetKey]
-          const entryText = parentSource.source()
-          if (!entryText) {
-            throw new Error('Could not locate manifest function in source', parentSource)
-          }
-          manifestEntry.text = entryText
         }
       }
 

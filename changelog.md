@@ -5,6 +5,11 @@ This project adheres to [Semantic Versioning].
 
 [Semantic Versioning]: http://semver.org/
 
+## 5.1.1 - 2020-08-17
+
+- Allow more than one entry in `includeManifest`.
+- Closes [#84](https://github.com/ztoben/assets-webpack-plugin/issues/84)
+
 ## 5.1.0 - 2020-08-17
 
 - Implements using more relaxed dependencies.
