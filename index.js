@@ -126,7 +126,7 @@ AssetsWebpackPlugin.prototype = {
       if (manifestName) {
         const manifestEntry = output[manifestName]
         if (manifestEntry) {
-          let js = manifestEntry.js
+          let js = manifestEntry.js || manifestEntry.mjs
           if (!Array.isArray(js)) {
             js = [js]
           }
