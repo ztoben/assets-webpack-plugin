@@ -141,6 +141,7 @@ use when you want to inline the manifest in your HTML skeleton for long-term cac
 See [issue #1315](https://github.com/webpack/webpack/issues/1315)
 or [a blog post](https://medium.com/@matt.krick/a-production-ready-realtime-saas-with-webpack-7b11ba2fa5b0#.p1vvfr3bm)
 to learn more.
+**NOTE** for webpack v5, `futureEmitAssets` is defaulted to `false` in development mode.  This option requires `output.futureEmitAssets = true` in order to work.
 
 ```js
 new AssetsPlugin({includeManifest: 'manifest'})
