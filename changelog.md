@@ -5,6 +5,11 @@ This project adheres to [Semantic Versioning].
 
 [Semantic Versioning]: http://semver.org/
 
+## 5.1.2 - 2020-09-22
+
+* Add a new option to include assets that aren't in any chunk using the `includeFilesWithoutChunk` option.
+* Closes [#204](https://github.com/ztoben/assets-webpack-plugin/issues/204)
+
 ## 5.1.1 - 2020-08-17
 
 * Allow more than one entry in `includeManifest`.
