@@ -307,6 +307,16 @@ If the 'entrypoints' option is given, the output will be limited to the entrypoi
 new AssetsPlugin({entrypoints: true})
 ```
 
+#### `includeFilesWithoutChunk`
+
+Optional. `false` by default.
+
+When set and `entrypoints` is set true, will output any files that are part of the unnamed chunk to an additional unnamed ("") entry.
+
+```js
+new AssetsPlugin({includeFilesWithoutChunk: true})
+```
+
 ### Using in multi-compiler mode
 
 If you use webpack multi-compiler mode and want your assets written to a single file,

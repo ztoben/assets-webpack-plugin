@@ -19,6 +19,7 @@ function AssetsWebpackPlugin (options) {
     useCompilerPath: false,
     fileTypes: ['js', 'css'],
     includeAllFileTypes: true,
+    includeFilesWithoutChunk: false,
     keepInMemory: false,
     integrity: false
   }, options)
@@ -66,16 +67,19 @@ AssetsWebpackPlugin.prototype = {
 
       if (self.options.entrypoints) {
         chunks = Object.keys(stats.entrypoints)
+        if (self.options.includeFilesWithoutChunk) {
+          chunks.push('') // push "unnamed" chunk
+        }
       } else {
         chunks = Object.keys(stats.assetsByChunkName)
-        chunks.push('') // push "unamed" chunk
+        chunks.push('') // push "unnamed" chunk
       }
 
       const output = chunks.reduce(function (chunkMap, chunkName) {
         let assets
 
         if (self.options.entrypoints) {
-          assets = stats.entrypoints[chunkName].assets
+          assets = chunkName ? stats.entrypoints[chunkName].assets : stats.assets
         } else {
           assets = chunkName ? stats.assetsByChunkName[chunkName] : stats.assets
         }
