@@ -1,26 +1,38 @@
 # assets-webpack-plugin
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://travis-ci.org/ztoben/assets-webpack-plugin.svg?branch=master)](https://travis-ci.org/ztoben/assets-webpack-plugin)
 [![Build status](https://ci.appveyor.com/api/projects/status/sbchndv12vk45mo3?svg=true)](https://ci.appveyor.com/project/ztoben/assets-webpack-plugin)
-
-
 [![NPM](https://nodei.co/npm/assets-webpack-plugin.png)](https://www.npmjs.com/package/assets-webpack-plugin)
 
 Webpack plugin that emits a json file with assets paths.
 
 ## Table of Contents
 
-- [Why Is This Useful?](#why-is-this-useful)
-
-- [Install](#install)
-
-- [Configuration](#configuration)
-
-- [Test](#test)
-
-- [Change Log](./changelog.md)
-
-- [Contributing Guidelines](./contributing.md)
+* [Why Is This Useful?](#why-is-this-useful)
+  * [Example output:](#example-output)
+* [Install](#install)
+* [Configuration](#configuration)
+  * [Options](#options)
+    * [`filename`](#filename)
+    * [`fullPath`](#fullpath)
+    * [`includeManifest`](#includemanifest)
+    * [`manifestFirst`](#manifestfirst)
+    * [`path`](#path)
+    * [`useCompilerPath`](#usecompilerpath)
+    * [`prettyPrint`](#prettyprint)
+    * [`processOutput`](#processoutput)
+    * [`update`](#update)
+    * [`metadata`](#metadata)
+    * [`includeAllFileTypes`](#includeallfiletypes)
+    * [`fileTypes`](#filetypes)
+    * [`keepInMemory`](#keepinmemory)
+    * [`integrity`](#integrity)
+    * [`entrypoints`](#entrypoints)
+  * [Using in multi-compiler mode](#using-in-multi-compiler-mode)
+  * [Using this with Rails](#using-this-with-rails)
+  * [Using this with ASP.NET Core](#using-this-with-aspnet-core)
+* [Test](#test)
 
 ## Why Is This Useful?
 
@@ -42,8 +54,8 @@ The output is a JSON object in the form:
 
 Where:
 
-  * `"bundle_name"` is the name of the bundle (the key of the entry object in your webpack config, or "main" if your entry is an array).
-  * `"asset_kind"` is the camel-cased file extension of the asset
+* `"bundle_name"` is the name of the bundle (the key of the entry object in your webpack config, or "main" if your entry is an array).
+* `"asset_kind"` is the camel-cased file extension of the asset
 
 For example, given the following webpack config:
 
@@ -252,7 +264,7 @@ new AssetsPlugin({includeAllFileTypes: false})
 
 #### `fileTypes`
 
-Optional. ```['js', 'css']``` by default.
+Optional. `['js', 'css']` by default.
 
 When set and `includeAllFileTypes` is set false, only assets matching these types will be included in the assets file.
 
@@ -320,7 +332,7 @@ new AssetsPlugin({includeFilesWithoutChunk: true})
 ### Using in multi-compiler mode
 
 If you use webpack multi-compiler mode and want your assets written to a single file,
-you **must** use the same instance of the plugin in the different configurations.
+you __must__ use the same instance of the plugin in the different configurations.
 
 For example:
 
@@ -342,7 +354,6 @@ webpack([
   }
 ])
 ```
-
 
 ### Using this with Rails
 
