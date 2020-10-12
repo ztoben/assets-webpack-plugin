@@ -1,3 +1,5 @@
+import { createFsFromVolume, Volume } from 'memfs'
+
 const fs = require('fs')
 const path = require('path')
 const _ = require('lodash')
@@ -21,7 +23,8 @@ function AssetsWebpackPlugin (options) {
     includeAllFileTypes: true,
     includeFilesWithoutChunk: false,
     keepInMemory: false,
-    integrity: false
+    integrity: false,
+    removeFullPathAutoPrefix: false
   }, options)
   this.writer = createQueuedWriter(createOutputWriter(this.options))
 }
@@ -38,7 +41,7 @@ AssetsWebpackPlugin.prototype = {
         : (self.options.path || '.')
     )
 
-    const afterEmit = (compilation, callback) => {
+    const emit = (compilation, callback) => {
       const options = compiler.options
       const stats = compilation.getStats().toJson({
         hash: true,
@@ -50,9 +53,8 @@ AssetsWebpackPlugin.prototype = {
         errorDetails: false,
         timings: false
       })
-      // publicPath with resolved [hash] placeholder
 
-      const assetPath = (stats.publicPath && self.options.fullPath) ? stats.publicPath : ''
+      let assetPath = (stats.publicPath && self.options.fullPath) ? stats.publicPath : ''
       // assetsByChunkName contains a hash with the bundle names and the produced files
       // e.g. { one: 'one-bundle.js', two: 'two-bundle.js' }
       // in some cases (when using a plugin or source maps) it might contain an array of produced files
@@ -61,6 +63,14 @@ AssetsWebpackPlugin.prototype = {
       //   [ 'index-bundle-42b6e1ec4fa8c5f0303e.js',
       //     'index-bundle-42b6e1ec4fa8c5f0303e.js.map' ]
       // }
+      // starting with webpack 5, the public path is automatically determined when possible and the path is prefaced
+      // with `/auto/`, the `removeAutoPrefix` option can be set to turn this off
+
+      if (self.options.removeFullPathAutoPrefix) {
+        if (assetPath.startsWith('auto')) {
+          assetPath = assetPath.substring(4)
+        }
+      }
 
       const seenAssets = {}
       let chunks
@@ -157,8 +167,15 @@ AssetsWebpackPlugin.prototype = {
         output.metadata = self.options.metadata
       }
 
+      if (self.options.keepInMemory) {
+        compiler.outputFileSystem = createFsFromVolume(new Volume())
+      }
+
       if (!compiler.outputFileSystem.readFile) {
         compiler.outputFileSystem.readFile = fs.readFile.bind(fs)
+      }
+
+      if (!compiler.outputFileSystem.join) {
         compiler.outputFileSystem.join = path.join.bind(path)
       }
 
@@ -173,9 +190,9 @@ AssetsWebpackPlugin.prototype = {
     if (compiler.hooks) {
       const plugin = { name: 'AssetsWebpackPlugin' }
 
-      compiler.hooks.afterEmit.tapAsync(plugin, afterEmit)
+      compiler.hooks.emit.tapAsync(plugin, emit)
     } else {
-      compiler.plugin('after-emit', afterEmit)
+      compiler.plugin('emit', emit)
     }
   }
 }
