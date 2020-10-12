@@ -1,5 +1,4 @@
-import { createFsFromVolume, Volume } from 'memfs'
-
+const { createFsFromVolume, Volume } = require('memfs')
 const fs = require('fs')
 const path = require('path')
 const _ = require('lodash')
