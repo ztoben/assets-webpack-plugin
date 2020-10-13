@@ -44,10 +44,10 @@ describe('Plugin', function () {
 
     const expected = {
       one: {
-        js: 'one-bundle.js'
+        js: 'auto/one-bundle.js'
       },
       two: {
-        js: 'two-bundle.js'
+        js: 'auto/two-bundle.js'
       }
     }
 
@@ -81,7 +81,7 @@ describe('Plugin', function () {
       plugins: [new Plugin({ path: 'tmp', update: true })]
     }
 
-    const expected = { one: { js: 'one-bundle.js' }, two: { js: 'two-bundle.js' } }
+    const expected = { one: { js: 'auto/one-bundle.js' }, two: { js: 'auto/two-bundle.js' } }
     const args = { config: config2, expected: expected }
 
     webpack(config1, function (err, stats) {
@@ -113,7 +113,7 @@ describe('Plugin', function () {
       plugins: [new Plugin({ path: 'tmp', update: false })]
     }
 
-    const expected = { two: { js: 'two-bundle.js' } }
+    const expected = { two: { js: 'auto/two-bundle.js' } }
     const args = { config: config2, expected: expected }
 
     webpack(config1, function (err, stats) {

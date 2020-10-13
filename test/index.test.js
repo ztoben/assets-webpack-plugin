@@ -27,6 +27,34 @@ describe('Plugin', function () {
 
     let expected = {
       main: {
+        js: 'auto/index-bundle.js'
+      }
+    }
+    expected = JSON.stringify(expected)
+
+    const args = {
+      config: webpackConfig,
+      expected: expected
+    }
+
+    expectOutput(args, done)
+  })
+
+  it('removes the auto prefix when `removeFullPathAutoPrefix` is set', function (done) {
+    const webpackConfig = {
+      entry: path.join(__dirname, 'fixtures/one.js'),
+      output: {
+        path: OUTPUT_DIR,
+        filename: 'index-bundle.js'
+      },
+      plugins: [new Plugin({
+        path: 'tmp',
+        removeFullPathAutoPrefix: true
+      })]
+    }
+
+    let expected = {
+      main: {
         js: 'index-bundle.js'
       }
     }
@@ -55,10 +83,10 @@ describe('Plugin', function () {
 
     const expected = {
       one: {
-        js: 'one-bundle.js'
+        js: 'auto/one-bundle.js'
       },
       two: {
-        js: 'two-bundle.js'
+        js: 'auto/two-bundle.js'
       }
     }
 
@@ -85,7 +113,7 @@ describe('Plugin', function () {
 
     const expected = {
       main: {
-        js: 'index-bundle.js'
+        js: 'auto/index-bundle.js'
       }
     }
 
@@ -100,7 +128,7 @@ describe('Plugin', function () {
 
   it('skips source maps', function (done) {
     const webpackConfig = {
-      devtool: 'sourcemap',
+      devtool: 'source-map',
       entry: path.join(__dirname, 'fixtures/one.js'),
       output: {
         path: OUTPUT_DIR,
@@ -111,7 +139,7 @@ describe('Plugin', function () {
 
     const expected = {
       main: {
-        js: 'index-bundle.js'
+        js: 'auto/index-bundle.js'
       }
     }
 
@@ -128,9 +156,9 @@ describe('Plugin', function () {
       entry: path.join(__dirname, 'fixtures/one.js'),
       output: {
         path: OUTPUT_DIR,
-        filename: 'index-bundle-[hash].js'
+        filename: 'index-bundle-[fullhash].js'
       },
-      plugins: [new Plugin({ path: 'tmp' })]
+      plugins: [new Plugin({ path: 'tmp', removeFullPathAutoPrefix: true })]
     }
 
     const expected = /{"main":{"js":"index-bundle-[0-9a-f]+\.js"}}/
@@ -148,9 +176,9 @@ describe('Plugin', function () {
       entry: path.join(__dirname, 'fixtures/one.js'),
       output: {
         path: OUTPUT_DIR,
-        filename: '[name].js?[hash]'
+        filename: '[name].js?[fullhash]'
       },
-      plugins: [new Plugin({ path: 'tmp' })]
+      plugins: [new Plugin({ path: 'tmp', removeFullPathAutoPrefix: true })]
     }
 
     const expected = /{"main":{"js":"main\.js\?[0-9a-f]+"}}/
@@ -205,14 +233,14 @@ describe('Plugin', function () {
 
     const expected = {
       one: {
-        js: 'one-bundle.js'
+        js: 'auto/one-bundle.js'
       },
       two: {
-        js: 'two-bundle.js'
+        js: 'auto/two-bundle.js'
       },
       styles: {
-        js: 'styles-bundle.js',
-        css: ['styles-bundle1.css', 'styles-bundle2.css']
+        js: 'auto/styles-bundle.js',
+        css: ['auto/styles-bundle1.css', 'auto/styles-bundle2.css']
       }
     }
 
@@ -229,7 +257,7 @@ describe('Plugin', function () {
       entry: path.join(__dirname, 'fixtures/one.js'),
       output: {
         path: OUTPUT_DIR,
-        publicPath: '/public/path/[hash]/',
+        publicPath: '/public/path/[fullhash]/',
         filename: 'index-bundle.js'
       },
       plugins: [new Plugin({ path: 'tmp' })]
@@ -250,7 +278,7 @@ describe('Plugin', function () {
       entry: path.join(__dirname, 'fixtures/one.js'),
       output: {
         path: OUTPUT_DIR,
-        publicPath: '/public/path/[hash]/',
+        publicPath: '/public/path/[fullhash]/',
         filename: 'index-bundle.js'
       },
       plugins: [new Plugin({
@@ -293,7 +321,7 @@ describe('Plugin', function () {
 
     let expected = {
       main: {
-        js: 'index-bundle.js'
+        js: 'auto/index-bundle.js'
       },
       metadata: {
         foo: 'bar',

@@ -1,4 +1,3 @@
-const { createFsFromVolume, Volume } = require('memfs')
 const fs = require('fs')
 const path = require('path')
 const _ = require('lodash')
@@ -164,10 +163,6 @@ AssetsWebpackPlugin.prototype = {
 
       if (self.options.metadata) {
         output.metadata = self.options.metadata
-      }
-
-      if (self.options.keepInMemory) {
-        compiler.outputFileSystem = createFsFromVolume(new Volume())
       }
 
       if (!compiler.outputFileSystem.readFile) {
