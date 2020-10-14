@@ -98,6 +98,9 @@ AssetsWebpackPlugin.prototype = {
         let added = false
         const typeMap = assets.reduce(function (typeMap, obj) {
           const asset = obj.name || obj
+
+          console.log(asset)
+
           if (isHMRUpdate(options, asset) || isSourceMap(options, asset) || (!chunkName && seenAssets[asset])) {
             return typeMap
           }
