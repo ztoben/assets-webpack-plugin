@@ -5,6 +5,13 @@ This project adheres to [Semantic Versioning].
 
 [Semantic Versioning]: http://semver.org/
 
+## 6.0.1 - 2020-10-15
+* Initial webpack 5 support
+* Versions going forward will support webpack 5 only
+
+## 6.0.0
+* This release is deprecated.
+
 ## 5.1.2 - 2020-09-22
 
 * Add a new option to include assets that aren't in any chunk using the `includeFilesWithoutChunk` option.
