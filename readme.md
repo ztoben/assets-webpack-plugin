@@ -8,13 +8,14 @@ Webpack plugin that emits a json file with assets paths.
 
 ## Table of Contents
 
+* [Install](#install)
 * [Why Is This Useful?](#why-is-this-useful)
   * [Example output:](#example-output)
-* [Install](#install)
 * [Configuration](#configuration)
   * [Options](#options)
     * [`filename`](#filename)
     * [`fullPath`](#fullpath)
+    * [`removeFullPathAutoPrefix`](#removefullpathautoprefix)
     * [`includeManifest`](#includemanifest)
     * [`manifestFirst`](#manifestfirst)
     * [`path`](#path)
@@ -23,15 +24,32 @@ Webpack plugin that emits a json file with assets paths.
     * [`processOutput`](#processoutput)
     * [`update`](#update)
     * [`metadata`](#metadata)
-    * [`includeAllFileTypes`](#includeallfiletypes)
+    * [`includeAllFileTypes`](#includeallfileTtypes)
     * [`fileTypes`](#filetypes)
     * [`keepInMemory`](#keepinmemory)
     * [`integrity`](#integrity)
     * [`entrypoints`](#entrypoints)
+    * [`includeFilesWithoutChunk`](#includefileswithoutchunk)
   * [Using in multi-compiler mode](#using-in-multi-compiler-mode)
   * [Using this with Rails](#using-this-with-rails)
   * [Using this with ASP.NET Core](#using-this-with-aspnet-core)
 * [Test](#test)
+
+## Install
+
+⚠️ Starting with version 6, this plugin works with Webpack 5+.
+
+If you are working with an older version of Webpack, you can use the most recent 5.x.x release (`5.1.2`).
+
+```sh
+npm install assets-webpack-plugin --save-dev
+```
+
+If you're using Webpack 4 or below:
+
+```sh
+npm install webpack-assets-manifest@5.1.2 --save-dev
+```
 
 ## Why Is This Useful?
 
@@ -83,22 +101,6 @@ The plugin will output the following json file:
         "js": "/js/two_2bb80372ebe8047a68d4.bundle.js"
     }
 }
-```
-
-## Install
-
-⚠️ Starting with version 6, this plugin works with Webpack 5+.
-
-If you are working with an older version of Webpack, you can use the most recent 5.x.x release (`5.1.2`).
-
-```sh
-npm install assets-webpack-plugin --save-dev
-```
-
-If you're using Webpack 4 or below:
-
-```sh
-npm install webpack-assets-manifest@5.1.2 --save-dev
 ```
 
 ## Configuration
