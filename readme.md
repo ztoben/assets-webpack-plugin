@@ -88,8 +88,18 @@ The plugin will output the following json file:
 
 ## Install
 
+⚠️ Starting with version 6, this plugin works with Webpack 5+.
+
+If you are working with an older version of Webpack, you can use the most recent 5.x.x release (`5.1.2`).
+
 ```sh
 npm install assets-webpack-plugin --save-dev
+```
+
+If you're using Webpack 4 or below:
+
+```sh
+npm install webpack-assets-manifest@5.1.2 --save-dev
 ```
 
 ## Configuration
