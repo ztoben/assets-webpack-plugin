@@ -263,7 +263,7 @@ describe('Plugin', function () {
       plugins: [new Plugin({ path: 'tmp' })]
     }
 
-    const expected = new RegExp('/public/path/[0-9a-f]+/index-bundle.js', 'i')
+    const expected = new RegExp('/public/path/[0-9a-f]+/index-bundle.js', 'i') // eslint-disable-line
 
     const args = {
       config: webpackConfig,
