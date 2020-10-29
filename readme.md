@@ -1,5 +1,7 @@
 # assets-webpack-plugin
 
+[![version](https://img.shields.io/npm/v/assets-webpack-plugin.svg)](https://npmjs.org/package/assets-webpack-plugin)
+[![downloads](https://img.shields.io/npm/dt/assets-webpack-plugin.svg)](https://npmjs.org/package/assets-webpack-plugin)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://travis-ci.org/ztoben/assets-webpack-plugin.svg?branch=master)](https://travis-ci.org/ztoben/assets-webpack-plugin)
 [![Build status](https://ci.appveyor.com/api/projects/status/sbchndv12vk45mo3?svg=true)](https://ci.appveyor.com/project/ztoben/assets-webpack-plugin)
