@@ -40,7 +40,7 @@
     "chai": "4.2.0",
     "css-loader": "5.0.0",
     "mini-css-extract-plugin": "1.2.1",
-    "mocha": "8.2.0",
+    "mocha": "8.2.1",
     "rimraf": "3.0.2",
     "snazzy": "9.0.0",
     "standard": "16.0.0",
