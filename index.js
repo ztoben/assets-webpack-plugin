@@ -20,6 +20,7 @@ function AssetsWebpackPlugin (options) {
     fileTypes: ['js', 'css'],
     includeAllFileTypes: true,
     includeFilesWithoutChunk: false,
+    includeAuxiliaryAssets: false,
     keepInMemory: false,
     integrity: false,
     removeFullPathAutoPrefix: false
@@ -90,6 +91,10 @@ AssetsWebpackPlugin.prototype = {
           assets = chunkName ? stats.entrypoints[chunkName].assets : stats.assets
         } else {
           assets = chunkName ? stats.assetsByChunkName[chunkName] : stats.assets
+        }
+        
+        if(self.options.includeAuxiliaryAssets && stats.entrypoints[chunkName].auxiliaryAssets){
+            assets = [...assets, ...stats.entrypoints[chunkName].auxiliaryAssets];
         }
 
         if (!Array.isArray(assets)) {
