@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning].
 
 [Semantic Versioning]: http://semver.org/
 
+## 6.0.4 - 2020-11-13
+* Adds the `includeAuxiliaryAssets` option
+* Closes [#302](https://github.com/ztoben/assets-webpack-plugin/issues/302)
+
 ## 6.0.2 - 2020-10-16
 * Closes [#279](https://github.com/ztoben/assets-webpack-plugin/issues/279)
 
