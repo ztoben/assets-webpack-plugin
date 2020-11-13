@@ -355,6 +355,16 @@ When set and `entrypoints` is set true, will output any files that are part of t
 new AssetsPlugin({includeFilesWithoutChunk: true})
 ```
 
+#### `includeAuxiliaryAssets`
+
+Optional. `false` by default.
+
+When set, will output any files that are part of the chunk and marked as auxiliary assets.
+
+```js
+new AssetsPlugin({includeAuxiliaryAssets: true})
+```
+
 ### Using in multi-compiler mode
 
 If you use webpack multi-compiler mode and want your assets written to a single file,
