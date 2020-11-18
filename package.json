@@ -43,7 +43,7 @@
     "mocha": "8.2.1",
     "rimraf": "3.0.2",
     "snazzy": "9.0.0",
-    "standard": "16.0.2",
+    "standard": "16.0.3",
     "style-loader": "2.0.0",
     "webpack": "5.5.0"
   },
