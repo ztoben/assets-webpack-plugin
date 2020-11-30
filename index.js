@@ -93,7 +93,7 @@ AssetsWebpackPlugin.prototype = {
           assets = chunkName ? stats.assetsByChunkName[chunkName] : stats.assets
         }
 
-        if (self.options.includeAuxiliaryAssets && stats.entrypoints[chunkName].auxiliaryAssets) {
+        if (self.options.includeAuxiliaryAssets && chunkName && stats.entrypoints[chunkName].auxiliaryAssets) {
           assets = [...assets, ...stats.entrypoints[chunkName].auxiliaryAssets]
         }
 
