@@ -25,7 +25,6 @@ function AssetsWebpackPlugin (options) {
     integrity: false,
     removeFullPathAutoPrefix: false
   }, options)
-  this.writer = createQueuedWriter(createOutputWriter(this.options))
 }
 
 AssetsWebpackPlugin.prototype = {
@@ -39,6 +38,7 @@ AssetsWebpackPlugin.prototype = {
         ? (compiler.options.output.path || '.')
         : (self.options.path || '.')
     )
+    self.writer = createQueuedWriter(createOutputWriter(self.options))
 
     const emit = (compilation, callback) => {
       const options = compiler.options
