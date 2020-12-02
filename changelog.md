@@ -5,8 +5,12 @@ This project adheres to [Semantic Versioning].
 
 [Semantic Versioning]: http://semver.org/
 
+## 6.0.6 - 2020-11-13
+* Adds [#311](https://github.com/ztoben/assets-webpack-plugin/pull/311)
+* Fixes issue where default path would not be set
+
 ## 6.0.5 - 2020-11-13
-* Adds [#301](https://github.com/ztoben/assets-webpack-plugin/pull/310)
+* Adds [#310](https://github.com/ztoben/assets-webpack-plugin/pull/310)
 
 ## 6.0.4 - 2020-11-13
 * Adds the `includeAuxiliaryAssets` option
