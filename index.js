@@ -21,6 +21,7 @@ function AssetsWebpackPlugin (options) {
     includeAllFileTypes: true,
     includeFilesWithoutChunk: false,
     includeAuxiliaryAssets: false,
+    includeLazyChildAssets: false,
     keepInMemory: false,
     integrity: false,
     removeFullPathAutoPrefix: false
@@ -96,6 +97,41 @@ AssetsWebpackPlugin.prototype = {
         if (self.options.includeAuxiliaryAssets && chunkName && stats.entrypoints[chunkName].auxiliaryAssets) {
           assets = [...assets, ...stats.entrypoints[chunkName].auxiliaryAssets]
         }
+        
+        if (self.options.includeLazyChildAssets && chunkName && (stats.entrypoints[chunkName].children.preload || stats.entrypoints[chunkName].children.prefetch)){
+          if(stats.entrypoints[chunkName].children.preload){
+            const preloadedChildAssets = [];
+            stats.entrypoints[chunkName].children.preload.forEach(function(obj){
+              obj.assets.forEach(function(asset){
+                asset.loadingBehaviour = 'preload';
+                preloadedChildAssets.push(asset);
+              });
+              if (self.options.includeAuxiliaryAssets && obj.auxiliaryAssets){
+                obj.auxiliaryAssets.forEach(function(asset){
+                    asset.loadingBehaviour = 'preload';
+                    preloadedChildAssets.push(asset);
+                });
+              }
+            });
+            assets = [...assets, ...preloadedChildAssets];
+          }
+          if(stats.entrypoints[chunkName].children.prefetch){
+            const prefetchedChildAssets = [];
+            stats.entrypoints[chunkName].children.prefetch.forEach(function(obj){
+              obj.assets.forEach(function(asset){
+                asset.loadingBehaviour = 'prefetch';
+                prefetchedChildAssets.push(asset);
+              });
+              if (self.options.includeAuxiliaryAssets && obj.auxiliaryAssets) {
+                obj.auxiliaryAssets.forEach(function(asset){
+                  asset.loadingBehaviour = 'prefetch';
+                  prefetchedChildAssets.push(asset);
+                });
+              }
+            });
+            assets = [...assets, ...prefetchedChildAssets];
+          }
+        }
 
         if (!Array.isArray(assets)) {
           assets = [assets]
@@ -114,6 +150,7 @@ AssetsWebpackPlugin.prototype = {
             const type = typeof typeMap[typeName]
             const compilationAsset = compilation.assets[asset]
             const integrity = compilationAsset && compilationAsset.integrity
+            const loadingBehaviour = obj.loadingBehaviour
 
             if (type === 'undefined') {
               typeMap[typeName] = combinedPath
@@ -125,7 +162,12 @@ AssetsWebpackPlugin.prototype = {
               if (type === 'string') {
                 typeMap[typeName] = [typeMap[typeName]]
               }
-              typeMap[typeName].push(combinedPath)
+              if(self.options.includeLazyChildAssets && loadingBehaviour){
+                typeMap[typeName + ':' + loadingBehaviour] = typeMap[typeName + ':' + loadingBehaviour] || [];
+                typeMap[typeName + ':' + loadingBehaviour].push(combinedPath) 
+              } else {
+                typeMap[typeName].push(combinedPath)
+              }
             }
 
             added = true
