@@ -365,6 +365,17 @@ When set, will output any files that are part of the chunk and marked as auxilia
 new AssetsPlugin({includeAuxiliaryAssets: true})
 ```
 
+#### `includeLazyChildAssets`
+
+Optional. `false` by default.
+
+When set, will output any files that are dynamically loaded and marked as preloaded or prefechted.
+See: https://webpack.js.org/guides/code-splitting/#prefetchingpreloading-modules
+
+```js
+new AssetsPlugin({includeLazyChildAssets: true})
+```
+
 ### Using in multi-compiler mode
 
 If you use webpack multi-compiler mode and want your assets written to a single file,
