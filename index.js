@@ -5,6 +5,7 @@ const _ = require('lodash')
 const getAssetKind = require('./lib/getAssetKind')
 const isHMRUpdate = require('./lib/isHMRUpdate')
 const isSourceMap = require('./lib/isSourceMap')
+const getDynamicImportedChildAssets = require('./lib/getDynamicImportedChildAssets')
 
 const createQueuedWriter = require('./lib/output/createQueuedWriter')
 const createOutputWriter = require('./lib/output/createOutputWriter')
@@ -21,6 +22,7 @@ function AssetsWebpackPlugin (options) {
     includeAllFileTypes: true,
     includeFilesWithoutChunk: false,
     includeAuxiliaryAssets: false,
+    includeDynamicImportedAssets: false,
     keepInMemory: false,
     integrity: false,
     removeFullPathAutoPrefix: false
@@ -97,6 +99,11 @@ AssetsWebpackPlugin.prototype = {
           assets = [...assets, ...stats.entrypoints[chunkName].auxiliaryAssets]
         }
 
+        if (self.options.includeDynamicImportedAssets && chunkName && stats.entrypoints[chunkName].children) {
+          const dynamicImportedChildAssets = getDynamicImportedChildAssets(options, stats.entrypoints[chunkName].children)
+          assets = [...assets, ...dynamicImportedChildAssets]
+        }
+
         if (!Array.isArray(assets)) {
           assets = [assets]
         }
@@ -114,6 +121,7 @@ AssetsWebpackPlugin.prototype = {
             const type = typeof typeMap[typeName]
             const compilationAsset = compilation.assets[asset]
             const integrity = compilationAsset && compilationAsset.integrity
+            const loadingBehaviour = obj.loadingBehaviour
 
             if (type === 'undefined') {
               typeMap[typeName] = combinedPath
@@ -125,7 +133,15 @@ AssetsWebpackPlugin.prototype = {
               if (type === 'string') {
                 typeMap[typeName] = [typeMap[typeName]]
               }
-              typeMap[typeName].push(combinedPath)
+
+              if (self.options.includeDynamicImportedAssets && loadingBehaviour) {
+                const typeNameWithLoadingBehaviour = typeName + ':' + loadingBehaviour
+
+                typeMap[typeNameWithLoadingBehaviour] = typeMap[typeNameWithLoadingBehaviour] || []
+                typeMap[typeNameWithLoadingBehaviour].push(combinedPath)
+              } else {
+                typeMap[typeName].push(combinedPath)
+              }
             }
 
             added = true
