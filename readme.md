@@ -65,9 +65,9 @@ The output is a JSON object in the form:
 
 ```json
 {
-    "bundle_name": {
-        "asset_kind": "/public/path/to/asset"
-    }
+  "bundle_name": {
+    "asset_kind": "/public/path/to/asset"
+  }
 }
 ```
 
@@ -365,15 +365,15 @@ When set, will output any files that are part of the chunk and marked as auxilia
 new AssetsPlugin({includeAuxiliaryAssets: true})
 ```
 
-#### `includeLazyChildAssets`
+#### `includeDynamicImportedAssets`
 
 Optional. `false` by default.
 
-When set, will output any files that are dynamically loaded and marked as preloaded or prefechted.
+When set, will output any files that are part of the chunk and marked as preloadable or prefechtable child assets via a dynamic import.
 See: https://webpack.js.org/guides/code-splitting/#prefetchingpreloading-modules
 
 ```js
-new AssetsPlugin({includeLazyChildAssets: true})
+new AssetsPlugin({includeDynamicImportedAssets: true})
 ```
 
 ### Using in multi-compiler mode

@@ -5,6 +5,7 @@ const _ = require('lodash')
 const getAssetKind = require('./lib/getAssetKind')
 const isHMRUpdate = require('./lib/isHMRUpdate')
 const isSourceMap = require('./lib/isSourceMap')
+const getDynamicImportedChildAssets = require('./lib/getDynamicImportedChildAssets')
 
 const createQueuedWriter = require('./lib/output/createQueuedWriter')
 const createOutputWriter = require('./lib/output/createOutputWriter')
@@ -21,11 +22,12 @@ function AssetsWebpackPlugin (options) {
     includeAllFileTypes: true,
     includeFilesWithoutChunk: false,
     includeAuxiliaryAssets: false,
-    includeLazyChildAssets: false,
+    includeDynamicImportedAssets: false,
     keepInMemory: false,
     integrity: false,
     removeFullPathAutoPrefix: false
   }, options)
+  this.writer = createQueuedWriter(createOutputWriter(this.options))
 }
 
 AssetsWebpackPlugin.prototype = {
@@ -39,9 +41,8 @@ AssetsWebpackPlugin.prototype = {
         ? (compiler.options.output.path || '.')
         : (self.options.path || '.')
     )
-    self.writer = createQueuedWriter(createOutputWriter(self.options))
 
-    const afterEmit = (compilation, callback) => {
+    const emit = (compilation, callback) => {
       const options = compiler.options
       const stats = compilation.getStats().toJson({
         hash: true,
@@ -97,40 +98,10 @@ AssetsWebpackPlugin.prototype = {
         if (self.options.includeAuxiliaryAssets && chunkName && stats.entrypoints[chunkName].auxiliaryAssets) {
           assets = [...assets, ...stats.entrypoints[chunkName].auxiliaryAssets]
         }
-        
-        if (self.options.includeLazyChildAssets && chunkName && (stats.entrypoints[chunkName].children.preload || stats.entrypoints[chunkName].children.prefetch)){
-          if(stats.entrypoints[chunkName].children.preload){
-            const preloadedChildAssets = [];
-            stats.entrypoints[chunkName].children.preload.forEach(function(obj){
-              obj.assets.forEach(function(asset){
-                asset.loadingBehaviour = 'preload';
-                preloadedChildAssets.push(asset);
-              });
-              if (self.options.includeAuxiliaryAssets && obj.auxiliaryAssets){
-                obj.auxiliaryAssets.forEach(function(asset){
-                    asset.loadingBehaviour = 'preload';
-                    preloadedChildAssets.push(asset);
-                });
-              }
-            });
-            assets = [...assets, ...preloadedChildAssets];
-          }
-          if(stats.entrypoints[chunkName].children.prefetch){
-            const prefetchedChildAssets = [];
-            stats.entrypoints[chunkName].children.prefetch.forEach(function(obj){
-              obj.assets.forEach(function(asset){
-                asset.loadingBehaviour = 'prefetch';
-                prefetchedChildAssets.push(asset);
-              });
-              if (self.options.includeAuxiliaryAssets && obj.auxiliaryAssets) {
-                obj.auxiliaryAssets.forEach(function(asset){
-                  asset.loadingBehaviour = 'prefetch';
-                  prefetchedChildAssets.push(asset);
-                });
-              }
-            });
-            assets = [...assets, ...prefetchedChildAssets];
-          }
+
+        if (self.options.includeDynamicImportedAssets && chunkName && stats.entrypoints[chunkName].children) {
+          const dynamicImportedChildAssets = getDynamicImportedChildAssets(options, stats.entrypoints[chunkName].children)
+          assets = [...assets, ...dynamicImportedChildAssets]
         }
 
         if (!Array.isArray(assets)) {
@@ -162,9 +133,10 @@ AssetsWebpackPlugin.prototype = {
               if (type === 'string') {
                 typeMap[typeName] = [typeMap[typeName]]
               }
-              if(self.options.includeLazyChildAssets && loadingBehaviour){
-                typeMap[typeName + ':' + loadingBehaviour] = typeMap[typeName + ':' + loadingBehaviour] || [];
-                typeMap[typeName + ':' + loadingBehaviour].push(combinedPath) 
+              if (self.options.includeDynamicImportedAssets && loadingBehaviour) {
+                const typeNameWithLoadingBehaviour = typeName + ':' + loadingBehaviour
+                typeMap[typeNameWithLoadingBehaviour] = typeMap[typeNameWithLoadingBehaviour] || []
+                typeMap[typeNameWithLoadingBehaviour].push(combinedPath)
               } else {
                 typeMap[typeName].push(combinedPath)
               }
@@ -232,9 +204,9 @@ AssetsWebpackPlugin.prototype = {
     if (compiler.hooks) {
       const plugin = { name: 'AssetsWebpackPlugin' }
 
-      compiler.hooks.afterEmit.tapAsync(plugin, afterEmit)
+      compiler.hooks.afterEmit.tapAsync(plugin, emit)
     } else {
-      compiler.plugin('after-emit', afterEmit)
+      compiler.plugin('emit', emit)
     }
   }
 }
