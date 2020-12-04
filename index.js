@@ -133,10 +133,10 @@ AssetsWebpackPlugin.prototype = {
               if (type === 'string') {
                 typeMap[typeName] = [typeMap[typeName]]
               }
-              
+
               if (self.options.includeDynamicImportedAssets && loadingBehaviour) {
                 const typeNameWithLoadingBehaviour = typeName + ':' + loadingBehaviour
-                
+
                 typeMap[typeNameWithLoadingBehaviour] = typeMap[typeNameWithLoadingBehaviour] || []
                 typeMap[typeNameWithLoadingBehaviour].push(combinedPath)
               } else {
