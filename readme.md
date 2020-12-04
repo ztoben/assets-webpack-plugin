@@ -365,6 +365,17 @@ When set, will output any files that are part of the chunk and marked as auxilia
 new AssetsPlugin({includeAuxiliaryAssets: true})
 ```
 
+#### `includeDynamicImportedAssets`
+
+Optional. `false` by default.
+
+When set, will output any files that are part of the chunk and marked as preloadable or prefechtable child assets via a dynamic import.
+See: https://webpack.js.org/guides/code-splitting/#prefetchingpreloading-modules
+
+```js
+new AssetsPlugin({includeDynamicImportedAssets: true})
+```
+
 ### Using in multi-compiler mode
 
 If you use webpack multi-compiler mode and want your assets written to a single file,
