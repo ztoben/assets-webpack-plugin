@@ -1,6 +1,6 @@
 {
   "name": "assets-webpack-plugin",
-  "version": "6.1.0",
+  "version": "6.1.1",
   "description": "Emits a json file with assets paths",
   "main": "dist/index.js",
   "engines": {
