@@ -5,9 +5,12 @@ This project adheres to [Semantic Versioning].
 
 [Semantic Versioning]: http://semver.org/
 
+## 6.1.2 - 2020-12-08
+* Closes [#319](https://github.com/ztoben/assets-webpack-plugin/issues/319)
+
 ## 6.1.1 - 2020-12-03
 * Adds the `includeDynamicImportedAssets` option
-* Closes [#313](https://github.com/ztoben/assets-webpack-plugin/issues/312)
+* Closes [#313](https://github.com/ztoben/assets-webpack-plugin/issues/313)
 
 ## 6.1.0 - 2020-12-03
 * Closes [#312](https://github.com/ztoben/assets-webpack-plugin/issues/312)
