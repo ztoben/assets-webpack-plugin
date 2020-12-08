@@ -121,7 +121,7 @@ AssetsWebpackPlugin.prototype = {
             const type = typeof typeMap[typeName]
             const compilationAsset = compilation.assets[asset]
             const integrity = compilationAsset && compilationAsset.integrity
-            const loadingBehaviour = obj.loadingBehaviour
+            const loadingBehavior = obj.loadingBehavior
 
             if (type === 'undefined') {
               typeMap[typeName] = combinedPath
@@ -134,11 +134,11 @@ AssetsWebpackPlugin.prototype = {
                 typeMap[typeName] = [typeMap[typeName]]
               }
 
-              if (self.options.includeDynamicImportedAssets && loadingBehaviour) {
-                const typeNameWithLoadingBehaviour = typeName + ':' + loadingBehaviour
+              if (self.options.includeDynamicImportedAssets && loadingBehavior) {
+                const typeNameWithLoadingBehavior = typeName + ':' + loadingBehavior
 
-                typeMap[typeNameWithLoadingBehaviour] = typeMap[typeNameWithLoadingBehaviour] || []
-                typeMap[typeNameWithLoadingBehaviour].push(combinedPath)
+                typeMap[typeNameWithLoadingBehavior] = typeMap[typeNameWithLoadingBehavior] || []
+                typeMap[typeNameWithLoadingBehavior].push(combinedPath)
               } else {
                 typeMap[typeName].push(combinedPath)
               }
