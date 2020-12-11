@@ -51,5 +51,8 @@
     "camelcase": "^6.0.0",
     "escape-string-regexp": "^4.0.0",
     "lodash": "^4.17.20"
+  },
+  "peerDependencies": {
+    "webpack": ">=5.0.0"
   }
 }
