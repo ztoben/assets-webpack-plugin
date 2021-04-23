@@ -42,7 +42,7 @@ AssetsWebpackPlugin.prototype = {
     )
     self.writer = createQueuedWriter(createOutputWriter(self.options))
 
-    const afterEmit = (compilation, callback) => {
+    const emitPlugin = (compilation, callback) => {
       const options = compiler.options
       const stats = compilation.getStats().toJson({
         hash: true,
@@ -206,9 +206,9 @@ AssetsWebpackPlugin.prototype = {
     if (compiler.hooks) {
       const plugin = { name: 'AssetsWebpackPlugin' }
 
-      compiler.hooks.afterEmit.tapAsync(plugin, afterEmit)
+      compiler.hooks.emit.tapAsync(plugin, emitPlugin)
     } else {
-      compiler.plugin('after-emit', afterEmit)
+      compiler.plugin('after-emit', emitPlugin)
     }
   }
 }
