@@ -5,6 +5,9 @@ This project adheres to [Semantic Versioning].
 
 [Semantic Versioning]: http://semver.org/
 
+## 7.1.0 - 2020-12-11
+* Closes [#327](https://github.com/ztoben/assets-webpack-plugin/issues/327)
+
 ## 7.0.0 - 2020-12-11
 * Requires webpack 5 or greater as a peer dependency
 * Closes [#322](https://github.com/ztoben/assets-webpack-plugin/issues/322)
