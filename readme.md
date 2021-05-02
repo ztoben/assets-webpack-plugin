@@ -50,7 +50,7 @@ npm install assets-webpack-plugin --save-dev
 If you're using Webpack 4 or below:
 
 ```sh
-npm install webpack-assets-manifest@5.1.2 --save-dev
+npm install assets-webpack-plugin@5.1.2 --save-dev
 ```
 
 ## Why Is This Useful?
