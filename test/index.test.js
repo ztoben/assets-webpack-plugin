@@ -7,6 +7,7 @@ const Plugin = require('../index.js')
 const OUTPUT_DIR = path.join(__dirname, '../tmp')
 const expectOutput = require('./utils/expectOutput')(OUTPUT_DIR)
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const SriPlugin = require('webpack-subresource-integrity')
 
 describe('Plugin', function () {
   beforeEach(function (done) {
@@ -241,6 +242,47 @@ describe('Plugin', function () {
       styles: {
         js: 'auto/styles-bundle.js',
         css: ['auto/styles-bundle1.css', 'auto/styles-bundle2.css']
+      }
+    }
+
+    const args = {
+      config: webpackConfig,
+      expected: expected
+    }
+
+    expectOutput(args, done)
+  })
+
+  it('works with SriPlugin for multiple entries', function (done) {
+    const webpackConfig = {
+      entry: {
+        one: path.join(__dirname, 'fixtures/one.js'),
+        two: path.join(__dirname, 'fixtures/two.js')
+      },
+      output: {
+        path: OUTPUT_DIR,
+        filename: '[name]-bundle.js'
+      },
+      plugins: [
+        new Plugin({
+          path: 'tmp',
+          integrity: true
+        }),
+        new SriPlugin({
+          hashFuncNames: ['sha384'],
+          enabled: true
+        })
+      ]
+    }
+
+    const expected = {
+      one: {
+        js: 'auto/one-bundle.js',
+        jsIntegrity: 'sha384-H3yxFmZeX9gwVyZXCuJBsMt5QGQTfjsWlVuRz533CIBFZKEFGd2x/jUgwfr2W03p'
+      },
+      two: {
+        js: 'auto/two-bundle.js',
+        jsIntegrity: 'sha384-fysNJb6C9uG1mOr57+Zm2SevQgQPrLqgzjWUHO5n9N+yjpsWQcwgjYatT15wxFoD'
       }
     }
 
