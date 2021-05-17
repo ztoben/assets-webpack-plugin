@@ -35,12 +35,14 @@ AssetsWebpackPlugin.prototype = {
   apply: function (compiler) {
     const self = this
 
-    self.options.path = path.resolve(
-      self.options.useCompilerPath
-        ? (compiler.options.output.path || '.')
-        : (self.options.path || '.')
-    )
-    self.writer = createQueuedWriter(createOutputWriter(self.options))
+    compiler.hooks.initialize.tap('AssetsWebpackPlugin', () => {
+      self.options.path = path.resolve(
+        self.options.useCompilerPath
+          ? (compiler.options.output.path || '.')
+          : (self.options.path || '.')
+      )
+      self.writer = createQueuedWriter(createOutputWriter(self.options))
+    })
 
     const emitPlugin = (compilation, callback) => {
       const options = compiler.options
