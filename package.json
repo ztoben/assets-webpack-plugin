@@ -39,7 +39,7 @@
     "babel-preset-env": "1.7.0",
     "chai": "4.3.4",
     "css-loader": "5.2.6",
-    "mini-css-extract-plugin": "1.6.0",
+    "mini-css-extract-plugin": "1.6.2",
     "mocha": "8.4.0",
     "rimraf": "3.0.2",
     "snazzy": "9.0.0",
