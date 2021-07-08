@@ -5,6 +5,9 @@ This project adheres to [Semantic Versioning].
 
 [Semantic Versioning]: http://semver.org/
 
+## 7.1.1 - 2021-07-08
+* Bump lodash for security concerns
+
 ## 7.1.0 - 2020-12-11
 * Closes [#327](https://github.com/ztoben/assets-webpack-plugin/issues/327)
 
