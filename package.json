@@ -46,7 +46,7 @@
     "standard": "16.0.3",
     "style-loader": "2.0.0",
     "webpack": "5.53.0",
-    "webpack-subresource-integrity": "1.5.2"
+    "webpack-subresource-integrity": "5.0.0"
   },
   "dependencies": {
     "camelcase": "^6.0.0",
