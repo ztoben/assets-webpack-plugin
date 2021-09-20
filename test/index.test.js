@@ -379,4 +379,35 @@ describe('Plugin', function () {
 
     expectOutput(args, done)
   })
+
+  describe('test compatibility with webpack defaults', function () {
+    const DEFAULT_WEBPACK_OUTPUT_DIR = path.join(__dirname, '../dist')
+    const expectDistOutput = require('./utils/expectOutput')(DEFAULT_WEBPACK_OUTPUT_DIR)
+
+    beforeEach(function (done) {
+      rmRf(DEFAULT_WEBPACK_OUTPUT_DIR, done)
+    })
+
+    it('support useCompilerPath without setting output.path', function (done) {
+      const webpackConfig = {
+        entry: path.join(__dirname, 'fixtures/one.js'),
+        plugins: [new Plugin({
+          useCompilerPath: true
+        })]
+      }
+
+      const expected = {
+        main: {
+          js: 'auto/main.js'
+        }
+      }
+
+      const args = {
+        config: webpackConfig,
+        expected: expected
+      }
+
+      expectDistOutput(args, done)
+    })
+  })
 })

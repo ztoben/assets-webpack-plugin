@@ -3,6 +3,7 @@ dist
 tmp
 npm-debug.log*
 .package.json
+.idea
 
 # Lock files shouldn't be committed for libraries https://stackoverflow.com/a/40206145
 yarn.lock
