@@ -1,5 +1,14 @@
 {
   "extends": [
     "config:base"
+  ],
+  "ignoreDeps": [
+    "style-loader",
+    "css-loader",
+    "mini-css-extract-plugin",
+    "mocha",
+    "standard",
+    "webpack-subresource-integrity",
+    "escape-string-regexp"
   ]
 }
