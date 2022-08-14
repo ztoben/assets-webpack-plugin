@@ -8,6 +8,8 @@
 
 Webpack plugin that emits a json file with assets paths.
 
+See [webpack-manifest-plugin](https://www.npmjs.com/package/webpack-manifest-plugin) as well
+
 ## Table of Contents
 
 * [Install](#install)
