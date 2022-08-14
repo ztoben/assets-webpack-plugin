@@ -7,6 +7,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/sbchndv12vk45mo3?svg=true)](https://ci.appveyor.com/project/ztoben/assets-webpack-plugin)
 
 Webpack plugin that emits a json file with assets paths.
+See [webpack-manifest-plugin](https://www.npmjs.com/package/webpack-manifest-plugin) as well
 
 ## Table of Contents
 
