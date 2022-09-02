@@ -6,7 +6,7 @@
 [![Build Status](https://travis-ci.org/ztoben/assets-webpack-plugin.svg?branch=master)](https://travis-ci.org/ztoben/assets-webpack-plugin)
 [![Build status](https://ci.appveyor.com/api/projects/status/sbchndv12vk45mo3?svg=true)](https://ci.appveyor.com/project/ztoben/assets-webpack-plugin)
 
-Webpack plugin that emits a json file with assets paths.
+[Webpack](https://webpack.js.org/) plugin that emits a json file with assets paths.
 
 ## Table of Contents
 
