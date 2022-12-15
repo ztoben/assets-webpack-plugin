@@ -7,7 +7,7 @@ const Plugin = require('../index.js')
 const OUTPUT_DIR = path.join(__dirname, '../tmp')
 const expectOutput = require('./utils/expectOutput')(OUTPUT_DIR)
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const SriPlugin = require('webpack-subresource-integrity')
+const { SubresourceIntegrityPlugin } = require('webpack-subresource-integrity')
 
 describe('Plugin', function () {
   beforeEach(function (done) {
@@ -253,7 +253,7 @@ describe('Plugin', function () {
     expectOutput(args, done)
   })
 
-  it('works with SriPlugin for multiple entries', function (done) {
+  it('works with SubresourceIntegrityPlugin for multiple entries', function (done) {
     const webpackConfig = {
       entry: {
         one: path.join(__dirname, 'fixtures/one.js'),
@@ -268,10 +268,7 @@ describe('Plugin', function () {
           path: 'tmp',
           integrity: true
         }),
-        new SriPlugin({
-          hashFuncNames: ['sha384'],
-          enabled: true
-        })
+        new SubresourceIntegrityPlugin()
       ]
     }
 
