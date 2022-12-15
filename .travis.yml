@@ -1,7 +1,7 @@
 sudo: false
 language: node_js
 node_js:
-  - "10"
+  - "18"
 
 script:
   - npm run lint

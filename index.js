@@ -42,7 +42,7 @@ AssetsWebpackPlugin.prototype = {
     )
     self.writer = createQueuedWriter(createOutputWriter(self.options))
 
-    const emitPlugin = (compilation, callback) => {
+    const emitPlugin = (file, { compilation }, callback) => {
       const options = compiler.options
       const stats = compilation.getStats().toJson({
         hash: true,
@@ -119,7 +119,7 @@ AssetsWebpackPlugin.prototype = {
           if (self.options.includeAllFileTypes || self.options.fileTypes.includes(typeName)) {
             const combinedPath = assetPath && assetPath.slice(-1) !== '/' ? `${assetPath}/${asset}` : assetPath + asset
             const type = typeof typeMap[typeName]
-            const compilationAsset = compilation.assets[asset]
+            const compilationAsset = stats.assets.find(statAsset => statAsset.name === asset)
             const integrity = compilationAsset && compilationAsset.integrity
             const loadingBehavior = obj.loadingBehavior
 
@@ -203,13 +203,8 @@ AssetsWebpackPlugin.prototype = {
       })
     }
 
-    if (compiler.hooks) {
-      const plugin = { name: 'AssetsWebpackPlugin' }
-
-      compiler.hooks.emit.tapAsync(plugin, emitPlugin)
-    } else {
-      compiler.plugin('after-emit', emitPlugin)
-    }
+    const plugin = { name: 'AssetsWebpackPlugin' }
+    compiler.hooks.assetEmitted.tapAsync(plugin, emitPlugin)
   }
 }
 
