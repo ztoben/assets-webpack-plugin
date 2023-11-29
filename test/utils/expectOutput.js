@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-expressions */
 
-const _ = require('lodash')
+const isRegExp = require('lodash.isregexp')
+const isString = require('lodash.isstring')
+
 const expect = require('chai').expect
 const webpack = require('webpack')
 const fs = require('fs')
@@ -31,9 +33,9 @@ module.exports = function (outputDir) {
 
       const content = fs.readFileSync(path.join(outputDir, outputFile)).toString()
 
-      if (_.isRegExp(expectedResult)) {
+      if (isRegExp(expectedResult)) {
         expect(content).to.match(expectedResult)
-      } else if (_.isString(expectedResult)) {
+      } else if (isString(expectedResult)) {
         expect(content).to.contain(expectedResult)
       } else {
         // JSON object provided

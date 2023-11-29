@@ -51,7 +51,10 @@
   "dependencies": {
     "camelcase": "^6.0.0",
     "escape-string-regexp": "4.0.0",
-    "lodash": "^4.17.21"
+    "lodash.assign": "^4.2.0",
+    "lodash.isregexp": "^4.0.1",
+    "lodash.isstring": "^4.0.1",
+    "lodash.merge": "^4.6.2"
   },
   "peerDependencies": {
     "webpack": ">=5.0.0"
