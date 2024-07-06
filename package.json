@@ -41,7 +41,7 @@
     "css-loader": "5.2.7",
     "mini-css-extract-plugin": "1.6.2",
     "mocha": "8.4.0",
-    "rimraf": "3.0.2",
+    "rimraf": "5.0.8",
     "snazzy": "9.0.0",
     "standard": "16.0.3",
     "style-loader": "2.0.0",
